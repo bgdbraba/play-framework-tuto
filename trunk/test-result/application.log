@@ -1,0 +1,5 @@
+24 juil. 2011 15:40:29,890 INFO  ~ Starting C:\Documents and Settings\POUTRAIN\workspace\yabe
+24 juil. 2011 15:40:30,593 WARN  ~ You're running Play! in DEV mode
+24 juil. 2011 15:40:30,796 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
+24 juil. 2011 15:41:14,468 INFO  ~ Connected to jdbc:h2:mem:play;MODE=MYSQL;LOCK_MODE=0
+24 juil. 2011 15:41:21,968 INFO  ~ Application 'Yet Another Blog Engine' is now started !
