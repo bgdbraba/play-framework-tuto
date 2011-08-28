@@ -1,28 +1,35 @@
 # you describe your data using the YAML notation here
 # and then load them using Fixtures.load("data.yml")
 
-# User(bob):
-#   email: bob@gmail.com
+# User(test):
+#   email: pouts@gmail.com
 #   password: secret
-#   fullname: Bob
+#   fullname: pouts
 
 # Test data
 
-User(bob):
-    email:          bob@gmail.com
+User(pouts):
+    email:          poutsjr@gmail.com
     password:       secret
-    fullname:       Bob
-    isAdmin:        true
-    
+    firstname:      Thierry
+    lastname:       Poutrain
+    birthdate:      1982-03-20
+
 User(jeff):
     email:          jeff@gmail.com
     password:       secret
-    fullname:       Jeff    
+    firstname:      Jeff
+    lastname:       Poutrain
+    birthdate:      1981-03-20   
     
-Post(firstBobPost):
+Exam(exam_1):
+    title:          Examen de test
+    examKey:        1
+
+Post(firstpoutsPost):
     title:          About the model layer
     postedAt:       2009-06-14
-    author:         bob
+    author:         pouts
     content:        >
                     The model has a central position in a Play! application. It is the domain-specific 
                     representation of the information on which the application operates.
@@ -34,10 +41,10 @@ Post(firstBobPost):
                     is controlled and used here, even though the technical details of storing it are 
                     delegated to the infrastructure. This layer is the heart of business software.
 
-Post(secondBobPost):
+Post(secondpoutsPost):
     title:          Just a test of YABE
     postedAt:       2009-03-25
-    author:         bob
+    author:         pouts
     content:        >
                     Well, it's just a test.
                     
@@ -58,19 +65,19 @@ Comment(c1):
     content:        >
                     You are right !
     postedAt:       2009-06-14
-    post:           firstBobPost
+    post:           firstpoutsPost
     
 Comment(c2):
     author:         Mike
     content:        >
                     I knew that ...
     postedAt:       2009-06-15
-    post:           firstBobPost    
+    post:           firstpoutsPost    
     
 Comment(c3):
     author:         Tom
     content:        >
                     This post is useless ?
     postedAt:       2009-04-05
-    post:           secondBobPost    
+    post:           secondpoutsPost    
                  
