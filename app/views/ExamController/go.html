@@ -1,0 +1,36 @@
+#{extends 'main.html' /}
+#{set title:exam.examKey /}
+ 
+<h3>Exam</h3>
+
+#{form @ExamController.storeCandidate(exam.id)}
+
+    #{ifErrors}
+        <p class="error">
+            All fields are required!
+        </p>
+    #{/ifErrors}
+    
+    <p>
+        <label for="email">Email: </label>
+        <input type="text" name="email" id="email" />
+    </p>
+    <p>
+        <label for="password">Password: </label>
+        <input type="password" name="password" id="password" />
+    </p>
+    <p>
+        <label for="confirm_password">Confirm password: </label>
+        <input type="password" name="confirm_password" id="confirm_password" />
+    </p>
+    <p>
+        <label for="birthdate">Birth date: </label>
+        <input type="text" name="birthdate" id="birthdate" />
+    </p>
+    
+    <p>
+        <input type="submit" value="Go to exam" />
+    </p>
+#{/form}
+ 
+
