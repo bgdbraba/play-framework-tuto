@@ -1,12 +1,7 @@
 # you describe your data using the YAML notation here
 # and then load them using Fixtures.load("data.yml")
 
-# User(test):
-#   email: pouts@gmail.com
-#   password: secret
-#   fullname: pouts
 
-# Test data
 
 User(pouts):
     email:          poutsjr@gmail.com
@@ -21,10 +16,21 @@ User(jeff):
     firstname:      Jeff
     lastname:       Poutrain
     birthdate:      1981-03-20   
-    
+
+Question(q1):
+    title:          C'est qui le plus fort ?
+    content:        Je ne connais pas tout le monde dans le monde mais bon ...
+    questionType:   models.Question.QuestionType.MULTIPLE_CHOICE;
+
+Questionnaire(questionnaire_1):
+    title:          questionnaire_1
+    description:    petit questionnaire tout simple
+    questions:      [q1]
+       
 Exam(exam_1):
-    title:          Examen de test
-    examKey:        1
+    examKey:        key_1
+    candidate:      pouts
+    questionnaire:  questionnaire_1
 
 Post(firstpoutsPost):
     title:          About the model layer
