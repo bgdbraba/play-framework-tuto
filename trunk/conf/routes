@@ -11,10 +11,21 @@ GET     /favicon.ico                            404
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 
-GET		/posts/{id}                             Application.show
-POST    /posts/{postId}/comments                Application.postComment
+GET		/posts/{id}                            Application.show
+POST    /posts/{postId}/comments               Application.postComment
 
-GET		/exam/{examKey}                         ExamController.go
+GET      /quiz/new                             QuizController.create
+POST     /quiz/new                             QuizController.storeQuiz
+GET      /quiz/show/{questionId}               QuizController.show
+
+GET      /question/new                          QuestionController.create
+POST     /question/new                          QuestionController.storeQuestion
+GET      /question/show/{questionId}            QuestionController.show
+
+GET      /exam/new                              ExamController.create
+POST     /exam/new                              ExamController.createFirstStep
+GET      /exam/{examKey}                        ExamController.go
+GET      /exam/{examKey}/start                  ExamController.beginQuiz
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}

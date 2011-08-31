@@ -1,0 +1,53 @@
+#{extends 'main.html' /}
+#{set title:'New quiz' /}
+
+<h3>New Quiz</h3>
+
+#{if quiz == null }
+   <h4>Step 1/2 : Description</h4>
+      #{form @QuizController.storeQuiz()}
+
+      #{ifErrors}
+           <p class="error">
+               All fields are required!
+           </p>
+       #{/ifErrors}
+       
+		<p>
+			<label for="title">Title: </label>
+			<input type="text" name="title"	id="question_title" value="" />
+		</p>
+		<p>
+			<label for="difficulty">Difficulty: </label>
+			<input type="text" name="difficulty" id="difficulty" value="" />
+		</p>
+		<p>
+			<label for="second">Time: </label>
+			<input type="text" name="second" id="second" value="" />(seconds)
+		</p>
+		<p>
+			<label for="groupType">Type: </label>
+			#{select 'groupTypes', items:models.GroupType.findAll(), valueProperty:'id', labelProperty:'name', id:'group_types', multiple:multiple /}
+		</p>
+      
+      <p>
+         <input type="submit" value="Next step" />
+      </p>
+   
+   #{/form}
+   
+#{/if}
+#{elseif quiz != null && quiz.question }
+   <p>Congratulation</p>
+#{/elseif}
+#{else}
+   <h4>Step 2/2 : Questions</h4>
+#{/else}
+
+
+
+
+
+
+ 
+
