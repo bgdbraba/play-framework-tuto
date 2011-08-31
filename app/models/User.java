@@ -6,18 +6,23 @@ import javax.persistence.Entity;
 
 import play.data.validation.Email;
 import play.data.validation.Password;
+import play.data.validation.Required;
 import play.db.jpa.Model;
 
 @Entity
 public class User extends Model {
 
 	@Email
+	@Required
 	public String email;
 
 	@Password
 	public String password;
 
-	public String firstname;
+	@Required
+	public String firstname; 
+
+	@Required
 	public String lastname;
 
 	public Date birthdate;

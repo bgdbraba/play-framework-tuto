@@ -1,0 +1,39 @@
+#{extends 'main.html' /}
+#{set title:exam.examKey /}
+ 
+<h3>Exam</h3>
+
+<h4>Question : ${question.title} (${question.questionType})</h4>
+
+<p>${question.content}</p>
+
+#{form @ExamController.nextQuestion(exam.id)}
+<p>
+   #{if question.questionType.toString() == 'SIMPLE_CHOICE'}
+      <!-- Use foreach question.responses -->
+      #{list items:question.responses, as:'response'}
+         <input type="radio" name="simple_response" value="${response.id}" checked="checked" />${response.value} (${response.correct})
+         <br/>
+      #{/list}
+   #{/if}
+   
+   #{elseif question.questionType.toString() == 'MULTIPLE_CHOICE'}
+      <!-- Use foreach question.responses -->
+      #{list items:question.responses, as:'response'}
+         <input type="checkbox" name="multiple_response_${response.id}" />${response.value} (${response.correct})
+         <br/>
+      #{/list}
+   #{/elseif}
+   
+   #{elseif question.questionType.toString() == 'TEXT_ANSWER'}
+      Response <input type="text" name="response_text" />
+   #{/elseif}
+</p>
+
+<p>
+   <input type="submit" value="Next Question" />
+</p>   
+   
+#{/form}
+ 
+

@@ -6,11 +6,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import play.db.jpa.Model;
 
 @Entity
-public class Questionnaire extends Model {
+public class Quiz extends Model {
 
 	public String title;
 	
@@ -22,4 +23,7 @@ public class Questionnaire extends Model {
 	@ManyToMany(cascade = CascadeType.ALL, targetEntity = Question.class)
 	public List<Question> questions;
 
+	@Transient
+	public int second;
+	
 }

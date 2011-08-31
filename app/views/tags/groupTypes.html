@@ -1,0 +1,8 @@
+*{ Display ... }*
+${_disabled}
+#{if _multiple}
+   #{select 'groupTypes',  items:_models.GroupType.findAll(), valueProperty:'id', labelProperty:'name', id:'group_types', multiple:true, value:3 /}
+#{/if}
+#{else}
+   #{select 'groupTypes',  items:models.GroupType.findAll(), valueProperty:'id', labelProperty:'name', id:'group_types' /}
+#{/else}

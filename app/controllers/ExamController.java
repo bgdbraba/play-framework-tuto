@@ -1,9 +1,13 @@
 package controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import models.Exam;
 import models.Post;
 import models.Question;
-import models.Question.QuestionType;
+import models.User;
 import play.Play;
 import play.data.validation.Required;
 import play.mvc.Before;
@@ -16,16 +20,51 @@ public class ExamController extends Controller {
 		render(exam);
 	}
 
-	public static void beginQuestionnaire(String examKey) {
+	public static void beginQuiz(String examKey) {
 		Exam exam = Exam.findByKey(examKey);
 		exam.nextQuestion();
-		Question question = exam.questionnaire.questions.get(exam.currentQuestion);
+		Question question = exam.quiz.questions.get(exam.currentQuestion);
 		System.out.println(question.questionType);
 		render(exam, question);
 	}
-	
+
+	public static void create() {
+		String examKey = Exam.generateFreeExamKey();
+		Exam exam = new Exam(examKey);
+		exam.save();
+		render(exam);
+	}
+
+	public static void createFirstStep(Long examId, @Required String firstname, @Required String lastname,
+			@Required String email, String birthdate) {
+
+		Date parsedDate = null;
+		if (birthdate != null && birthdate.length() > 0) {
+			try {
+				parsedDate = new SimpleDateFormat("yyyy-MM-dd").parse(birthdate);
+			} catch (ParseException e) {
+				// -- Add error
+				// validation.errors().add(new Error(key, message, variables));
+				System.out.println("Bad date");
+			}
+		}
+		User candidate = new User(email, null, firstname, lastname, parsedDate);
+		Exam exam = Exam.findById(examId);
+
+		if (validation.hasErrors()) {
+			exam.delete();
+			render("ExamController/create.html", exam);
+		}
+
+		candidate.save();
+		exam.candidate = candidate;
+		exam.save();
+		render("ExamController/create.html", exam);
+
+	}
+
 	public static void nextQuestion(String examKey) {
-		beginQuestionnaire(examKey);
+		beginQuiz(examKey);
 	}
 
 	public static void show(Long id) {
@@ -39,21 +78,19 @@ public class ExamController extends Controller {
 		System.out.println(examId);
 		exam.candidate.password = password;
 		exam.candidate.save();
-//		System.out.println("password " + password);
-//		System.out.println("confirm " + confirm_password);
-//		System.out.println("birth " + birthdate);
+		// System.out.println("password " + password);
+		// System.out.println("confirm " + confirm_password);
+		// System.out.println("birth " + birthdate);
 		if (validation.hasErrors()) {
 			render("ExamController/go.html", exam);
 		}
-		beginQuestionnaire(exam.examKey);
+		beginQuiz(exam.examKey);
 	}
 
 	@Before
 	static void addDefaults() {
-		renderArgs.put("siteTitle",
-				Play.configuration.getProperty("site.title"));
-		renderArgs.put("siteBaseline",
-				Play.configuration.getProperty("site.baseline"));
+		renderArgs.put("siteTitle", Play.configuration.getProperty("site.title"));
+		renderArgs.put("siteBaseline", Play.configuration.getProperty("site.baseline"));
 	}
 
 }

@@ -1,0 +1,52 @@
+#{extends 'main.html' /}
+#{set title:exam.examKey /}
+
+<h3>New Exam</h3>
+
+#{if exam.quiz }
+   <p>Congratulation</p>
+#{/if}
+#{elseif exam.candidate }
+   <h4>Step 2/2 : Store quiz</h4>
+#{/elseif}
+#{else}
+   <h4>Step 1/2 : Store candidate</h4>
+   #{form @ExamController.CreateFirstStep(exam.id)}
+
+	   #{ifErrors}
+	        <p class="error">
+	            All fields are required!
+	        </p>
+	    #{/ifErrors}
+	    
+	    <p>
+	        <label for="firstname">First name: </label>
+	        <input type="text" name="firstname" id="firstname" value=""/>
+	    </p>
+	    <p>
+	        <label for="lastname">Last name: </label>
+	        <input type="text" name="lastname" id="lastname" value=""/>
+	    </p>
+	    <p>
+	        <label for="email">Email: </label>
+	        <input type="text" name="email" id="email" value=""/>
+	    </p>
+	    <p>
+	        <label for="birthdate">Birth date: </label>
+	        <input type="text" name="birthdate" id="birthdate" value=""/>
+	    </p>
+	    
+	    <p>
+	        <input type="submit" value="Next step" />
+	    </p>
+   
+   #{/form}
+   
+#{/else}
+
+
+
+
+
+ 
+
