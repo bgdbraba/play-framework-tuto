@@ -28,23 +28,7 @@ Response(rep2):
 Response(rep3):
     value:          Chuck Norris
     correct:        false
-    
-Question(q1):
-    title:          C'est qui le plus fort ?
-    content:        Je ne connais pas tout le monde dans le monde mais bon ...
-    questionType:   SIMPLE_CHOICE
-    responses:      [rep1, rep2, rep3]
 
-Quiz(quiz_1):
-    title:          quiz_1
-    description:    petit quiz tout simple
-    questions:      [q1]
-       
-Exam(exam_1):
-    examKey:        key_1
-    candidate:      pouts
-    quiz:  quiz_1
-    
 GroupType(group_1):
     name:           Java EE
 
@@ -59,6 +43,27 @@ GroupType(group_4):
 
 GroupType(group_5):
     name:           Network
+        
+Question(q1):
+    title:          C'est qui le plus fort ?
+    content:        Je ne connais pas tout le monde dans le monde mais bon ...
+    second:         45
+    difficulty:     3
+    questionType:   SIMPLE_CHOICE
+    groupType:      group_1
+    responses:      [rep1, rep2, rep3]
+
+Quiz(quiz_1):
+    title:          quiz_1
+    difficulty:     3
+    description:    petit quiz tout simple
+    questions:      [q1]
+       
+Exam(exam_1):
+    examKey:        key_1
+    candidate:      pouts
+    quiz:  quiz_1
+
 
 Post(firstpoutsPost):
     title:          About the model layer

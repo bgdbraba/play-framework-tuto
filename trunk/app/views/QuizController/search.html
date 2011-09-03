@@ -1,0 +1,83 @@
+#{extends 'main.html' /} 
+#{set title:'Search quiz' /}
+
+<h3>Search Quiz</h3>
+
+
+#{form @QuizController.search()} 
+
+	#{ifErrors}
+	<p class="error">All fields are required!</p>
+	#{/ifErrors}
+	
+	<p>
+		<label for="title">Title: </label>
+		<input type="text" name="title" id="question_title" value="" />
+	</p>
+	<p>
+		<label for="difficulty">Min difficulty: </label>
+		<input type="text" name="difficulty" id="difficulty" value="" />
+	</p>
+	<p>
+		<label for="second">Min time: </label>
+		<input type="text" name="second"	id="second" value="" />(seconds)
+	</p>
+     <p>
+        <label for="groupType">Type: </label> 
+        #{select 'groupType', items:models.GroupType.findAll(), valueProperty:'id', labelProperty:'name', id:'group_types', multiple:'multiple' /}
+     </p>
+          <p>
+        <label for="questions">Questions: </label> 
+      <input type="text" name="questions" id="questions" value="" />
+     </p>
+           
+     <p>
+        <input type="submit" value="Search" />
+     </p>
+  
+  #{/form} 
+	
+<div>
+	<table>
+		<thead>
+			<tr>
+				<th>Title</th>
+            <th>Difficulty</th>
+            <th>Questions</th>
+            <th>Time</th>
+            <th>Type</th>
+			</tr>
+		</thead>
+		<tbody>
+		  #{list items:quizzes, as:'quiz'}
+			<tr>
+				<td>#{a @QuizController.show(quiz.id)}${quiz.title}#{/a}</td>
+            <td>${quiz.difficulty}</td>
+            <td>${quiz.questions.size()}</td>
+            <td>${quiz.second}</td>
+            <td>
+               <ul>
+	               #{list items:quiz.groupTypes, as:'types'}
+	                  <li>${types.name}</li>
+	               #{/list}
+               </ul>
+            </td>
+			</tr>
+			#{/list}
+			#{else}
+			<tr>
+			   <td colspan="5" class="no-response">No quiz. Change filter values.</td>
+			</tr>
+			#{/else}
+		</tbody>
+	</table>
+
+</div>
+
+
+
+
+
+
+
+

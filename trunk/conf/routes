@@ -12,16 +12,24 @@ GET     /favicon.ico                            404
 GET     /public/                                staticDir:public
 
 GET		/posts/{id}                            Application.show
-POST    /posts/{postId}/comments               Application.postComment
+POST    /posts/{postId}/comments                Application.postComment
+GET     /posts/{postId}/comments                Application.logout
 
-GET      /quiz/new                             QuizController.create
-POST     /quiz/new                             QuizController.storeQuiz
-GET      /quiz/show/{questionId}               QuizController.show
+GET      /profile                               ProfileController.show
 
+GET      /admin                                 AdminController.show
+
+GET      /quiz/search                           QuizController.search
+GET      /quiz/new                              QuizController.create
+POST     /quiz/new                              QuizController.storeQuiz
+GET      /quiz/show/{questionId}                QuizController.show
+
+*        /question/search                       QuestionController.search
 GET      /question/new                          QuestionController.create
 POST     /question/new                          QuestionController.storeQuestion
 GET      /question/show/{questionId}            QuestionController.show
 
+GET      /exam/search                           ExamController.search
 GET      /exam/new                              ExamController.create
 POST     /exam/new                              ExamController.createFirstStep
 GET      /exam/{examKey}                        ExamController.go

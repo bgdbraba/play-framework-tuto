@@ -35,16 +35,13 @@ public class Question extends Model {
 	@Enumerated
 	public QuestionType questionType;
 
-	public Question(String title, String content, String explanation,
-			int difficulty, int second, GroupType groupType,
+	public Question(String title, String content, String explanation, int difficulty, int second, GroupType groupType,
 			List<Response> responses, QuestionType questionType) {
-		this(title, content, explanation, difficulty, second, groupType,
-				questionType);
+		this(title, content, explanation, difficulty, second, groupType, questionType);
 		this.responses = responses;
 	}
 
-	public Question(String title, String content, String explanation,
-			int difficulty, int second, GroupType groupType,
+	public Question(String title, String content, String explanation, int difficulty, int second, GroupType groupType,
 			QuestionType questionType) {
 		super();
 		this.title = title;
@@ -63,5 +60,42 @@ public class Question extends Model {
 		if (value != null && value.length() > 0) {
 			responses.add(new Response(value, correct));
 		}
+	}
+
+	public static List<Question> search(String title, Integer difficulty, Integer second, Long groupType) {
+
+		List<Question> questions = null;
+		if ((title == null || title.trim().length() == 0) && difficulty == null && second == null && groupType == null) {
+			questions = new ArrayList<Question>();
+		} else {
+			String query = "";
+			List<Object> params = new ArrayList<Object>();
+			if (title != null && title.trim().length() > 0) {
+				query = "title = ? ";
+				params.add(title);
+				System.out.println(title);
+			}
+			if (difficulty != null) {
+				query += (query.length() > 0 ? "and " : "") + "difficulty >= ? ";
+				params.add(difficulty);
+				System.out.println(difficulty);
+			}
+			if (second != null) {
+				query += (query.length() > 0 ? "and " : "") + "time >= ? ";
+				params.add(second);
+				System.out.println(second);
+			}
+			if (groupType != null) {
+				GroupType group = GroupType.findById(groupType);
+				query += (query.length() > 0 ? "and " : "") + "groupType = ? ";
+				params.add(group);
+				System.out.println(group.name);
+			}
+
+			System.out.println(query);
+			questions = find(query, params.get(0)).fetch();
+
+		}
+		return questions;
 	}
 }

@@ -3,6 +3,7 @@ package controllers;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import models.Exam;
 import models.Post;
@@ -33,6 +34,12 @@ public class ExamController extends Controller {
 		Exam exam = new Exam(examKey);
 		exam.save();
 		render(exam);
+	}
+
+	public static void search(String title, Integer difficulty, Integer second, Long groupType) {
+		List<Question> questions = Question.search(title, difficulty, second, groupType);
+
+		render(questions);
 	}
 
 	public static void createFirstStep(Long examId, @Required String firstname, @Required String lastname,
