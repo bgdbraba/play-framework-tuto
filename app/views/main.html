@@ -18,7 +18,14 @@
             </div>
             <ul id="tools">
                 <li>
-                    <a href="#">Log in to write something</a>
+                    #{a @ProfileController.show()}<b>Thierry POUTRAIN</b>#{/a} | 
+                    #{a @Application.logout()}Logout#{/a} 
+                </li>
+               <li>
+                    #{a @ExamController.search()}Exams#{/a} | 
+                    #{a @QuizController.search()}Quiz#{/a} | 
+                    #{a @QuestionController.search()}Questions#{/a} | 
+                    #{a @AdminController.show()}Admin#{/a} 
                 </li>
             </ul>
 			<div id="title">

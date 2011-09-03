@@ -14,7 +14,9 @@ import play.db.jpa.Model;
 public class Quiz extends Model {
 
 	public String title;
-	
+
+	public int difficulty;
+
 	public String description;
 
 	@OneToMany(cascade = CascadeType.ALL, targetEntity = GroupType.class)
@@ -25,5 +27,5 @@ public class Quiz extends Model {
 
 	@Transient
 	public int second;
-	
+
 }

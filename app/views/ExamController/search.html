@@ -1,0 +1,71 @@
+#{extends 'main.html' /} 
+#{set title:'Search question' /}
+
+<h3>Search Question</h3>
+
+
+#{form @QuestionController.search()} 
+
+	#{ifErrors}
+	<p class="error">All fields are required!</p>
+	#{/ifErrors}
+	
+	<p>
+		<label for="title">Title: </label>
+		<input type="text" name="title" id="question_title" value="" />
+	</p>
+	<p>
+		<label for="difficulty">Min difficulty: </label>
+		<input type="text" name="difficulty" id="difficulty" value="" />
+	</p>
+	<p>
+		<label for="second">Min time: </label>
+		<input type="text" name="second"	id="second" value="" />(seconds)
+	</p>
+     <p>
+        <label for="groupType">Type: </label> 
+        #{select 'groupType', items:models.GroupType.findAll(), valueProperty:'id', labelProperty:'name', id:'group_types' /}
+     </p>
+           
+     <p>
+        <input type="submit" value="Search" />
+     </p>
+  
+  #{/form} 
+	
+<div>
+	<table>
+		<thead>
+			<tr>
+				<th>Title</th>
+                <th>Difficulty</th>
+                <th>Time</th>
+                <th>Type</th>
+			</tr>
+		</thead>
+		<tbody>
+		  #{list items:questions, as:'question'}
+			<tr>
+				<td>#{a @QuestionController.show(question.id)}${question.title}#{/a}</td>
+            <td>${question.difficulty}</td>
+            <td>${question.second}</td>
+            <td>${question.groupType.name}</td>
+			</tr>
+			#{/list}
+			#{else}
+			<tr>
+			   <td colspan="4" class="no-response">No question. Change filter values.</td>
+			</tr>
+			#{/else}
+		</tbody>
+	</table>
+
+</div>
+
+
+
+
+
+
+
+
