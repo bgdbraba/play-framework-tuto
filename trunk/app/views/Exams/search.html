@@ -4,7 +4,7 @@
 <h3>Search Question</h3>
 
 
-#{form @QuestionController.search()} 
+#{form @Questions.search()} 
 
 	#{ifErrors}
 	<p class="error">All fields are required!</p>
@@ -46,7 +46,7 @@
 		<tbody>
 		  #{list items:questions, as:'question'}
 			<tr>
-				<td>#{a @QuestionController.show(question.id)}${question.title}#{/a}</td>
+				<td>#{a @Questions.show(question.id)}${question.title}#{/a}</td>
             <td>${question.difficulty}</td>
             <td>${question.second}</td>
             <td>${question.groupType.name}</td>

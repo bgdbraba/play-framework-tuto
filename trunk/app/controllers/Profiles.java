@@ -1,10 +1,12 @@
 package controllers;
 
+import controllers.CRUD.For;
 import play.Play;
 import play.mvc.Before;
 import play.mvc.Controller;
 
-public class AdminController extends Controller {
+@For(models.User.class)
+public class Profiles extends CRUD {
 
 	public static void show() {
 		render();

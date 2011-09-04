@@ -13,8 +13,10 @@ import play.Play;
 import play.data.validation.Required;
 import play.mvc.Before;
 import play.mvc.Controller;
+import play.mvc.With;
 
-public class ExamController extends Controller {
+@With(Secure.class)
+public class Exams extends CRUD {
 
 	public static void go(String examKey) {
 		Exam exam = Exam.findByKey(examKey);

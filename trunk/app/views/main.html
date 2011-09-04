@@ -18,14 +18,14 @@
             </div>
             <ul id="tools">
                 <li>
-                    #{a @ProfileController.show()}<b>Thierry POUTRAIN</b>#{/a} | 
+                    #{a @Profiles.show()}<b>${user}</b>#{/a} | 
                     #{a @Application.logout()}Logout#{/a} 
                 </li>
                <li>
-                    #{a @ExamController.search()}Exams#{/a} | 
-                    #{a @QuizController.search()}Quiz#{/a} | 
-                    #{a @QuestionController.search()}Questions#{/a} | 
-                    #{a @AdminController.show()}Admin#{/a} 
+                    #{a @Exams.search()}Exams#{/a} | 
+                    #{a @Quizzes.search()}Quiz#{/a} | 
+                    #{a @Questions.search()}Questions#{/a} | 
+                    #{a @Admin.show()}Admin#{/a} 
                 </li>
             </ul>
 			<div id="title">
