@@ -15,25 +15,28 @@ GET		/posts/{id}                            Application.show
 POST    /posts/{postId}/comments                Application.postComment
 GET     /posts/{postId}/comments                Application.logout
 
-GET      /profile                               ProfileController.show
+GET      /profile                               Profiles.show
 
-GET      /admin                                 AdminController.show
 
-GET      /quiz/search                           QuizController.search
-GET      /quiz/new                              QuizController.create
-POST     /quiz/new                              QuizController.storeQuiz
-GET      /quiz/show/{questionId}                QuizController.show
+# Administration
+GET     /admin/?                                Admin.index
+*       /admin                                  module:crud
 
-*        /question/search                       QuestionController.search
-GET      /question/new                          QuestionController.create
-POST     /question/new                          QuestionController.storeQuestion
-GET      /question/show/{questionId}            QuestionController.show
+GET      /quiz/search                           Quizzes.search
+GET      /quiz/new                              Quizzes.create
+POST     /quiz/new                              Quizzes.storeQuiz
+GET      /quiz/show/{questionId}                Quizzes.show
 
-GET      /exam/search                           ExamController.search
-GET      /exam/new                              ExamController.create
-POST     /exam/new                              ExamController.createFirstStep
-GET      /exam/{examKey}                        ExamController.go
-GET      /exam/{examKey}/start                  ExamController.beginQuiz
+*        /question/search                       Questions.search
+GET      /question/new                          Questions.create
+POST     /question/new                          Questions.storeQuestion
+GET      /question/show/{questionId}            Questions.show
+
+GET      /exam/search                           Exams.search
+GET      /exam/new                              Exams.create
+POST     /exam/new                              Exams.createFirstStep
+GET      /exam/{examKey}                        Exams.go
+GET      /exam/{examKey}/start                  Exams.beginQuiz
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}

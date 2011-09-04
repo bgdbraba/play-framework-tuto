@@ -11,7 +11,7 @@ import javax.persistence.Transient;
 import play.db.jpa.Model;
 
 @Entity
-public class Quiz extends Model {
+public class Quiz extends Model { 
 
 	public String title;
 

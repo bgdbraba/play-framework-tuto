@@ -7,7 +7,7 @@
 
 <p>${question.content}</p>
 
-#{form @ExamController.nextQuestion(exam.id)}
+#{form @Exams.nextQuestion(exam.id)}
 <p>
    #{if question.questionType.toString() == 'SIMPLE_CHOICE'}
       <!-- Use foreach question.responses -->

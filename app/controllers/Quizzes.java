@@ -6,9 +6,10 @@ import models.Quiz;
 import play.Play;
 import play.data.validation.Required;
 import play.mvc.Before;
-import play.mvc.Controller;
+import controllers.CRUD.For;
 
-public class QuizController extends Controller {
+@For(models.Quiz.class) 
+public class Quizzes extends CRUD {  
 
 	public static void show(Long quizId) {
 		Quiz quiz = Quiz.findById(quizId);

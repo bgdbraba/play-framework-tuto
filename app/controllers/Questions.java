@@ -10,7 +10,8 @@ import play.data.validation.Required;
 import play.mvc.Before;
 import play.mvc.Controller;
 
-public class QuestionController extends Controller {
+
+public class Questions extends CRUD {
 
 	public static void show(Long questionId) {
 		Question question = Question.findById(questionId);

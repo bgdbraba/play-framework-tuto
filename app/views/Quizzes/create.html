@@ -5,7 +5,7 @@
 
 #{if quiz == null }
    <h4>Step 1/2 : Description</h4>
-      #{form @QuizController.storeQuiz()}
+      #{form @Quizzes.storeQuiz()}
 
       #{ifErrors}
            <p class="error">

@@ -4,7 +4,7 @@
 <h3>Search Quiz</h3>
 
 
-#{form @QuizController.search()} 
+#{form @Quizzes.search()} 
 
 	#{ifErrors}
 	<p class="error">All fields are required!</p>
@@ -51,7 +51,7 @@
 		<tbody>
 		  #{list items:quizzes, as:'quiz'}
 			<tr>
-				<td>#{a @QuizController.show(quiz.id)}${quiz.title}#{/a}</td>
+				<td>#{a @Quizzes.show(quiz.id)}${quiz.title}#{/a}</td>
             <td>${quiz.difficulty}</td>
             <td>${quiz.questions.size()}</td>
             <td>${quiz.second}</td>

@@ -11,7 +11,7 @@
 #{/elseif}
 #{else}
    <h4>Step 1/2 : Store candidate</h4>
-   #{form @ExamController.CreateFirstStep(exam.id)}
+   #{form @Exams.CreateFirstStep(exam.id)}
 
 	   #{ifErrors}
 	        <p class="error">
