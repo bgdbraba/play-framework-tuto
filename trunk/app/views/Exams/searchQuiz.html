@@ -1,10 +1,10 @@
 #{extends 'main.html' /} 
-#{set title:'Search question' /}
+#{set title:'Search quiz' /}
 
-<h3>Search Question</h3>
+<h3>Search Quiz</h3>
 
 
-#{form @Questions.search()} 
+#{form @Exams.searchQuiz()} 
 
 	#{ifErrors}
 	<p class="error">All fields are required!</p>

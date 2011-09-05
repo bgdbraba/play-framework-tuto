@@ -8,6 +8,83 @@
 #{/if}
 #{elseif exam.candidate }
    <h4>Step 2/2 : Store quiz</h4>
+   #{form @Exams.searchQuiz(exam.id)} 
+
+	#{ifErrors}
+	<p class="error">All fields are required!</p>
+	#{/ifErrors}
+	
+	<p>
+		<label for="title">Title: </label>
+		<input type="text" name="title" id="question_title" value="" />
+	</p>
+	<p>
+		<label for="difficulty">Min difficulty: </label>
+		<input type="text" name="difficulty" id="difficulty" value="" />
+	</p>
+	<p>
+		<label for="second">Min time: </label>
+		<input type="text" name="second"	id="second" value="" />(seconds)
+	</p>
+     <p>
+        <label for="groupType">Type: </label> 
+        #{select 'groupType', items:models.GroupType.findAll(), valueProperty:'id', labelProperty:'name', id:'group_types'/}
+     </p>
+	 <p>
+        <label for="questions">Questions: </label> 
+        <input type="text" name="questions" id="questions" value="" />
+     </p>
+           
+     <p>
+        <input type="submit" value="Search" />
+     </p>
+  
+  #{/form} 
+	
+<div>
+#{form @Exams.storeQuiz(exam.id)} 
+	<table>
+		<thead>
+			<tr>
+				<th>&nbsp;</th>
+				<th>Title</th>
+	            <th>Difficulty</th>
+	            <th>Questions</th>
+	            <th>Time</th>
+	            <th>Type</th>
+			</tr>
+		</thead>
+		<tbody>
+		  #{list items:quizzes, as:'quiz'}
+			<tr>
+				<td><input type="radio" name="quizId" value="${quiz.id}"/></td>
+				<td>#{a @Quizzes.show(quiz.id)}${quiz.title}#{/a}</td>
+	            <td>${quiz.difficulty}</td>
+	            <td>${quiz.questions.size()}</td>
+	            <td>${quiz.second}</td>
+	            <td>
+	               <ul>
+		               #{list items:quiz.groupTypes, as:'types'}
+		                  <li>${types.name}</li>
+		               #{/list}
+	               </ul>
+	            </td>
+			</tr>
+			#{/list}
+			#{else}
+			<tr>
+			   <td colspan="5" class="no-response">No quiz. Change filter values.</td>
+			</tr>
+			#{/else}
+		</tbody>
+	</table>
+	
+    <p>
+        <input type="submit" value="Create" />
+    </p>
+	    
+#{/form}
+</div>
 #{/elseif}
 #{else}
    <h4>Step 1/2 : Store candidate</h4>

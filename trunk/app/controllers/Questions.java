@@ -49,7 +49,7 @@ public class Questions extends CRUD {
 			throw new RuntimeException("Problem with Form");
 		}
 		if (validation.hasErrors()) {
-			render("QuestionController/create.html");
+			render("Questions/create.html");
 		}
 		question.create();
 		show(question.id);
