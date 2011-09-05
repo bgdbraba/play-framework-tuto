@@ -26,6 +26,6 @@ public class Quiz extends Model {
 	public List<Question> questions;
 
 	@Transient
-	public int second;
+	public int second = 300;
 
 }

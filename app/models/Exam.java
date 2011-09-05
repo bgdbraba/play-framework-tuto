@@ -1,10 +1,15 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import play.db.jpa.Model;
 
@@ -17,16 +22,31 @@ public class Exam extends Model {
 	@ManyToOne
 	public Quiz quiz;
 
-	public Date creationDate;
-	public Date startingDate;
+	public Calendar creationDate;
+	public Calendar startingDate;
+	public Calendar endingDate;
 	public String examKey;
 	public int currentQuestion;
 	public boolean validated;
 
+	@OneToMany(cascade = CascadeType.PERSIST, targetEntity = Answer.class)
+	public List<Answer> answers;
+
 	public Exam() {
 		super();
-		creationDate = new Date();
+		creationDate = Calendar.getInstance();
 		currentQuestion = -1;
+	}
+
+	public void initAnswers() {
+		if (quiz != null) {
+			answers = new ArrayList<Answer>();
+			for (Question question : quiz.questions) {
+				Answer answer = new Answer();
+				answer.question = question;
+				answers.add(answer);
+			}
+		}
 	}
 
 	public Exam(String examKey) {
@@ -40,7 +60,9 @@ public class Exam extends Model {
 
 	public void nextQuestion() {
 		if (startingDate == null) {
-			startingDate = new Date();
+			startingDate = Calendar.getInstance();
+			endingDate = startingDate;
+			endingDate.add(Calendar.SECOND, quiz.second);
 			currentQuestion = 0;
 		}
 		// currentQuestion++;
@@ -58,4 +80,14 @@ public class Exam extends Model {
 		}
 		return examKey;
 	}
+
+	public boolean isFinished() {
+		return endingDate.before(Calendar.getInstance());
+	}
+
+	public void storeQuiz(Quiz quiz) {
+		this.quiz = quiz;
+		initAnswers();
+	}
+
 }

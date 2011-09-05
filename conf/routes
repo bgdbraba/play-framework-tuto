@@ -34,7 +34,8 @@ GET      /question/show/{questionId}            Questions.show
 
 GET      /exam/search                           Exams.search
 GET      /exam/new                              Exams.create
-POST     /exam/new                              Exams.createFirstStep
+POST     /exam/new/step1                        Exams.createFirstStep
+POST     /exam/new/step2                        Exams.searchQuiz
 GET      /exam/{examKey}                        Exams.go
 GET      /exam/{examKey}/start                  Exams.beginQuiz
 
