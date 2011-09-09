@@ -6,14 +6,13 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
 import play.db.jpa.Model;
 
 @Entity
-public class Quiz extends Model { 
+public class Quiz extends Model {
 
-	public String title;
+	public String title; 
 
 	public int difficulty;
 
@@ -25,7 +24,19 @@ public class Quiz extends Model {
 	@ManyToMany(cascade = CascadeType.ALL, targetEntity = Question.class)
 	public List<Question> questions;
 
-	@Transient
-	public int second = 300;
+	public int second;
 
+	@Override
+	public String toString() {
+
+		if (groupTypes == null || groupTypes.size() == 0) {
+			return title;
+		}
+		String types = "";
+		for (GroupType type : groupTypes) {
+			types += type + ", ";
+		}
+
+		return title + "(" + types.substring(0, types.length() - 2) + ")";
+	}
 }

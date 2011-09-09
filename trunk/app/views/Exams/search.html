@@ -1,0 +1,65 @@
+#{extends 'site.html' /} 
+#{set title:'Search exam' /}
+
+<h3>Search Exam </h3>
+#{a @Exams.create()} +Add#{/a}
+
+#{form @Exams.search()} 
+
+	#{ifErrors}
+	<p class="error">All fields are required!</p>
+	#{/ifErrors}
+	
+	<p style="display: block; clear: both;">
+      <label for="email">Candidate email: </label>
+      <input type="text" name="email" id="email" value="" />
+   </p>
+   <p style="display: block; clear: both;">
+      <label for="examKey">Key: </label>
+      <input type="text" name="examKey" id="examKey" value="" />
+   </p>
+           
+     <p style="display: block; clear: both;">
+        <input type="submit" value="Search" />
+     </p>
+  
+  #{/form} 
+	
+<div>
+	<table>
+		<thead>
+			<tr>
+            <th>Exam key</th>
+            <th>Candidate</th>
+            <th>Quiz</th>
+            <th>Created</th>
+            <th>Time</th>
+			</tr>
+		</thead>
+		<tbody>
+		  #{list items:exams, as:'exam'}
+			<tr>
+				<td>#{a @Exams.show(exam.id)}${exam.examKey}#{/a}</td>
+            <td>${exam.candidate}</td>
+            <td>${exam.quiz}</td>
+            <td>${exam.creationDate.getTime().toString()}</td>
+            <td>${exam.second}</td>
+			</tr>
+			#{/list}
+			#{else}
+			<tr>
+			   <td colspan="5" class="no-response">No question. Change filter values.</td>
+			</tr>
+			#{/else}
+		</tbody>
+	</table>
+
+</div>
+
+
+
+
+
+
+
+

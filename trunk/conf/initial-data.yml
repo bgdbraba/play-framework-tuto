@@ -4,18 +4,35 @@
 
 
 User(pouts):
-    email:          poutsjr@gmail.com
+    email:          admin@gmail.com
     password:       secret
     firstname:      Thierry
     lastname:       Poutrain
     birthdate:      1982-03-20
+    profile:        ADMIN
 
-User(jeff):
-    email:          jeff@gmail.com
+User(alice):
+    email:          manager@gmail.com
     password:       secret
-    firstname:      Jeff
-    lastname:       Poutrain
-    birthdate:      1981-03-20   
+    firstname:      Alice
+    lastname:       Padawan
+    birthdate:      1981-03-20  
+    profile:        MANAGER
+    
+User(steeve):
+    email:          examiner@gmail.com
+    password:       secret
+    firstname:      Steeve
+    lastname:       Hunting
+    birthdate:      1980-03-20  
+    profile:        EXAMINER 
+
+User(bob):
+    email:          candidate@gmail.com
+    password:       secret
+    firstname:      Bob
+    lastname:       Screener
+    birthdate:      1979-03-20   
 
 Response(rep1):
     value:          Pouts
@@ -28,6 +45,18 @@ Response(rep2):
 Response(rep3):
     value:          Chuck Norris
     correct:        false
+
+Response(rep4):
+    value:          1
+    correct:        false
+
+Response(rep5):
+    value:          50
+    correct:        true
+
+Response(rep6):
+    value:          1000
+    correct:        true
 
 GroupType(group_1):
     name:           Java EE
@@ -45,24 +74,43 @@ GroupType(group_5):
     name:           Network
         
 Question(q1):
-    title:          C'est qui le plus fort ?
-    content:        Je ne connais pas tout le monde dans le monde mais bon ...
+    title:          Surpuissance ?
+    content:        Qui est le plus fort du monde ...
     second:         45
     difficulty:     3
     questionType:   SIMPLE_CHOICE
     groupType:      group_1
     responses:      [rep1, rep2, rep3]
 
+Question(q2):
+    title:          Inférieur / Supérieur ?
+    content:        Qui est supérieur à 10 ...
+    second:         30
+    difficulty:     2
+    questionType:   MULTIPLE_CHOICE
+    groupType:      group_1
+    responses:      [rep4, rep5, rep6]
+
 Quiz(quiz_1):
-    title:          quiz_1
+    title:          Quiz Java and Security Novice
+    groupTypes:     [group_1, group_2]
     difficulty:     3
-    description:    petit quiz tout simple
-    questions:      [q1]
+    description:    Quiz containg questions about Java and Security 
+    questions:      [q1, q2]
+    second:         200
        
+Answer(answer1):
+    question:       q1
+
+Answer(answer2):
+    question:       q2
+
 Exam(exam_1):
     examKey:        key_1
     candidate:      pouts
-    quiz:  quiz_1
+    quiz:           quiz_1
+    answers:        [answer1, answer2]
+    second:         200
 
 
 Post(firstpoutsPost):
@@ -87,10 +135,10 @@ Post(secondpoutsPost):
     content:        >
                     Well, it's just a test.
                     
-Post(jeffPost):
+Post(bobPost):
     title:          The MVC application
     postedAt:       2009-06-06
-    author:         jeff
+    author:         bob
     content:        >
                     A Play! application follows the MVC architectural pattern as applied to the 
                     architecture of the Web.
