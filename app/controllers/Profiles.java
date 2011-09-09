@@ -1,14 +1,16 @@
 package controllers;
 
-import controllers.CRUD.For;
+import models.User;
 import play.Play;
 import play.mvc.Before;
-import play.mvc.Controller;
+import play.mvc.With;
+import controllers.CRUD.For;
 
-@For(models.User.class)
-public class Profiles extends CRUD {
+@With(Secure.class)
+@For(User.class)
+public class Profiles extends AbstractController {
 
-	public static void show() {
+	public static void show(Long userId) {
 		render();
 	}
 

@@ -1,17 +1,19 @@
 package controllers;
 
+import java.util.Arrays;
 import java.util.List;
 
 import models.GroupType;
 import models.Question;
 import models.Question.QuestionType;
-import play.Play;
 import play.data.validation.Required;
-import play.mvc.Before;
-import play.mvc.Controller;
+import play.mvc.With;
+import controllers.CRUD.For;
 
-
-public class Questions extends CRUD {
+@Check({ "MANAGER" })
+@With(Secure.class)
+@For(Question.class)
+public class Questions extends AbstractController { 
 
 	public static void show(Long questionId) {
 		Question question = Question.findById(questionId);
@@ -52,23 +54,17 @@ public class Questions extends CRUD {
 			render("Questions/create.html");
 		}
 		question.create();
-		show(question.id);
+		// show(question.id);
 	}
 
 	public static void search(String title, Integer difficulty, Integer second, Long groupType) {
-		List<Question> questions = Question.search(title, difficulty, second, groupType);
+		List<Question> questions = Question.search(title, difficulty, second, Arrays.asList(groupType));
 
 		render(questions);
 	}
 
 	public static void create() {
 		render();
-	}
-
-	@Before
-	static void addDefaults() {
-		renderArgs.put("siteTitle", Play.configuration.getProperty("site.title"));
-		renderArgs.put("siteBaseline", Play.configuration.getProperty("site.baseline"));
 	}
 
 }

@@ -7,7 +7,7 @@ import play.db.jpa.Model;
 @Entity
 public class Response extends Model { 
 
-	public Response(String value, boolean correct) {
+	public Response(String value, boolean correct) { 
 		super();
 		this.value = value;
 		this.correct = correct;

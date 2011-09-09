@@ -1,11 +1,10 @@
 package models;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Entity;
 
-import play.db.jpa.JPABase;
 import play.db.jpa.Model;
 
 @Entity
@@ -21,7 +20,17 @@ public class GroupType extends Model {
 			nullType.name = "- All -";
 			response.add(0, nullType);
 		}
-		
+
 		return response;
+	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
+
+	public static List<GroupType> findByIds(Collection<Long> groupTypeIds) {
+		List<GroupType> types = GroupType.find("id in ?", groupTypeIds).fetch();
+		return types;
 	}
 }

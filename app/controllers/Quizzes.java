@@ -1,15 +1,18 @@
 package controllers;
 
+import java.util.Arrays;
 import java.util.List;
 
+import models.Question;
 import models.Quiz;
-import play.Play;
 import play.data.validation.Required;
-import play.mvc.Before;
+import play.mvc.With;
 import controllers.CRUD.For;
 
-@For(models.Quiz.class) 
-public class Quizzes extends CRUD {  
+@Check({ "MANAGER" })
+@With(Secure.class)
+@For(Quiz.class)
+public class Quizzes extends AbstractController { 
 
 	public static void show(Long quizId) {
 		Quiz quiz = Quiz.findById(quizId);
@@ -19,12 +22,17 @@ public class Quizzes extends CRUD {
 	public static void storeQuiz(@Required String title, @Required int difficulty, @Required int minutes,
 			@Required int[] groupTypes) {
 
-		// TODO
-
+		Quiz quiz = new Quiz();
+		quiz.create();
+		create(quiz.id);
 	}
 
-	public static void create() {
-		render();
+	public static void create(Long quizId) {
+		if (quizId == null) {
+			render();
+		}
+		Quiz quiz = Quiz.findById(quizId);
+		render(quiz);
 	}
 
 	public static void search(String title, Integer difficulty, Integer second, Long[] groupType, Integer seconds) {
@@ -33,10 +41,8 @@ public class Quizzes extends CRUD {
 		render(quizzes);
 	}
 
-	@Before
-	static void addDefaults() {
-		renderArgs.put("siteTitle", Play.configuration.getProperty("site.title"));
-		renderArgs.put("siteBaseline", Play.configuration.getProperty("site.baseline"));
+	public static void searchQuestions(@Required int difficulty, @Required int minutes, @Required Long[] groupTypes) {
+		List<Question> questions = Question.search(null, difficulty, 60 * minutes, Arrays.asList(groupTypes));
+		render(questions);
 	}
-
 }

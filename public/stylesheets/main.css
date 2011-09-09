@@ -8,7 +8,7 @@ html, body {
 body {
     width: 900px;
     padding: 0 30px;
-    margin: auto;
+    margin: auto !important;
 }
 
 /** Blog header **/
@@ -53,7 +53,7 @@ body {
     background: #B8C569;
     padding: 20px 30px 30px 20px;
     margin: 20px 0;
-    color: #3C4313;
+    color: #3C4313 !important;
     position: relative;
     -webkit-border-radius: 16px;
     -webkit-box-shadow: 0 2px 0 #93A045;

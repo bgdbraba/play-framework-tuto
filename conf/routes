@@ -2,11 +2,12 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
-GET     /                                       Application.index
-
 # Ignore favicon requests
 GET     /favicon.ico                            404
+
+# Home page
+#GET       /                                     module:secure
+GET       /                                     Application.index
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
@@ -15,29 +16,39 @@ GET		/posts/{id}                            Application.show
 POST    /posts/{postId}/comments                Application.postComment
 GET     /posts/{postId}/comments                Application.logout
 
-GET      /profile                               Profiles.show
-
-
 # Administration
-GET     /admin/?                                Admin.index
-*       /admin                                  module:crud
+GET     /admin/?                                Admins.index
+GET     /admin/{action}                         Admins.{action}
+GET     /admin/{action}                         CRUD.{action}
+#*       /admin                                 module:crud
 
-GET      /quiz/search                           Quizzes.search
-GET      /quiz/new                              Quizzes.create
-POST     /quiz/new                              Quizzes.storeQuiz
-GET      /quiz/show/{questionId}                Quizzes.show
+GET      /quiz/search/?                         Quizzes.search
+GET      /quiz/new/?                            Quizzes.create
+POST     /quiz/new/?                            Quizzes.storeQuiz
+GET      /quiz/show/{quizId}                    Quizzes.show
+GET      /quiz/{action}                         Quizzes.{action}
 
-*        /question/search                       Questions.search
-GET      /question/new                          Questions.create
-POST     /question/new                          Questions.storeQuestion
-GET      /question/show/{questionId}            Questions.show
+*        /question/search/?                     Questions.search
+GET      /question/new/?                        Questions.create
+POST     /question/new/?                        Questions.storeQuestion
+*        /question/show/{questionId}            Questions.show
+GET      /question/{action}                     Questions.{action}
 
-GET      /exam/search                           Exams.search
-GET      /exam/new                              Exams.create
-POST     /exam/new/step1                        Exams.createFirstStep
-POST     /exam/new/step2                        Exams.searchQuiz
-GET      /exam/{examKey}                        Exams.go
-GET      /exam/{examKey}/start                  Exams.beginQuiz
+GET      /profile/show/{userId}                 Profiles.show
+GET      /profile/{action}                      Profiles.{action}
+
+GET      /exam/search/?                         Exams.search
+POST     /exam/new/step1/{examId}               Exams.createFirstStep
+POST     /exam/new/step2/{examId}               Exams.searchQuiz
+POST     /exam/new/step3/{examId}               Exams.storeQuiz
+GET      /exam/new/?                            Exams.create
+*        /exam/show/{examId}                    Exams.show
+GET      /exam/{action}                         Exams.{action}
+
+GET      /group/{action}                        GroupTypes.{action}
+
+GET      /contest/{examKey}                     Contests.go
+GET      /contest/{examKey}/start/?             Contests.beginQuiz
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}

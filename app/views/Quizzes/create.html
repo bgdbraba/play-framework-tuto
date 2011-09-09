@@ -1,4 +1,4 @@
-#{extends 'main.html' /}
+#{extends 'site.html' /}
 #{set title:'New quiz' /}
 
 <h3>New Quiz</h3>
@@ -13,31 +13,35 @@
            </p>
        #{/ifErrors}
        
-		<p>
+		<p style="display: block; clear: both;">
 			<label for="title">Title: </label>
 			<input type="text" name="title"	id="question_title" value="" />
 		</p>
-		<p>
-			<label for="difficulty">Difficulty: </label>
-			<input type="text" name="difficulty" id="difficulty" value="" />
-		</p>
-		<p>
+	   <p style="display: block; clear: both;">
+	      <label style="float: left;">Min difficulty: </label>
+	      <input type="radio" name="difficulty" class="star" value="1"/>
+	      <input type="radio" name="difficulty" class="star" value="2"/>
+	      <input type="radio" name="difficulty" class="star" value="3"/>
+	      <input type="radio" name="difficulty" class="star" value="4"/>
+	      <input type="radio" name="difficulty" class="star" value="5"/>
+	   </p>
+		<p style="display: block; clear: both;">
 			<label for="second">Time: </label>
 			<input type="text" name="second" id="second" value="" />(seconds)
 		</p>
-		<p>
+		<p style="display: block; clear: both;">
 			<label for="groupType">Type: </label>
 			#{select 'groupTypes', items:models.GroupType.findAll(), valueProperty:'id', labelProperty:'name', id:'group_types', multiple:multiple /}
 		</p>
       
-      <p>
+      <p style="display: block; clear: both;">
          <input type="submit" value="Next step" />
       </p>
    
    #{/form}
    
 #{/if}
-#{elseif quiz != null && quiz.question }
+#{elseif quiz != null && quiz.questions }
    <p>Congratulation</p>
 #{/elseif}
 #{else}

@@ -1,26 +1,14 @@
-#{extends 'main.html' /}
+#{extends 'site.html' /}
 #{set title:'Home' /}
  
-#{if frontPost}
-    
-    #{display post:frontPost, as:'home' /}
-    
-    #{if olderPosts.size()}
-    
-        <div class="older-posts">
-            <h3>Older posts <span class="from">from this blog</span></h3>
-        
-            #{list items:olderPosts, as:'oldPost'}
-                #{display post:oldPost, as:'teaser' /}
-            #{/list}
-        </div>
-        
-    #{/if}
-    
-#{/if}
- 
-#{else}
-    <div class="empty">
-        There is currently nothing to read here.
-    </div>
-#{/else}
+<h3>News</h3>
+
+<div id="posts">
+
+	#{list items:posts, as:'post'}
+	
+	   #{post post:post, as:'home' /}
+	
+	#{/list}
+
+</div>

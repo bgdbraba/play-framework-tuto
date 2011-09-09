@@ -62,10 +62,11 @@ public class Question extends Model {
 		}
 	}
 
-	public static List<Question> search(String title, Integer difficulty, Integer second, Long groupType) {
+	public static List<Question> search(String title, Integer difficulty, Integer second, List<Long> groupTypes) {
 
-		List<Question> questions = null;
-		if ((title == null || title.trim().length() == 0) && difficulty == null && second == null && groupType == null) {
+		List<Question> questions = null; 
+		if ((title == null || title.trim().length() == 0) && difficulty == null && second == null
+				&& (groupTypes == null || groupTypes.size() == 0)) {
 			questions = new ArrayList<Question>();
 		} else {
 			String query = "";
@@ -85,11 +86,12 @@ public class Question extends Model {
 				params.add(second);
 				System.out.println(second);
 			}
-			if (groupType != null) {
-				GroupType group = GroupType.findById(groupType);
-				query += (query.length() > 0 ? "and " : "") + "groupType = ? ";
-				params.add(group);
-				System.out.println(group.name);
+			if (groupTypes != null && groupTypes.size() > 0) {
+
+				List<GroupType> groups = GroupType.findByIds(groupTypes);
+				query += (query.length() > 0 ? "and " : "") + "groupType in ? ";
+				params.add(groups);
+				System.out.println(groups.size());
 			}
 
 			System.out.println(query);

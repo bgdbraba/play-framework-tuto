@@ -1,45 +1,54 @@
 <!DOCTYPE html >
-<html>
+<html lang="${lang}">
     <head>
         <title>Exam #{get 'title' /}</title>		
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}" />
+        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/crud.css'}" />
         <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}" />
         <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/jquery.countdown.css'}" />
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/jquery.rating.css'}" />
 		<script type="text/javascript" src="@{'/public/javascripts/jquery-1.4.4.min.js'}"></script>
-		<script type="text/javascript" src="@{'/public/javascripts/jquery.countdown.min.js'}"></script>
+      <script type="text/javascript" src="@{'/public/javascripts/jquery.countdown.min.js'}"></script>
+      <script type="text/javascript" src="@{'/public/javascripts/jquery.rating.pack.js'}"></script>
 	</head>
-    <body>
+	
+    <body id="crud">
         
         <div id="header">
             <div id="logo">
-                SaaS EXAM
+               #{a @Application.index() ,style:"text-decoration:none; color: white;"}SaaS EXAM#{/a}                
             </div>
             <ul id="tools">
                 <li>
-                    #{a @Profiles.show()}<b>${user}</b>#{/a} | 
-                    #{a @Application.logout()}Logout#{/a} 
+                  #{if user}
+                    #{a @Profiles.show(user.id)}<b>${user.firstname} ${user.lastname}</b>#{/a} | 
+                    #{a @Secure.logout()}Logout#{/a}
+                  #{/if}
+                  #{else}
+                    #{a @Secure.login()}Login#{/a}
+                  #{/else} 
                 </li>
+                #{if user}
                <li>
-                    #{a @Exams.search()}Exams#{/a} | 
+                  #{if user.profile.toString() == "EXAMINER"}
+                    #{a @Exams.search()}Exams#{/a} 
+                  #{/if}
+                  #{if user.profile.toString() == 'MANAGER'} 
                     #{a @Quizzes.search()}Quiz#{/a} | 
-                    #{a @Questions.search()}Questions#{/a} | 
-                    #{a @Admin.show()}Admin#{/a} 
+                    #{a @Questions.search()}Questions#{/a}
+                  #{/if}
+                  #{if user.profile.toString() == 'ADMIN'}  
+                    #{a @Admins.index()}Admin#{/a}
+                  #{/if}
                 </li>
+                #{/if}
             </ul>
-			<div id="title">
-			    <span class="about">About this blog</span>
-			    <h1><a href="@{Application.index()}">${siteTitle}</a></h1>
-			    <h2>${siteBaseline}</h2>
-			</div>
         </div>
         
-        <div id="main">
-            #{doLayout /} 
-        </div>
+        #{doLayout /}
         
-        <p id="footer">
-            SaaS Exam is the most powerful service for the candidate</p>
+        <p id="footer">SaaS Exam is the most powerful service for the candidate</p>
         
     </body>
 </html>

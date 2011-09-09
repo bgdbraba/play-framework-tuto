@@ -6,14 +6,18 @@ import models.Post;
 import play.Play;
 import play.data.validation.Required;
 import play.mvc.Before;
-import play.mvc.Controller;
 
-public class Application extends Controller {
+public class Application extends AbstractController {
+
+	// public static void index() {
+	// Post frontPost = Post.find("order by postedAt desc").first();
+	// List<Post> olderPosts = Post.find("order by postedAt desc").from(1).fetch(10);
+	// render(frontPost, olderPosts);
+	// }
 
 	public static void index() {
-		Post frontPost = Post.find("order by postedAt desc").first();
-		List<Post> olderPosts = Post.find("order by postedAt desc").from(1).fetch(10);
-		render(frontPost, olderPosts);
+		List<Post> posts = Post.findAll();
+		render(posts);
 	}
 
 	public static void show(Long id) {

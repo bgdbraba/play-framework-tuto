@@ -1,8 +1,8 @@
-#{extends 'main.html' /} 
+#{extends 'site.html' /} 
 #{set title:'Search quiz' /}
 
 <h3>Search Quiz</h3>
-
+#{a @Quizzes.create()} +Add#{/a}
 
 #{form @Quizzes.search()} 
 
