@@ -25,6 +25,7 @@ GET     /admin/{action}                         CRUD.{action}
 GET      /quiz/search/?                         Quizzes.search
 GET      /quiz/new/?                            Quizzes.create
 POST     /quiz/new/?                            Quizzes.storeQuiz
+*        /quiz/new/{quizId}                     Quizzes.storeQuiz
 GET      /quiz/show/{quizId}                    Quizzes.show
 GET      /quiz/{action}                         Quizzes.{action}
 

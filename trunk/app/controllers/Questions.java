@@ -19,11 +19,11 @@ public class Questions extends AbstractController {
 		Question question = Question.findById(questionId);
 		render(question);
 	}
-
+	
 	public static void storeQuestion(@Required String title, @Required int difficulty, @Required int second,
 			@Required Long groupType, @Required String content, String explanation, @Required String questionType,
 			String correct, String response1, String response2, String response3, String response4, String response5,
-			Boolean correct1, Boolean correct2, Boolean correct3, Boolean correct4, Boolean correct5) {
+			boolean correct1, boolean correct2, boolean correct3, boolean correct4, boolean correct5) {
 
 		Question question =
 				new Question(title, content, explanation, difficulty, second,
@@ -54,11 +54,11 @@ public class Questions extends AbstractController {
 			render("Questions/create.html");
 		}
 		question.create();
-		// show(question.id);
+		show(question.id);
 	}
 
 	public static void search(String title, Integer difficulty, Integer second, Long groupType) {
-		List<Question> questions = Question.search(title, difficulty, second, Arrays.asList(groupType));
+		List<Question> questions = Question.search(title, difficulty, second, groupType==null?null:new Long[]{groupType});
 
 		render(questions);
 	}

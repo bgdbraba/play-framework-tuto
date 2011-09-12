@@ -46,44 +46,48 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td><input type="radio" name="correct" value="1" />
+		#{list items:0..4, as:'i'}
+    		<tr>
+				<td>
+					<input type="radio" name="correct" value="${i+1}" />
+					<input type="checkbox" name="correct${i+1}" #{if question.responses.size()>i && question.responses.get(i).correct}checked="checked"#{/if}/>
 				</td>
-				<td><input type="text" name="response1" value="" />
-				</td>
-			</tr>
-			<tr>
-				<td><input type="radio" name="correct" value="2" />
-				</td>
-				<td><input type="text" name="response2" value="" />
+				<td>
+					<input type="text" name="response1" value="#{if question.responses.size()>i}${question.responses.get(i).value}#{/if}" />
 				</td>
 			</tr>
-			<tr>
-				<td><input type="radio" name="correct" value="3" />
-				</td>
-				<td><input type="text" name="response3" value="" />
-				</td>
-			</tr>
-			<tr>
-				<td><input type="radio" name="correct" value="4" />
-				</td>
-				<td><input type="text" name="response4" value="" />
-				</td>
-			</tr>
-			<tr>
-				<td><input type="radio" name="correct" value="5" />
-				</td>
-				<td><input type="text" name="response5" value="" />
-				</td>
-			</tr>
+		#{/list}
 		</tbody>
 	</table>
 
 </div>
 
 <p>
-	<input type="submit" value="Next step" />
+	<input type="submit" value="Save" />
 </p>
+
+<script type="text/javascript">
+		$(document).ready(function() {
+			$('input[name="questionType"]').change(function(){
+				loadChoice();
+			});
+			loadChoice();
+		});
+		
+		function loadChoice(){
+			var choice = $('input[name="questionType"]:checked').val();
+			if(choice == '${models.Question.QuestionType.SIMPLE_CHOICE }'){
+				$('div#response_bloc input[type=radio]').show();
+				$('div#response_bloc input[type=checkbox]').hide();
+			}else if(choice == '${models.Question.QuestionType.MULTIPLE_CHOICE }'){
+				$('div#response_bloc input[type=radio]').hide();
+				$('div#response_bloc input[type=checkbox]').show();
+			}else {
+				$('div#response_bloc input[type=radio]').hide();
+				$('div#response_bloc input[type=checkbox]').hide();
+			}
+		}
+		</script>
 
 
 

@@ -29,8 +29,11 @@ public class GroupType extends Model {
 		return name;
 	}
 
-	public static List<GroupType> findByIds(Collection<Long> groupTypeIds) {
-		List<GroupType> types = GroupType.find("id in ?", groupTypeIds).fetch();
+	public static List<GroupType> findByIds(Long[] groupTypeIds) {
+		for (Long l : groupTypeIds) {
+			System.out.println(l);
+		}
+		List<GroupType> types = GroupType.find("id in (?)", groupTypeIds).fetch();
 		return types;
 	}
 }

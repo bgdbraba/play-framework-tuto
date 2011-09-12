@@ -19,8 +19,8 @@ public class Quizzes extends AbstractController {
 		render(quiz);
 	}
 
-	public static void storeQuiz(@Required String title, @Required int difficulty, @Required int minutes,
-			@Required int[] groupTypes) {
+	public static void storeQuiz(Long quizId, @Required String title, @Required int difficulty, @Required int second,
+			@Required long[] groupTypes) {
 
 		Quiz quiz = new Quiz();
 		quiz.create();
@@ -42,7 +42,7 @@ public class Quizzes extends AbstractController {
 	}
 
 	public static void searchQuestions(@Required int difficulty, @Required int minutes, @Required Long[] groupTypes) {
-		List<Question> questions = Question.search(null, difficulty, 60 * minutes, Arrays.asList(groupTypes));
+		List<Question> questions = Question.search(null, difficulty, 60 * minutes, groupTypes);
 		render(questions);
 	}
 }
