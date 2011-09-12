@@ -46,6 +46,88 @@
 #{/elseif}
 #{else}
    <h4>Step 2/2 : Questions</h4>
+   #{form @Quizzes.searchQuestions(quiz.id)} 
+
+	#{ifErrors}
+	<p class="error">All fields are required!</p>
+	#{/ifErrors}
+	
+	<p style="display: block; clear: both;">
+		<label for="title">Title: </label>
+		<input type="text" name="title" id="question_title" value="" />
+	</p>
+
+   <p style="display: block; clear: both;">
+		<label style="float: left;">Min difficulty: </label>
+      <input type="radio" name="difficulty" class="star" value="1"/>
+      <input type="radio" name="difficulty" class="star" value="2"/>
+      <input type="radio" name="difficulty" class="star" value="3"/>
+      <input type="radio" name="difficulty" class="star" value="4"/>
+      <input type="radio" name="difficulty" class="star" value="5"/>
+	</p>
+   <p style="display: block; clear: both;">
+		<label for="second">Min time: </label>
+		<input type="text" name="second"	id="second" value="" />(seconds)
+	</p>
+   <p style="display: block; clear: both;">
+      <label for="groupType">Type: </label> 
+      #{select 'groupType', items:models.GroupType.findAll(), valueProperty:'id', labelProperty:'name', id:'group_types'/}
+     </p>
+   <p style="display: block; clear: both;">
+      <label for="questions">Questions: </label> 
+      <input type="text" name="questions" id="questions" value="" />
+   </p>
+           
+   <p style="display: block; clear: both;">
+      <input type="submit" value="Search" />
+   </p>
+  
+  #{/form} 
+	
+<div>
+#{form @Quizzes.storeQuiz(quiz.id)} 
+	<table>
+		<thead>
+			<tr>
+				<th>&nbsp;</th>
+				<th>Title</th>
+	            <th>Difficulty</th>
+	            <th>Questions</th>
+	            <th>Time</th>
+	            <th>Type</th>
+			</tr>
+		</thead>
+		<tbody>
+		  #{list items:quizzes, as:'quiz'}
+			<tr>
+				<td><input type="radio" name="quizId" value="${quiz.id}"/></td>
+				<td>#{a @Quizzes.show(quiz.id)}${quiz.title}#{/a}</td>
+	            <td>${quiz.difficulty}</td>
+	            <td>${quiz.questions.size()}</td>
+	            <td>${quiz.second}</td>
+	            <td>
+	               <ul>
+		               #{list items:quiz.groupTypes, as:'types'}
+		                  <li>${types.name}</li>
+		               #{/list}
+	               </ul>
+	            </td>
+			</tr>
+			#{/list}
+			#{else}
+			<tr>
+			   <td colspan="5" class="no-response">No quiz. Change filter values.</td>
+			</tr>
+			#{/else}
+		</tbody>
+	</table>
+	
+    <p>
+        <input type="submit" value="Create" />
+    </p>
+	    
+#{/form}
+</div>
 #{/else}
 
 
