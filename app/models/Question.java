@@ -1,7 +1,6 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -36,16 +35,13 @@ public class Question extends Model {
 	@Enumerated
 	public QuestionType questionType;
 
-	public Question(String title, String content, String explanation,
-			int difficulty, int second, GroupType groupType,
+	public Question(String title, String content, String explanation, int difficulty, int second, GroupType groupType,
 			List<Response> responses, QuestionType questionType) {
-		this(title, content, explanation, difficulty, second, groupType,
-				questionType);
+		this(title, content, explanation, difficulty, second, groupType, questionType);
 		this.responses = responses;
 	}
 
-	public Question(String title, String content, String explanation,
-			int difficulty, int second, GroupType groupType,
+	public Question(String title, String content, String explanation, int difficulty, int second, GroupType groupType,
 			QuestionType questionType) {
 		super();
 		this.title = title;
@@ -66,12 +62,16 @@ public class Question extends Model {
 		}
 	}
 
-	public static List<Question> search(String title, Integer difficulty,
-			Integer second, Long[] groupTypes) {
-
+	public static List<Question> search(String title, Integer difficulty, Integer second, Long[] groupTypes) {
+		for (Long long1 : groupTypes) {
+			System.out.println("#" + long1);
+		}
+		System.out.println("#" + title);
+		System.out.println("#" + difficulty);
+		System.out.println("#" + second);
 		List<Question> questions = null;
-		if ((title == null || title.trim().length() == 0) && difficulty == null
-				&& second == null
+
+		if ((title == null || title.trim().length() == 0) && difficulty == null && second == null
 				&& (groupTypes == null || groupTypes.length == 0)) {
 			questions = new ArrayList<Question>();
 		} else {
@@ -82,20 +82,20 @@ public class Question extends Model {
 				params.add(title);
 			}
 			if (difficulty != null) {
-				query += (query.length() > 0 ? "and " : "")
-						+ "difficulty >= ? ";
+				query += (query.length() > 0 ? "and " : "") + "difficulty >= ? ";
 				params.add(difficulty);
 			}
-			if (second != null) {
-				query += (query.length() > 0 ? "and " : "") + "time >= ? ";
+			if (second != null && second > 0) {
+				query += (query.length() > 0 ? "and " : "") + "second >= ? ";
 				params.add(second);
 			}
 			if (groupTypes != null && groupTypes.length > 0) {
-
-				List<GroupType> groups = GroupType.findByIds(groupTypes);
-				query += (query.length() > 0 ? "and " : "") + "groupType in (?) ";
-				params.add(groups.toArray());
+				// FIXME
+				// List<GroupType> groups = GroupType.findByIds(groupTypes);
+				// query += (query.length() > 0 ? "and " : "") + "groupType.id in (?) ";
+				// params.add(Arrays.asList(groupTypes));
 			}
+
 			questions = find(query, params.toArray()).fetch();
 
 		}

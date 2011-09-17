@@ -20,14 +20,15 @@ public class Exams extends AbstractController {
 
 	public static void create() {
 		String examKey = Exam.generateFreeExamKey();
-		Exam exam = new Exam(examKey);
+		User user = (User) renderArgs.get("user");
+		Exam exam = new Exam(examKey, user);
 		exam.save();
+		System.out.println(user + " creating the new exam " + exam.examKey);
 		render(exam);
 	}
 
-	public static void search(String candidate, String examKey) {
-		List<Exam> exams = Exam.search(candidate, examKey);
-
+	public static void search(String email, String examKey) {
+		List<Exam> exams = Exam.search(email, examKey, (User) renderArgs.get("user"));
 		render(exams);
 	}
 
@@ -48,12 +49,13 @@ public class Exams extends AbstractController {
 		Exam exam = Exam.findById(examId);
 
 		if (validation.hasErrors()) {
-			exam.delete();
+			// exam.delete();
 			render("Exams/create.html", exam);
 		}
 
 		candidate.save();
 		exam.candidate = candidate;
+		exam.validate();
 		exam.save();
 		render("Exams/create.html", exam);
 
@@ -62,17 +64,38 @@ public class Exams extends AbstractController {
 	public static void storeQuiz(Long examId, Long quizId) {
 		Quiz quiz = Quiz.findById(quizId);
 		Exam exam = Exam.findById(examId);
-		exam.storeQuiz(quiz);
-		for (Answer answer : exam.answers) {
-			answer.merge();
+
+		if (!exam.isPaid()) {
+
+			exam.storeQuiz(quiz);
+			for (Answer answer : exam.answers) {
+				answer.merge();
+			}
+			exam.save();
+
+			exam.author.removeCredit(Exam.EXAM_PRICE);
+			exam.paid();
+			exam.save();
+			sendMail(exam);
 		}
-		exam.save();
+
 		render("Exams/create.html", exam);
 	}
 
-	public static void searchQuiz(Long examId) {
+	private static void sendMail(Exam exam) {
+		// -- Stub SEND_MAIL
+		String pwd = exam.candidate.changePassword();
+		System.out.println("Mail has been sent to " + exam.candidate.email + " for contest/" + exam.examKey + " ["
+				+ pwd + "]");
 
-		List<Quiz> quizzes = Quiz.findAll();
+	}
+
+	public static void searchQuiz(Long examId, String title, Integer difficulty, Integer minutes, Long groupType,
+			Integer questions) {
+
+		List<Quiz> quizzes =
+				Quiz.search(title, difficulty, minutes != null ? 60 * minutes : null, groupType, questions);
+
 		Exam exam = Exam.findById(examId);
 		render("Exams/create.html", exam, quizzes);
 	}

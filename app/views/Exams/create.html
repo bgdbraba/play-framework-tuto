@@ -1,7 +1,7 @@
 #{extends 'site.html' /}
 #{set title:exam.examKey /}
 
-<h3>New Exam</h3>
+<h2>New Exam</h2>
 
 #{if exam.quiz }
    <p>Congratulation</p>
@@ -9,87 +9,91 @@
 #{elseif exam.candidate }
    <h4>Step 2/2 : Store quiz</h4>
    #{form @Exams.searchQuiz(exam.id)} 
-
-	#{ifErrors}
-	<p class="error">All fields are required!</p>
-	#{/ifErrors}
 	
-	<p style="display: block; clear: both;">
-		<label for="title">Title: </label>
-		<input type="text" name="title" id="question_title" value="" />
-	</p>
+		#{ifErrors}
+		<p class="error">All fields are required!</p>
+		#{/ifErrors}
+		
+		<p style="display: block; clear: both;">
+			<label for="title">Title: </label>
+			<input type="text" name="title" id="question_title" value="" />
+		</p>
+		
+		  <p style="display: block; clear: both;">
+			<label style="float: left;">Min difficulty: </label>
+		     <input type="radio" name="difficulty" class="star" value="1"/>
+		     <input type="radio" name="difficulty" class="star" value="2"/>
+		     <input type="radio" name="difficulty" class="star" value="3"/>
+		     <input type="radio" name="difficulty" class="star" value="4"/>
+		     <input type="radio" name="difficulty" class="star" value="5"/>
+		</p>
+		  <p style="display: block; clear: both;">
+			<label for="minutes">Min time: </label>
+			<input type="text" name="minutes" id="minutes" value="" />(minutes)
+		</p>
+		  <p style="display: block; clear: both;">
+		     <label for="groupType">Type: </label> 
+		     <select name="groupType" size="1" id="group_types">
+                <option value=""></option>
+                #{list items:models.GroupType.findAll(), as:'type'}
+					 <option value="${type.id}">${type.name}</option>
+					 #{/list}
+		    </select>
+		    </p>
+		  <p style="display: block; clear: both;">
+		     <label for="questions">Questions: </label> 
+		     <input type="text" name="questions" id="questions" value="" />
+		  </p>
+		          
+		  <p style="display: block; clear: both;">
+		     <input type="submit" value="Search" />
+		  </p>
+	 
+	 #{/form} 
 
-   <p style="display: block; clear: both;">
-		<label style="float: left;">Min difficulty: </label>
-      <input type="radio" name="difficulty" class="star" value="1"/>
-      <input type="radio" name="difficulty" class="star" value="2"/>
-      <input type="radio" name="difficulty" class="star" value="3"/>
-      <input type="radio" name="difficulty" class="star" value="4"/>
-      <input type="radio" name="difficulty" class="star" value="5"/>
-	</p>
-   <p style="display: block; clear: both;">
-		<label for="second">Min time: </label>
-		<input type="text" name="second"	id="second" value="" />(seconds)
-	</p>
-   <p style="display: block; clear: both;">
-      <label for="groupType">Type: </label> 
-      #{select 'groupType', items:models.GroupType.findAll(), valueProperty:'id', labelProperty:'name', id:'group_types'/}
-     </p>
-   <p style="display: block; clear: both;">
-      <label for="questions">Questions: </label> 
-      <input type="text" name="questions" id="questions" value="" />
-   </p>
-           
-   <p style="display: block; clear: both;">
-      <input type="submit" value="Search" />
-   </p>
-  
-  #{/form} 
-	
-<div>
-#{form @Exams.storeQuiz(exam.id)} 
-	<table>
-		<thead>
-			<tr>
-				<th>&nbsp;</th>
-				<th>Title</th>
+	#{form @Exams.storeQuiz(exam.id)} 
+		<table>
+			<thead>
+				<tr>
+					<th>&nbsp;</th>
+					<th>Title</th>
 	            <th>Difficulty</th>
-	            <th>Questions</th>
-	            <th>Time</th>
 	            <th>Type</th>
-			</tr>
-		</thead>
-		<tbody>
-		  #{list items:quizzes, as:'quiz'}
-			<tr>
-				<td><input type="radio" name="quizId" value="${quiz.id}"/></td>
-				<td>#{a @Quizzes.show(quiz.id)}${quiz.title}#{/a}</td>
+	            <th>Time</th>
+	            <th>Questions</th>
+				</tr>
+			</thead>
+			<tbody>
+			  #{list items:quizzes, as:'quiz'}
+				<tr>
+					<td><input type="radio" name="quizId" value="${quiz.id}"/></td>
+					<td>${quiz.title}</td>
 	            <td>${quiz.difficulty}</td>
-	            <td>${quiz.questions.size()}</td>
-	            <td>${quiz.second}</td>
 	            <td>
-	               <ul>
+		            <ul>
 		               #{list items:quiz.groupTypes, as:'types'}
 		                  <li>${types.name}</li>
 		               #{/list}
-	               </ul>
-	            </td>
-			</tr>
-			#{/list}
-			#{else}
-			<tr>
-			   <td colspan="5" class="no-response">No quiz. Change filter values.</td>
-			</tr>
-			#{/else}
-		</tbody>
-	</table>
-	
-    <p>
-        <input type="submit" value="Create" />
-    </p>
-	    
-#{/form}
-</div>
+		            </ul>
+		         </td>
+	            <td>${quiz.second}</td>
+	            <td>${quiz.questions.size()}</td>
+				</tr>
+				#{/list}
+				#{else}
+				<tr>
+				   <td colspan="6" class="no-response">No quiz. Change filter values.</td>
+				</tr>
+				#{/else}
+			</tbody>
+		</table>
+		
+	    <p>
+	        <input type="submit" value="Create" />
+	    </p>
+		    
+	#{/form}
+
 #{/elseif}
 #{else}
    <h4>Step 1/2 : Store candidate</h4>

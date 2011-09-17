@@ -27,10 +27,10 @@
  
 #{if _as == 'full'}
     <div class="comments">
-        <h3>
+        <h2>
             ${_post.comments.size() ?: 'no'} 
             comment${_post.comments.size().pluralize()}
-        </h3>
+        </h2>
         
         #{list items:_post.comments, as:'comment'}
             <div class="comment">

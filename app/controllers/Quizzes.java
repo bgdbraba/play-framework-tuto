@@ -1,6 +1,5 @@
 package controllers;
 
-import java.util.Arrays;
 import java.util.List;
 
 import models.Question;
@@ -12,7 +11,7 @@ import controllers.CRUD.For;
 @Check({ "MANAGER" })
 @With(Secure.class)
 @For(Quiz.class)
-public class Quizzes extends AbstractController { 
+public class Quizzes extends AbstractController {
 
 	public static void show(Long quizId) {
 		Quiz quiz = Quiz.findById(quizId);
@@ -24,25 +23,30 @@ public class Quizzes extends AbstractController {
 
 		Quiz quiz = new Quiz();
 		quiz.create();
-		create(quiz.id);
+		create(quiz.id, null);
 	}
 
-	public static void create(Long quizId) {
+	public static void create(Long quizId, List<Question> questions) {
+		System.out.println("quizId" + quizId);
 		if (quizId == null) {
 			render();
 		}
 		Quiz quiz = Quiz.findById(quizId);
-		render(quiz);
+		render(quiz, questions);
 	}
 
-	public static void search(String title, Integer difficulty, Integer second, Long[] groupType, Integer seconds) {
-		// TODO
-		List<Quiz> quizzes = Quiz.findAll();
+	public static void search(String title, Integer difficulty, Integer second, Long groupType, Integer questions) {
+		List<Quiz> quizzes = Quiz.search(title, difficulty, second, groupType, questions);
 		render(quizzes);
 	}
 
-	public static void searchQuestions(@Required int difficulty, @Required int minutes, @Required Long[] groupTypes) {
-		List<Question> questions = Question.search(null, difficulty, 60 * minutes, groupTypes);
-		render(questions);
+	public static void searchQuestions(Long quizId, String title, int difficulty, int second, Long groupType) {
+		List<Question> questions =
+				Question.search(null, difficulty, 60 * second, groupType != null ? new Long[]{ groupType } : null);
+		System.out.println(questions.size() + " questions found");
+
+		Quiz quiz = Quiz.findById(quizId);
+
+		renderTemplate("Quizzes/create.html", quiz, questions);
 	}
 }

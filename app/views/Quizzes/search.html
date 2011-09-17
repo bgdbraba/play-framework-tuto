@@ -1,7 +1,7 @@
 #{extends 'site.html' /} 
 #{set title:'Search quiz' /}
 
-<h3>Search Quiz</h3>
+<h2>Search Quiz</h2>
 #{a @Quizzes.create()} +Add#{/a}
 
 #{form @Quizzes.search()} 
@@ -10,27 +10,35 @@
 	<p class="error">All fields are required!</p>
 	#{/ifErrors}
 	
-	<p>
-		<label for="title">Title: </label>
-		<input type="text" name="title" id="question_title" value="" />
-	</p>
-	<p>
-		<label for="difficulty">Min difficulty: </label>
-		<input type="text" name="difficulty" id="difficulty" value="" />
-	</p>
-	<p>
-		<label for="second">Min time: </label>
-		<input type="text" name="second"	id="second" value="" />(seconds)
-	</p>
-     <p>
-        <label for="groupType">Type: </label> 
-        #{select 'groupType', items:models.GroupType.findAll(), valueProperty:'id', labelProperty:'name', id:'group_types', multiple:'multiple' /}
-     </p>
-          <p>
-        <label for="questions">Questions: </label> 
-      <input type="text" name="questions" id="questions" value="" />
-     </p>
-           
+	  <table class="table-filter">
+      <tbody>
+         <tr>
+            <td align="right"><label for="title">Title: </label></td>
+            <td><input type="text" name="title" id="question_title" value="" /></td>
+            <td align="right"><label for="difficulty">Min difficulty: </label></td>
+            <td>
+               <input type="radio" name="difficulty" class="star" value="1"/>
+		         <input type="radio" name="difficulty" class="star" value="2"/>
+		         <input type="radio" name="difficulty" class="star" value="3"/>
+		         <input type="radio" name="difficulty" class="star" value="4"/>
+		         <input type="radio" name="difficulty" class="star" value="5"/>
+            </td>
+         </tr>
+         <tr>
+            <td align="right"><label for="second">Min time: </label></td>
+            <td><input type="text" name="second"   id="second" value="" />(seconds)</td>
+            <td align="right"><label for="groupType">Type: </label> </td>
+            <td>#{select 'groupType', items:models.GroupType.findAll(true), valueProperty:'id', labelProperty:'name', id:'group_types' /}</td>
+         </tr>
+         <tr>
+            <td align="right"><label for="questions">Questions: </label> </td>
+            <td><input type="text" name="questions" id="questions" value="" /></td>
+            <td align="right">&nbsp;</td>
+            <td>&nbsp;</td>
+         </tr>
+      </tbody>
+   </table>
+   
      <p>
         <input type="submit" value="Search" />
      </p>

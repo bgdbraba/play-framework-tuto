@@ -3,15 +3,26 @@ package controllers;
 import models.Answer;
 import models.Exam;
 import models.Question;
+import models.User;
+
+import org.junit.Before;
+
 import play.data.validation.Required;
 import play.mvc.With;
 
 @With(Secure.class)
 public class Contests extends AbstractController {
 
+	@Before
+	static void addDefaults() {
+		renderArgs.put("siteBaseline", "Contest");
+	}
+
 	public static void go(String examKey) {
 		Exam exam = Exam.findByKey(examKey);
-		render(exam);
+		User user = (User) renderArgs.get("user");
+		boolean isUser = (user == exam.candidate);
+		render(exam, isUser);
 	}
 
 	public static void beginQuiz(String examKey) {
@@ -35,6 +46,8 @@ public class Contests extends AbstractController {
 
 	public static void finish(String examKey) {
 		Exam exam = Exam.findByKey(examKey);
+		// Send mail to exam.author
+		System.out.println("Mail has been sent to " + exam.author.email + " for exam " + exam.examKey);
 		render(exam);
 	}
 

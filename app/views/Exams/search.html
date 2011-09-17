@@ -1,7 +1,7 @@
 #{extends 'site.html' /} 
 #{set title:'Search exam' /}
 
-<h3>Search Exam </h3>
+<h2>Search Exam </h2>
 #{a @Exams.create()} +Add#{/a}
 
 #{form @Exams.search()} 
@@ -12,11 +12,11 @@
 	
 	<p style="display: block; clear: both;">
       <label for="email">Candidate email: </label>
-      <input type="text" name="email" id="email" value="" />
+      <input type="text" name="email" id="email" />
    </p>
    <p style="display: block; clear: both;">
       <label for="examKey">Key: </label>
-      <input type="text" name="examKey" id="examKey" value="" />
+      <input type="text" name="examKey" id="examKey" />
    </p>
            
      <p style="display: block; clear: both;">

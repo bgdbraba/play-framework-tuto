@@ -1,20 +1,19 @@
 #{extends 'main.html' /}
 
 <div id="title">
-     <span class="about">About this blog</span>
-     <h1>${siteTitle}</h1>
+     <h1>${siteBaseline}</h1>
 </div>
  
-<div id="main" style="display: block; min-height: 800px;" >
-   <div id="recentQuiz" style="float:left; width: 20%; height 100%; border-right: #869AB1 solid 2px;">
-     <h3>Recent Quiz</h3>
+<div id="main" >
+   <div id="recentQuiz" >
+     <h2>Recent Quiz</h2>
      <ul>
         #{list items:recentQuizzes, as:'quiz'}
            <li>${quiz.title}</li>
         #{/list}
      </ul>
    </div>
-   <div style="float:left; width: 75%">
+   <div id="content_main">
       #{doLayout /} 
     </div>
 </div>

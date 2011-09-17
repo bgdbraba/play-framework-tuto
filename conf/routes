@@ -23,9 +23,11 @@ GET     /admin/{action}                         CRUD.{action}
 #*       /admin                                 module:crud
 
 GET      /quiz/search/?                         Quizzes.search
-GET      /quiz/new/?                            Quizzes.create
-POST     /quiz/new/?                            Quizzes.storeQuiz
+POST     /quiz/new/step1                        Quizzes.storeQuiz
+POST     /quiz/new/step1/{quizId}               Quizzes.storeQuiz
+POST     /quiz/new/step2/{quizId}               Quizzes.searchQuestions
 *        /quiz/new/{quizId}                     Quizzes.storeQuiz
+GET      /quiz/new/?                            Quizzes.create
 GET      /quiz/show/{quizId}                    Quizzes.show
 GET      /quiz/{action}                         Quizzes.{action}
 
@@ -35,8 +37,7 @@ POST     /question/new/?                        Questions.storeQuestion
 *        /question/show/{questionId}            Questions.show
 GET      /question/{action}                     Questions.{action}
 
-GET      /profile/show/{userId}                 Profiles.show
-GET      /profile/{action}                      Profiles.{action}
+GET      /profile/?                             Profiles.show
 
 GET      /exam/search/?                         Exams.search
 POST     /exam/new/step1/{examId}               Exams.createFirstStep
