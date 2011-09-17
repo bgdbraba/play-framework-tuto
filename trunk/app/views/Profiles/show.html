@@ -1,4 +1,69 @@
 #{extends 'site.html' /}
 #{set title:'Profile' /}
 
-<h3>Profile</h3>
+<h2>Profile</h2>
+
+#{form @Profiles.save()}
+   
+    #{ifErrors}
+        <p class="error">
+            All fields are required!
+        </p>
+    #{/ifErrors}
+    
+    <p>
+        <label for="firstname">First name: </label>
+        <input type="text" name="firstname" id="firstname" value="${user.firstname}" />
+    </p>
+    <p>
+        <label for="lastname">Last name: </label>
+        <input type="text" name="lastname" id="lastname" value="${user.lastname}" />
+    </p>
+    <p>
+        <label for="email">Email: </label>
+        <input type="text" name="email" id="email" value="${user.email}" disabled="disabled"/>
+    </p>
+    <p>
+        <label for="password">Password: </label>
+        <input type="password" name="password" id="password" value="${user.password}" />
+    </p>
+    <p>
+        <label for="confirm_password">Confirm password: </label>
+        <input type="password" name="confirm_password" id="confirm_password" value="${user.password}" />
+    </p>
+    <p>
+        <label for="birthdate">Birth date: </label>
+        <input type="text" name="birthdate" id="birthdate"  value="${user.birthdate}"/>
+    </p>
+    #{if user.profile != null}
+    <p>
+        <label for="profile">Profile: </label>
+        <input type="text" name="profile" id="profile"  value="${user.profile}" disabled="disabled"/>
+    </p>
+    #{/if}
+    #{if creditable}
+    <p>
+        <label for="credit">Credit: </label>
+        <input type="text" name="credit" id="credit"  value="${user.credit}" disabled="disabled"/> units
+    </p>
+    <a href="#" onclick="credit()">+ Add Credit</a>
+    #{/if}
+
+    <script type="text/javascript">
+    
+	    function credit() {
+	    	var creditAction = #{jsAction @Profiles.addCredit(':sum') /};
+	    	
+	    	$.post(creditAction({sum:10}),null,function(userCredit){
+	    		// Load into input#credit
+	    		$('#credit').val(userCredit);
+	    		alert("Free version : Add 10 units")
+	    	});
+	    }
+	    
+    </script>
+    
+    <p>
+        <input type="submit" value="Save" />
+    </p>
+#{/form}

@@ -7,7 +7,7 @@ import models.User;
 import play.Play;
 import play.mvc.Before;
 
-public class AbstractController extends CRUD {  
+public class AbstractController extends CRUD {
 
 	@Before
 	static void setConnectedUser() {
@@ -20,7 +20,9 @@ public class AbstractController extends CRUD {
 	@Before
 	static void addDefaults() {
 		renderArgs.put("siteTitle", Play.configuration.getProperty("site.title"));
-		renderArgs.put("siteBaseline", Play.configuration.getProperty("site.baseline"));
+		if (renderArgs.get("siteBaseline") == null) {
+			renderArgs.put("siteBaseline", Play.configuration.getProperty("site.baseline"));
+		}
 	}
 
 	@Before

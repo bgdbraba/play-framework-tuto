@@ -111,7 +111,7 @@ Exam(exam_1):
     quiz:           quiz_1
     answers:        [answer1, answer2]
     second:         200
-
+    author:         steeve
 
 Post(firstpoutsPost):
     title:          About the model layer

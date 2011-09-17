@@ -14,41 +14,45 @@
 	</head>
 	
     <body id="crud">
-        
-        <div id="header">
-            <div id="logo">
-               #{a @Application.index() ,style:"text-decoration:none; color: white;"}SaaS EXAM#{/a}                
-            </div>
-            <ul id="tools">
-                <li>
-                  #{if user}
-                    #{a @Profiles.show(user.id)}<b>${user.firstname} ${user.lastname}</b>#{/a} | 
-                    #{a @Secure.logout()}Logout#{/a}
-                  #{/if}
-                  #{else}
-                    #{a @Secure.login()}Login#{/a}
-                  #{/else} 
-                </li>
+        <div id="content">
+	        <div id="header">
+             <div>
+                #{a @Application.index()}&nbsp;&nbsp;Home#{/a}
                 #{if user}
-               <li>
-                  #{if user.profile.toString() == "EXAMINER"}
-                    #{a @Exams.search()}Exams#{/a} 
-                  #{/if}
-                  #{if user.profile.toString() == 'MANAGER'} 
-                    #{a @Quizzes.search()}Quiz#{/a} | 
-                    #{a @Questions.search()}Questions#{/a}
-                  #{/if}
-                  #{if user.profile.toString() == 'ADMIN'}  
-                    #{a @Admins.index()}Admin#{/a}
-                  #{/if}
-                </li>
+                 #{if user.profile.toString() == "EXAMINER"}
+                   #{a @Exams.search()}&nbsp;&nbsp;Exams#{/a} 
+                 #{/if}
+                 #{if user.profile.toString() == 'MANAGER'} 
+                   #{a @Quizzes.search()}&nbsp;&nbsp;Quiz#{/a} 
+                   #{a @Questions.search()}&nbsp;&nbsp;Questions#{/a}
+                 #{/if}
+                 #{if user.profile.toString() == 'ADMIN'}  
+                   #{a @Admins.index()}&nbsp;&nbsp;Admin#{/a}
+                 #{/if}
                 #{/if}
-            </ul>
-        </div>
-        
-        #{doLayout /}
-        
-        <p id="footer">SaaS Exam is the most powerful service for the candidate</p>
+              </div>	        
+	            <div id="logo">
+	               #{a @Application.index() ,style:"text-decoration:none; color: white;"}${siteTitle}#{/a}                
+	            </div>
+              <div>
+                #{if user}
+                  #{a @Profiles.show()}<b>${user.firstname} ${user.lastname}</b>#{/a} | 
+                  #{a @Secure.logout()}Logout#{/a}
+                #{/if}
+                #{else}
+                  #{a @Secure.login()}Login#{/a}
+                #{/else} 
+              </div>	           
+
+	                
+	        </div>
+	        
+	        #{doLayout /}
+	        
+	        
+	     </div>
+	     
+	     <div id="footer"><p>SaaS Exam is the most powerful service for the candidate</p></div>
         
     </body>
 </html>

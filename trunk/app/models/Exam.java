@@ -7,6 +7,7 @@ import java.util.Random;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -15,27 +16,43 @@ import play.db.jpa.Model;
 @Entity
 public class Exam extends Model {
 
+	public final static int EXAM_PRICE = 3;
+
 	@ManyToOne
 	public User candidate;
 
 	@ManyToOne
 	public Quiz quiz;
 
-	public Calendar creationDate; 
+	public Calendar creationDate;
 	public Calendar startingDate;
 	public Calendar endingDate;
 	public String examKey;
 	public int currentQuestion;
-	public boolean validated;
+
+	@ManyToOne
+	public User author;
+
+	@Enumerated
+	public ExamState state;
+
 	public int second;
 
 	@OneToMany(cascade = CascadeType.PERSIST, targetEntity = Answer.class)
 	public List<Answer> answers;
 
-	public Exam() {
+	public enum ExamState {
+
+		INIT, VALIDATED, PAID, CANCELED, IN_PROGRESS, FINISHED;
+
+	}
+
+	public Exam(User author) {
 		super();
-		creationDate = Calendar.getInstance();
-		currentQuestion = -1;
+		this.author = author;
+		this.creationDate = Calendar.getInstance();
+		this.currentQuestion = -1;
+		this.state = ExamState.INIT;
 	}
 
 	public void initAnswers() {
@@ -49,8 +66,8 @@ public class Exam extends Model {
 		}
 	}
 
-	public Exam(String examKey) {
-		this();
+	public Exam(String examKey, User author) {
+		this(author);
 		this.examKey = examKey;
 	}
 
@@ -70,10 +87,6 @@ public class Exam extends Model {
 		this.save();
 	}
 
-	public void validate() {
-		this.validated = true;
-	}
-
 	public static String generateFreeExamKey() {
 		String examKey = new Random().nextInt(100000000) + "";
 		if (findByKey(examKey) != null) {
@@ -90,35 +103,46 @@ public class Exam extends Model {
 		this.quiz = quiz;
 		this.second = quiz.second;
 		initAnswers();
+		state = ExamState.VALIDATED;
 	}
 
-	public static List<Exam> search(String email, String examKey) {
+	public static List<Exam> search(String email, String examKey, User user) {
 		List<Exam> exams = null;
-		if ((email == null || email.trim().length() == 0) && (examKey == null || examKey.trim().length() == 0)) {
-			exams = new ArrayList<Exam>();
-		} else {
-			String query = "";
-			List<Object> params = new ArrayList<Object>();
-			if (email != null && email.trim().length() > 0) {
-				query = "candidate.email = ?";
-				params.add(email);
-				params.add(email);
-			}
-			if (examKey != null && examKey.trim().length() > 0) {
-				query = "examKey like ?";
-				params.add(examKey);
-			}
+		List<Object> params = new ArrayList<Object>();
 
-			System.out.println(query);
-			exams = find(query, params.toArray()).fetch();
+		String query = "author.id = ? ";
+		params.add(user.id);
 
+		if (email != null && email.trim().length() > 0) {
+			query += " and candidate.email = ?";
+			params.add(email);
 		}
+		if (examKey != null && examKey.trim().length() > 0) {
+			query += " and examKey like ?";
+			params.add(examKey);
+		}
+
+		exams = find(query, params.toArray()).fetch();
+		System.out.println(query + " - > " + exams.size());
+
 		return exams;
 	}
 
 	@Override
 	public String toString() {
 		return candidate + " " + examKey;
+	}
+
+	public boolean isPaid() {
+		return state != ExamState.INIT && state != ExamState.VALIDATED;
+	}
+
+	public void paid() {
+		state = ExamState.PAID;
+	}
+
+	public void validate() {
+		state = ExamState.VALIDATED;
 	}
 
 }

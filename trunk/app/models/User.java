@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Date;
+import java.util.Random;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -12,7 +13,7 @@ import play.db.jpa.Model;
 
 @Entity
 public class User extends Model {
- 
+
 	@Email
 	@Required
 	public String email;
@@ -27,6 +28,8 @@ public class User extends Model {
 	public String lastname;
 
 	public Date birthdate;
+
+	public Integer credit;
 
 	public static enum Profile {
 
@@ -56,4 +59,36 @@ public class User extends Model {
 		return id + " - " + firstname + " " + lastname;
 	}
 
+	public String changePassword() {
+		this.password = Integer.toHexString(new Random().nextInt(1000000));
+		return this.password;
+	}
+
+	public boolean isAdmin() {
+		return profile != null && Profile.ADMIN.equals(profile);
+	}
+
+	public boolean isManager() {
+		return profile != null && Profile.MANAGER.equals(profile);
+	}
+
+	public boolean isExaminer() {
+		return profile != null && Profile.EXAMINER.equals(profile);
+	}
+
+	public void addCredit(Integer sum) {
+		if (this.credit == null) {
+			this.credit = 0;
+		}
+		this.credit += sum;
+		this.save();
+	}
+
+	public void removeCredit(Integer sum) {
+		if (this.credit == null) {
+			this.credit = 0;
+		}
+		this.credit -= sum;
+		this.save();
+	}
 }
