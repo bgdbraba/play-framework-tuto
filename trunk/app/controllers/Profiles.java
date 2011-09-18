@@ -47,6 +47,11 @@ public class Profiles extends AbstractController {
 		user.addCredit(sum);
 		renderText(user.credit.toString());
 	}
+	
+	public static void showUserMenu(){
+		User user = (User) renderArgs.get("user");
+		render("Profiles/user_menu.html", user);
+	}
 
 	@Before
 	static void addDefaults() {

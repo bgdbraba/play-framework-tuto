@@ -31,6 +31,16 @@ public class User extends Model {
 
 	public Integer credit;
 
+	public UserState state;
+
+	public Date creationDate;
+
+	public int validationNumber;
+
+	public static enum UserState {
+		WAITING_VALIDATION, CREATED, CANCELED;
+	}
+
 	public static enum Profile {
 
 		ADMIN, MANAGER, EXAMINER;
@@ -40,13 +50,17 @@ public class User extends Model {
 	@Enumerated
 	public Profile profile;
 
-	public User(String email, String password, String firstname, String lastname, Date birthdate) {
+	public User(String email, String password, String firstname,
+			String lastname, Date birthdate) {
 		super();
 		this.email = email;
 		this.password = password;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.birthdate = birthdate;
+		this.state = UserState.WAITING_VALIDATION;
+		this.creationDate = new Date();
+		this.validationNumber = 10000000 + new Random().nextInt(1000000);
 	}
 
 	public static User connect(String email, String password) {
@@ -58,6 +72,11 @@ public class User extends Model {
 		// TODO Auto-generated method stub
 		return id + " - " + firstname + " " + lastname;
 	}
+	
+	public static User findByEmail(String email) {
+		System.out.println("find with " + email);
+		return User.find("byEmail", email).first();
+	} 
 
 	public String changePassword() {
 		this.password = Integer.toHexString(new Random().nextInt(1000000));

@@ -110,6 +110,7 @@ Exam(exam_1):
     candidate:      pouts
     quiz:           quiz_1
     answers:        [answer1, answer2]
+    creationDate:   '2011-06-08 00:00:00'
     second:         200
     author:         steeve
 

@@ -2,7 +2,12 @@
 #{set title:'Search exam' /}
 
 <h2>Search Exam </h2>
-#{a @Exams.create()} +Add#{/a}
+
+<ul class="addingItem">
+	<li>
+		#{a @Exams.create()}Or add a new one#{/a}
+	</li>
+</ul>
 
 #{form @Exams.search()} 
 
@@ -12,11 +17,11 @@
 	
 	<p style="display: block; clear: both;">
       <label for="email">Candidate email: </label>
-      <input type="text" name="email" id="email" />
+      <input type="text" name="email" id="email" value="${email}"/>
    </p>
    <p style="display: block; clear: both;">
       <label for="examKey">Key: </label>
-      <input type="text" name="examKey" id="examKey" />
+      <input type="text" name="examKey" id="examKey" value="${examKey}"/>
    </p>
            
      <p style="display: block; clear: both;">

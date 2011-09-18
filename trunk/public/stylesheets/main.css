@@ -7,49 +7,151 @@ html,body {
 }
 
 #content {
-	width: 900px;
+	width: 1100px;
 	padding: 0 30px;
 	margin: auto !important;
 }
 
 #crud {
-	background: transparent
-		url('http://www.sqltechnologies.com/static/css/images/header.jpg');
+	background: transparent url('/public/images/header.jpg');
 	background-repeat: repeat-x;
 }
 
 #recentQuiz {
 	background: transparent
-      url('http://www.sqltechnologies.com/static/css/images/columns.png');
-   background-repeat: no-repeat;
-   background-position: right;
+		url('http://www.sqltechnologies.com/static/css/images/columns.png');
+	background-repeat: no-repeat;
+	background-position: right;
 	float: left;
-	width: 20%; 
+	width: 20%;
 	height: 100%;
 	margin-right: 20px;
 }
 
+/** Menu **/
+#menu {
+	left: 0;
+	padding-left: 4px;
+}
+
+#menu_user {
+	right: 0;
+	padding-right: 5px;
+}
+
+#menu,#menu_user {
+	position: absolute;
+	white-space: nowrap;
+	height: 30px;
+	z-index: 1000;
+	font-size: 17px;
+}
+
+#menu a,#menu_user a {
+	color: white;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.menu_item {
+	float: left;
+	padding: 5px 15px 6px 15px;
+	background-color: inherit;
+}
+
+#menu_user {
+	background-color: inherit;
+	width: 220px;
+	height: 30px;
+}
+
+#menu_user_item {
+	padding: 5px 15px 6px 0px;
+	text-align: center;
+}
+
+#menu_user_detail span {
+	font-family: serif;
+	display: block;
+	color: #333333;
+	font-weight: normal;
+}
+
+#menu_user_detail a {
+	display: block;
+	color: #333333;
+	font-weight: normal;
+}
+
+#menu_user_detail_name {
+	
+}
+
+#menu_user_detail_email {
+	color: grey !important;
+	font-style: italic;
+}
+
+#menu_user_detail { /**margin: 8px 15px 6px 0px;**/
+	padding: 10px 10px 10px 10px;
+	background:
+		url("http://www.sqltechnologies.com/static/css/images/content.jpg");
+	border: 1px grey solid;
+	border-top: 0px solid;
+	color: #333333;
+	line-height: 16px;
+	right: 70px;
+	position: relative;
+	width: 300px;
+}
+
+.menu_user_selected:HOVER {
+	background:
+		url("http://www.sqltechnologies.com/static/css/images/content.jpg");
+	color: grey !important;
+}
+
+.menu_item:HOVER,#menu_user_item:HOVER {
+	cursor: pointer;
+	background-color: #4A4A4A;
+}
+
+.menu_user_selected {
+	background:
+		url("http://www.sqltechnologies.com/static/css/images/content.jpg");
+	color: grey !important;
+}
+
+.home_logo {
+	padding: 0px 15px 0px 15px;
+}
+
+.more {
+	position: relative;
+	top: -1px;
+	border-style: solid dashed dashed;
+	border-color: transparent;
+	border-top-color: silver;
+	display: -moz-inline-box;
+	display: inline-block;
+	font-size: 0;
+	height: 0;
+	line-height: 0;
+	width: 0;
+	border-width: 3px 3px 0;
+	padding-top: 1px;
+	left: 4px;
+}
+
 /** Blog header **/
-#header {
-	padding: 10px 0;
+#header { /**padding: 10px 0;**/
+	min-height: 30px;
 	position: relative;
 	color: #DDDDDD
 }
 
 #logo {
-	display: block;
-	height: 49px;
-	margin-left: 20px;
-	color: #fff;
-	font-size: 48px;
-	font-weight: bold;
-	letter-spacing: -4px;
-	text-shadow: 1px 2px 2px #000;
-}
-
-#logo span {
-	color: #f00;
-	font-size: 70%;
+	
 }
 
 #tools {
@@ -69,6 +171,8 @@ html,body {
 
 #title {
 	color: #333333;
+	margin-top: 5px;
+	margin-bottom: 9px;
 }
 
 /** A little hacky to create arrows without images **/
@@ -104,8 +208,8 @@ html,body {
 
 /** Main content **/
 #main {
-	padding: 7px;
-	display: block; min-height: 600px;
+	display: block;
+	min-height: 600px;
 }
 
 #main thead tr {
@@ -113,8 +217,7 @@ html,body {
 	color: #3C4313;
 }
 
-#main table {
-	/*border: 1px solid gray;*/
+#main table { /*border: 1px solid gray;*/
 	width: 100%;
 }
 
@@ -122,14 +225,26 @@ html,body {
 	color: #444;
 }
 
-#main div {
-	/*padding-left: 7px; Decallage */
+#main div { /*padding-left: 7px; Decallage */
+	
 }
 
 #content_main {
-   float:left; 
-   width: 75%;
-   
+	float: left;
+	width: 75%;
+}
+
+/**   **/
+.addingItem {
+	font-weight: bold;
+	list-style-image: url('/public/images/add.png');
+}
+
+.addingItem a {
+	color: #333333;
+	position: relative;
+	bottom: 3px;
+	right: 3px;
 }
 
 /** Post **/
@@ -283,10 +398,12 @@ h2 span {
 
 /** Form **/
 form {
-   padding: 10px;
-   margin: 10px;
-   /*border: 1px solid #B9CCD2;*/
-   background: url("http://www.sqltechnologies.com/static/css/images/separator.png") no-repeat center bottom;  
+	padding: 10px;
+	margin: 10px;
+	/*border: 1px solid #B9CCD2;*/
+	background:
+		url("http://www.sqltechnologies.com/static/css/images/separator.png")
+		no-repeat center bottom;
 }
 
 form .error {
@@ -371,7 +488,8 @@ form label { /**display: block;*/
 
 /** Footer **/
 #footer {
-	background: transparent url("http://www.sqltechnologies.com/static/css/images/footer.png");
+	background: transparent
+		url("http://www.sqltechnologies.com/static/css/images/footer.png");
 	border-top: 1px solid #45597A;
 	font-size: 70%;
 	padding: 10px 30px;

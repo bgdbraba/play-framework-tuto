@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -69,6 +70,7 @@ public class Question extends Model {
 		System.out.println("#" + title);
 		System.out.println("#" + difficulty);
 		System.out.println("#" + second);
+		
 		List<Question> questions = null;
 
 		if ((title == null || title.trim().length() == 0) && difficulty == null && second == null
@@ -90,12 +92,15 @@ public class Question extends Model {
 				params.add(second);
 			}
 			if (groupTypes != null && groupTypes.length > 0) {
-				// FIXME
-				// List<GroupType> groups = GroupType.findByIds(groupTypes);
-				// query += (query.length() > 0 ? "and " : "") + "groupType.id in (?) ";
-				// params.add(Arrays.asList(groupTypes));
+				 query += (query.length() > 0 ? "and " : "");
+				 query += "groupType.id in (";
+				 for (Long g : groupTypes) {
+					query+= (g+",");
+				}
+				 query=query.substring(0, query.length()-1);
+				 query += ") ";
 			}
-
+System.out.println(query);
 			questions = find(query, params.toArray()).fetch();
 
 		}

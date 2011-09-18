@@ -6,13 +6,16 @@
 GET     /favicon.ico                            404
 
 # Home page
-#GET       /                                     module:secure
+#GET       /                                    module:secure
 GET       /                                     Application.index
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 
-GET		/posts/{id}                            Application.show
+GET      /siging/?                              Application.signing
+GET      /validation/user/{validationNumber}    Application.validateUser
+
+GET		/posts/{id}                             Application.show
 POST    /posts/{postId}/comments                Application.postComment
 GET     /posts/{postId}/comments                Application.logout
 
@@ -38,6 +41,7 @@ POST     /question/new/?                        Questions.storeQuestion
 GET      /question/{action}                     Questions.{action}
 
 GET      /profile/?                             Profiles.show
+GET      /profile/showUserMenu/?                Profiles.showUserMenu
 
 GET      /exam/search/?                         Exams.search
 POST     /exam/new/step1/{examId}               Exams.createFirstStep

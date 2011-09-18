@@ -16,33 +16,69 @@
     <body id="crud">
         <div id="content">
 	        <div id="header">
-             <div>
-                #{a @Application.index()}&nbsp;&nbsp;Home#{/a}
-                #{if user}
+             <div id="menu">
+             	<div class="menu_item home_logo">
+				#{a @Application.index()}<img alt="Home" src="@{'/public/images/logo_small.png'}">#{/a}
+				</div>
+				#{if myContest}
+	               #{a @Contests.go(myContest.examKey)}<div class="menu_item">Go to my EXAM</div>#{/a}
+	            #{/if}                
+                #{if user && user.profile}
                  #{if user.profile.toString() == "EXAMINER"}
-                   #{a @Exams.search()}&nbsp;&nbsp;Exams#{/a} 
+                   #{a @Exams.search()}<div class="menu_item">Exams</div>#{/a} 
                  #{/if}
                  #{if user.profile.toString() == 'MANAGER'} 
-                   #{a @Quizzes.search()}&nbsp;&nbsp;Quiz#{/a} 
-                   #{a @Questions.search()}&nbsp;&nbsp;Questions#{/a}
+                   #{a @Quizzes.search()}<div class="menu_item">Quiz</div>#{/a} 
+                   #{a @Questions.search()}<div class="menu_item">Questions</div>#{/a}
                  #{/if}
                  #{if user.profile.toString() == 'ADMIN'}  
-                   #{a @Admins.index()}&nbsp;&nbsp;Admin#{/a}
+                   #{a @Admins.index()}<div class="menu_item">Admin</div>#{/a}
                  #{/if}
                 #{/if}
+				#{a @Documentations.index()}<div class="menu_item">Documentation</div>#{/a}
+				#{a @Documentations.index()}<div class="menu_item">Pricing</div>  #{/a}
+				              
+                
               </div>	        
-	            <div id="logo">
-	               #{a @Application.index() ,style:"text-decoration:none; color: white;"}${siteTitle}#{/a}                
-	            </div>
-              <div>
+              <div id="menu_user">
                 #{if user}
-                  #{a @Profiles.show()}<b>${user.firstname} ${user.lastname}</b>#{/a} | 
-                  #{a @Secure.logout()}Logout#{/a}
+                  <div id="menu_user_item" >
+                     <span>${user.firstname} ${user.lastname}</span>
+                     <span class="more"></span> 
+                  </div>                  
+                  <div id="menu_user_detail">
+                     <span id="menu_user_detail_name">${user.firstname} ${user.lastname} #{if user.profile}(${user.profile.toString()})#{/if}</span>
+                     <span id="menu_user_detail_email">${user.email}</span>
+                     <br/>
+                     <span id="menu_user_detail_account">#{a @Profiles.show()}Account parameters#{/a}</span>
+                     <br/>
+                     <span id="menu_user_detail_logout">#{a @Secure.logout()}Logout <img src="@{'/public/images/logout.png'}" />#{/a}</span>
+                  </div>                  
                 #{/if}
                 #{else}
-                  #{a @Secure.login()}Login#{/a}
+                  #{a @Application.signing()}<div class="menu_item">Signing in</div>#{/a}
+                  #{a @Secure.login()}<div class="menu_item">Login</div>#{/a}
                 #{/else} 
-              </div>	           
+              </div>	
+              
+              <script type="text/javascript">
+              
+              $(document).ready(function(){
+            	  $('#menu_user_detail').hide();
+            	  $('#menu_user_item').click(function(){
+            		  $('#menu_user_detail').slideToggle("fast", function(){
+            			  var className="menu_user_selected";
+            			  if($('#menu_user_detail').css("display") != "none"){
+            				  $('#menu_user_item').addClass(className);
+            			  }else{
+            				  $('#menu_user_item').removeClass(className);
+            			  }
+            		  });
+            	  })
+              });
+
+	              
+              </script>           
 
 	                
 	        </div>
