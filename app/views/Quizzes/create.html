@@ -7,31 +7,24 @@
    <h4>Step 1/2 : Description</h4>
       #{form @Quizzes.storeQuiz()}
 
-      #{ifErrors}
-           <p class="error">
-               All fields are required!
-           </p>
-       #{/ifErrors}
-       
 		<p style="display: block; clear: both;">
-			<label for="title">Title: </label>
-			<input type="text" name="title"	id="question_title" value="" />
-		</p>
-	   <p style="display: block; clear: both;">
-	      <label style="float: left;">Min difficulty: </label>
-	      <input type="radio" name="difficulty" class="star" value="1"/>
-	      <input type="radio" name="difficulty" class="star" value="2"/>
-	      <input type="radio" name="difficulty" class="star" value="3"/>
-	      <input type="radio" name="difficulty" class="star" value="4"/>
-	      <input type="radio" name="difficulty" class="star" value="5"/>
-	   </p>
-		<p style="display: block; clear: both;">
-			<label for="second">Time: </label>
-			<input type="text" name="second" id="second" value="" />(seconds)
+			<label for="quizTitle">Title* : </label>
+			<input type="text" name="quizTitle"	id="quizTitle" value="${quizTitle}" />
+			<span class="error">#{error 'quizTitle' /}</span>
 		</p>
 		<p style="display: block; clear: both;">
-			<label for="groupType">Type: </label>
-			#{select 'groupTypes', items:models.GroupType.findAll(), valueProperty:'id', labelProperty:'name', id:'group_types', multiple:multiple /}
+			<label for="description">Description : </label>
+			<textarea name="description" id="description">${description}</textarea>
+			<span class="error">#{error 'description' /}</span>
+		</p>
+		<p style="display: block; clear: both;">
+			<label for="groupType">Type* : </label>
+			<select name="groupTypes" size="3" id="groupTypes" multiple="multiple">
+				#{list items:models.GroupType.findAll(), as:'type'}
+				    <option value="${type.id}" #{if groups && groups.contains(type)}selected="selected"#{/if}>${type.name}</option>
+				#{/list}
+			</select>
+			<span class="error">#{error 'groupTypes' /}</span>
 		</p>
       
       <p style="display: block; clear: both;">
@@ -41,7 +34,7 @@
    #{/form}
    
 #{/if}
-#{elseif quiz != null && quiz.questions }
+#{elseif quiz != null && quiz.valid }
    <p>Congratulation</p>
 #{/elseif}
 #{else}
@@ -53,30 +46,21 @@
 	#{/ifErrors}
 	
 	<p style="display: block; clear: both;">
-		<label for="title">Title: </label>
-		<input type="text" name="title" id="question_title" value="" />
+		<label for="questionTitle">Title: </label>
+		<input type="text" name="questionTitle" id="questionTitle" value="${questionTitle}" />
 	</p>
-
    <p style="display: block; clear: both;">
 		<label style="float: left;">Min difficulty: </label>
-      <input type="radio" name="difficulty" class="star" value="1"/>
-      <input type="radio" name="difficulty" class="star" value="2"/>
-      <input type="radio" name="difficulty" class="star" value="3"/>
-      <input type="radio" name="difficulty" class="star" value="4"/>
-      <input type="radio" name="difficulty" class="star" value="5"/>
-	</p>
+        #{difficulty star:difficulty/}
+   </p>
    <p style="display: block; clear: both;">
 		<label for="second">Min time: </label>
-		<input type="text" name="second"	id="second" value="" />(seconds)
-	</p>
+		<input type="text" name="second" id="second" value="${second}" />(seconds)
+   </p>
    <p style="display: block; clear: both;">
       <label for="groupType">Type: </label> 
-      #{select 'groupType', items:models.GroupType.findAll(), valueProperty:'id', labelProperty:'name', id:'group_types'/}
+      #{select 'groupType', items:models.GroupType.findAll(true), valueProperty:'id', value:groupType, labelProperty:'name', id:'group_types'/}
      </p>
-   <p style="display: block; clear: both;">
-      <label for="questions">Questions: </label> 
-      <input type="text" name="questions" id="questions" value="" />
-   </p>
            
    <p style="display: block; clear: both;">
       <input type="submit" value="Search" />
@@ -84,34 +68,47 @@
   
   #{/form} 
 	
+<script type="text/javascript">
+
+	function toogleQuestion(questionId){
+		var toogleQuestion = #{jsAction @Quizzes.toogleQuestion(quiz.id, ':questionId') /};
+		
+		$.post(toogleQuestion({questionId:questionId}),null,function(added){
+			if(added=='true'){console.log("added");
+				$('img#imgAdd_'+questionId).hide();
+				$('img#imgRemove_'+questionId).show();
+			}else{console.log("removed");
+				$('img#imgRemove_'+questionId).hide();
+				$('img#imgAdd_'+questionId).show();
+			}
+		});
+	}
+
+</script>
+    
 <div>
-#{form @Quizzes.storeQuiz(quiz.id)} 
+#{form @Quizzes.validateQuiz(quiz.id)} 
 	<table>
 		<thead>
 			<tr>
 				<th>&nbsp;</th>
 				<th>Title</th>
 	            <th>Difficulty</th>
-	            <th>Questions</th>
 	            <th>Time</th>
 	            <th>Type</th>
 			</tr>
 		</thead>
 		<tbody>
-		  #{list items:quizzes, as:'quiz'}
+		  #{list items:questions, as:'question'}
 			<tr>
-				<td><input type="radio" name="quizId" value="${quiz.id}"/></td>
-				<td>#{a @Quizzes.show(quiz.id)}${quiz.title}#{/a}</td>
-	            <td>${quiz.difficulty}</td>
-	            <td>${quiz.questions.size()}</td>
-	            <td>${quiz.second}</td>
-	            <td>
-	               <ul>
-		               #{list items:quiz.groupTypes, as:'types'}
-		                  <li>${types.name}</li>
-		               #{/list}
-	               </ul>
-	            </td>
+				<td>
+				   <img id="imgAdd_${question.id}" src="@{'/public/images/add.png'}" #{if quiz.questions.contains(question)}style="display: none"#{/if} onclick="toogleQuestion(${question.id});"/>
+				   <img id="imgRemove_${question.id}" src="@{'/public/images/remove.png'}" #{if !quiz.questions.contains(question)}style="display: none"#{/if} onclick="toogleQuestion(${question.id});"/>
+				</td>
+				<td>${question.title}</td>
+	            <td>#{difficulty star:question.difficulty, readonly:true, discriminator:question.id /}</td>
+	            <td>${question.second}</td>
+	            <td>${question.groupType.name}</td>
 			</tr>
 			#{/list}
 			#{else}
@@ -125,7 +122,7 @@
     <p>
         <input type="submit" value="Create" />
     </p>
-	    
+    
 #{/form}
 </div>
 #{/else}

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
@@ -143,6 +144,11 @@ public class Exam extends Model {
 
 	public void validate() {
 		state = ExamState.VALIDATED;
+	}
+	
+	public void finish() {
+		endingDate=Calendar.getInstance();
+		state = ExamState.FINISHED;
 	}
 
 	public static Exam findForUser(User user) {

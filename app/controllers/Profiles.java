@@ -39,6 +39,8 @@ public class Profiles extends AbstractController {
 			}
 		}
 		user.birthdate = parsedDate;
+		user.save();
+		show();
 
 	}
 

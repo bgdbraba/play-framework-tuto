@@ -29,6 +29,8 @@ GET      /quiz/search/?                         Quizzes.search
 POST     /quiz/new/step1                        Quizzes.storeQuiz
 POST     /quiz/new/step1/{quizId}               Quizzes.storeQuiz
 POST     /quiz/new/step2/{quizId}               Quizzes.searchQuestions
+POST     /quiz/new/step3/{quizId}               Quizzes.validateQuiz
+POST     /quiz/toogleQuestion/{quizId}          Quizzes.toogleQuestion
 *        /quiz/new/{quizId}                     Quizzes.storeQuiz
 GET      /quiz/new/?                            Quizzes.create
 GET      /quiz/show/{quizId}                    Quizzes.show

@@ -16,20 +16,30 @@ public class Quiz extends Model {
 
 	public String title;
 
-	public int difficulty;
+	public float difficulty;
 
 	public String description;
 
-	@OneToMany(cascade = CascadeType.ALL, targetEntity = GroupType.class)
+	@ManyToMany(cascade = CascadeType.ALL, targetEntity = GroupType.class)
 	public List<GroupType> groupTypes;
 
 	@ManyToMany(cascade = CascadeType.ALL, targetEntity = Question.class)
 	public List<Question> questions;
-	
-	@Transient
-	public int nbQuestion = (questions==null?0:questions.size());
 
 	public int second;
+
+	public boolean valid;
+
+	public Quiz(String title, String description, List<GroupType> groupTypes) {
+		this();
+		this.title = title;
+		this.description = description;
+		this.groupTypes = groupTypes;
+	}
+
+	public Quiz() {
+		super();
+	}
 
 	@Override
 	public String toString() {
@@ -45,22 +55,16 @@ public class Quiz extends Model {
 		return title + "(" + types.substring(0, types.length() - 2) + ")";
 	}
 
-	public static List<Quiz> search(String title, Integer difficulty, Integer second, Long groupTypeId,
-			Integer questions) {
-
-		System.out.println("#" + title);
-		System.out.println("#" + difficulty);
-		System.out.println("#" + second);
-		System.out.println("#" + groupTypeId);
-		System.out.println("#" + questions);
+	public static List<Quiz> search(String title, Integer difficulty,
+			Integer second, Long groupTypeId, Integer questions) {
 
 		List<Quiz> quizzes = null;
 
-		if ((title == null || title.trim().length() == 0) && difficulty == null && second == null
-				&& groupTypeId == null && questions == null) {
+		if ((title == null || title.trim().length() == 0) && difficulty == null
+				&& second == null && groupTypeId == null && questions == null) {
 			quizzes = new ArrayList<Quiz>();
 		} else {
-			String query = "SELECT distinct quiz FROM Quiz quiz JOIN quiz.groupTypes groupType WHERE quiz.id != null ";
+			String query = "SELECT distinct quiz FROM Quiz quiz JOIN quiz.groupTypes groupType WHERE quiz.id > 0 ";
 			List<Object> params = new ArrayList<Object>();
 			if (title != null && title.trim().length() > 0) {
 				query += "and title = ? ";
@@ -88,5 +92,22 @@ public class Quiz extends Model {
 		}
 
 		return quizzes;
+	}
+
+	public void validate() {
+		int diff = 0;
+		int time = 0;
+		for (Question q : questions) {
+			System.out.println(q.difficulty);
+			diff+=q.difficulty;
+			time+=q.second;
+		}
+		
+		//FIXME
+		this.difficulty=new Float(Math.round((new Double(diff)/questions.size())*5))/5;
+		System.out.println(this.difficulty);
+		this.second=time;
+		this.valid = true;
+		this.save();
 	}
 }

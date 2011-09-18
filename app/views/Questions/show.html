@@ -9,9 +9,8 @@
 		id="question_title" value="${question.title}" readonly="readonly" />
 </p>
 <p>
-	<label for="difficulty">Difficulty: </label> <input type="text"
-		name="difficulty" id="difficulty" value="${question.difficulty}"
-		readonly="readonly" />
+	<label for="difficulty">Difficulty: </label>
+	#{difficulty star:question.difficulty, readonly:true/}
 </p>
 <p>
 	<label for="second">Time: </label> <input type="text" name="second"
@@ -49,7 +48,7 @@
 		#{list items:0..4, as:'i'}
     		<tr>
 				<td>
-					<input type="radio" name="correct" value="${i+1}" />
+					<input type="radio" name="correct" value="${i+1}" #{if question.responses.size()>i && question.responses.get(i).correct}checked="checked"#{/if}/>
 					<input type="checkbox" name="correct${i+1}" #{if question.responses.size()>i && question.responses.get(i).correct}checked="checked"#{/if}/>
 				</td>
 				<td>

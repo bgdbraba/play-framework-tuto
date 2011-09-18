@@ -2,7 +2,12 @@
 #{set title:'Search quiz' /}
 
 <h2>Search Quiz</h2>
-#{a @Quizzes.create()} +Add#{/a}
+
+<ul class="addingItem">
+	<li>
+		<a href="@{Quizzes.create()}">Or add a new one</a>
+	</li>
+</ul>
 
 #{form @Quizzes.search()} 
 
@@ -13,26 +18,20 @@
 	  <table class="table-filter">
       <tbody>
          <tr>
-            <td align="right"><label for="title">Title: </label></td>
-            <td><input type="text" name="title" id="question_title" value="" /></td>
+            <td align="right"><label for="quizTitle">Title: </label></td>
+            <td><input type="text" name="quizTitle" id="quizTitle" value="${quizTitle}" /></td>
             <td align="right"><label for="difficulty">Min difficulty: </label></td>
-            <td>
-               <input type="radio" name="difficulty" class="star" value="1"/>
-		         <input type="radio" name="difficulty" class="star" value="2"/>
-		         <input type="radio" name="difficulty" class="star" value="3"/>
-		         <input type="radio" name="difficulty" class="star" value="4"/>
-		         <input type="radio" name="difficulty" class="star" value="5"/>
-            </td>
+            <td>#{difficulty star:difficulty/}</td>
          </tr>
          <tr>
             <td align="right"><label for="second">Min time: </label></td>
-            <td><input type="text" name="second"   id="second" value="" />(seconds)</td>
+            <td><input type="text" name="second"   id="second" value="${second}" />(seconds)</td>
             <td align="right"><label for="groupType">Type: </label> </td>
-            <td>#{select 'groupType', items:models.GroupType.findAll(true), valueProperty:'id', labelProperty:'name', id:'group_types' /}</td>
+            <td>#{select 'groupType', items:models.GroupType.findAll(true), valueProperty:'id', value:groupType, labelProperty:'name', id:'group_types' /}</td>
          </tr>
          <tr>
-            <td align="right"><label for="questions">Questions: </label> </td>
-            <td><input type="text" name="questions" id="questions" value="" /></td>
+            <td align="right"><label for="nbQuestion">Questions: </label> </td>
+            <td><input type="text" name="nbQuestion" id="nbQuestion" value="${nbQuestion}" /></td>
             <td align="right">&nbsp;</td>
             <td>&nbsp;</td>
          </tr>
@@ -50,17 +49,17 @@
 		<thead>
 			<tr>
 				<th>Title</th>
-            <th>Difficulty</th>
-            <th>Questions</th>
-            <th>Time</th>
-            <th>Type</th>
+	            <th>Difficulty</th>
+	            <th>Questions</th>
+	            <th>Time</th>
+	            <th>Type</th>
 			</tr>
 		</thead>
 		<tbody>
 		  #{list items:quizzes, as:'quiz'}
 			<tr>
 				<td>#{a @Quizzes.show(quiz.id)}${quiz.title}#{/a}</td>
-            <td>${quiz.difficulty}</td>
+            <td>#{difficulty star:quiz.difficulty, discriminator:quiz.id, readonly:true, split:true/}</td>
             <td>${quiz.questions.size()}</td>
             <td>${quiz.second}</td>
             <td>

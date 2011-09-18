@@ -57,10 +57,11 @@ public class Questions extends AbstractController {
 		show(question.id);
 	}
 
-	public static void search(String title, Integer difficulty, Integer second, Long groupType) {
-		List<Question> questions = Question.search(title, difficulty, second, groupType==null?new Long[]{}:new Long[]{groupType});
+	public static void search(String questionTitle, Integer difficulty, Integer second, Long groupType) {
+		List<Question> questions = Question.search(questionTitle, difficulty, second,
+				groupType == null ? new Long[] {} : new Long[] { groupType });
 
-		render(questions);
+		render(questions,questionTitle,difficulty,second,groupType);
 	}
 
 	public static void create() {
