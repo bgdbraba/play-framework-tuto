@@ -64,12 +64,6 @@ public class Question extends Model {
 	}
 
 	public static List<Question> search(String title, Integer difficulty, Integer second, Long[] groupTypes) {
-		for (Long long1 : groupTypes) {
-			System.out.println("#" + long1);
-		}
-		System.out.println("#" + title);
-		System.out.println("#" + difficulty);
-		System.out.println("#" + second);
 		
 		List<Question> questions = null;
 
@@ -100,7 +94,7 @@ public class Question extends Model {
 				 query=query.substring(0, query.length()-1);
 				 query += ") ";
 			}
-System.out.println(query);
+
 			questions = find(query, params.toArray()).fetch();
 
 		}

@@ -8,9 +8,15 @@ import java.util.List;
 import models.Post;
 import models.User;
 import models.User.UserState;
+
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.HtmlEmail;
+import org.apache.commons.mail.SimpleEmail;
+
 import play.Play;
 import play.data.validation.Required;
 import play.db.jpa.JPABase;
+import play.libs.Mail;
 import play.mvc.Before;
 
 public class Application extends AbstractController {

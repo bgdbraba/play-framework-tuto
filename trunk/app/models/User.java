@@ -5,6 +5,8 @@ import java.util.Random;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import play.data.validation.Email;
 import play.data.validation.Password;
@@ -27,10 +29,12 @@ public class User extends Model {
 	@Required
 	public String lastname;
 
+	@Temporal(TemporalType.DATE)
 	public Date birthdate;
 
 	public Integer credit;
 
+	@Enumerated
 	public UserState state;
 
 	public Date creationDate;

@@ -18,16 +18,16 @@
 	<table class="table-filter">
 		<tbody>
 			<tr>
-				<td align="right"><label for="title">Title: </label></td>
-				<td><input type="text" name="title" id="question_title" value="" /></td>
+				<td align="right"><label for="questionTitle">Title: </label></td>
+				<td><input type="text" name="questionTitle" id="questionTitle" value="${questionTitle}" /></td>
 				<td align="right"><label for="groupType">Type: </label></td>
-				<td>#{select 'groupType', items:models.GroupType.findAll(true), valueProperty:'id', labelProperty:'name', id:'group_types' /}</td>
+				<td>#{select 'groupType', items:models.GroupType.findAll(true), valueProperty:'id', value:groupType, labelProperty:'name', id:'group_types' /}</td>
 			</tr>
 			<tr>
 				<td align="right"><label for="difficulty">Min difficulty: </label></td>
-				<td><input type="text" name="difficulty" id="difficulty" value="" /></td>
+				<td>#{difficulty star:difficulty/}</td>
 				<td align="right"><label for="second">Min time: </label></td>
-				<td><input type="text" name="second" id="second" value="" />(seconds)</td>
+				<td><input type="text" name="second" id="second" value="${second}" />(seconds)</td>
 			</tr>
 		</tbody>
 	</table>
@@ -52,9 +52,9 @@
 		  #{list items:questions, as:'question'}
 			<tr>
 				<td>#{a @Questions.show(question.id)}${question.title}#{/a}</td>
-            <td>${question.difficulty}</td>
-            <td>${question.second}</td>
-            <td>${question.groupType.name}</td>
+	            <td>${question.difficulty}</td>
+	            <td>${question.second}</td>
+	            <td>${question.groupType.name}</td>
 			</tr>
 			#{/list}
 			#{else}

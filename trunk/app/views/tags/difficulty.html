@@ -1,8 +1,21 @@
-#{list items:1..5, as:'diff'}
-   #{if _star == diff}
-      <input type="radio" name="difficulty" class="star" value="${diff}" checked="checked"/>
-   #{/if}
-   #{else}
-      <input type="radio" name="difficulty" class="star" value="${diff}" />
-   #{/else}
-#{/list}
+#{if _split}
+	#{list items:1..25, as:'diff'}
+	${(_star*5)}
+	   #{if (_star*5) == diff}
+	      <input type="radio" name="difficulty${_discriminator}" class="star {split:5}" value="${diff/5}" checked="checked" #{if _readonly}disabled="disabled"#{/if}/>
+	   #{/if}
+	   #{else}
+	      <input type="radio" name="difficulty${_discriminator}" class="star {split:5}" value="${diff/5}" #{if _readonly}disabled="disabled"#{/if}/>
+	   #{/else}
+	#{/list}
+#{/if}
+#{else}
+	#{list items:1..5, as:'diff'}
+	   #{if _star == diff}
+	      <input type="radio" name="difficulty${_discriminator}" class="star " value="${diff}" checked="checked" #{if _readonly}disabled="disabled"#{/if}/>
+	   #{/if}
+	   #{else}
+	      <input type="radio" name="difficulty${_discriminator}" class="star" value="${diff}" #{if _readonly}disabled="disabled"#{/if}/>
+	   #{/else}
+	#{/list}
+#{/else}

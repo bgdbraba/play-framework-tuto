@@ -94,11 +94,12 @@ Question(q2):
 Quiz(quiz_1):
     title:          Quiz Java and Security Novice
     groupTypes:     [group_1, group_2]
-    difficulty:     3
+    difficulty:     2.6
     description:    Quiz containg questions about Java and Security 
     questions:      [q1, q2]
     second:         200
-       
+    valid:          true
+
 Answer(answer1):
     question:       q1
 
