@@ -145,4 +145,9 @@ public class Exam extends Model {
 		state = ExamState.VALIDATED;
 	}
 
+	public static Exam findForUser(User user) {
+		Exam exam = find("byCandidateAndState", user, ExamState.PAID).first();
+		return exam;
+	}
+
 }

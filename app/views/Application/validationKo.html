@@ -1,0 +1,16 @@
+#{extends 'site.html' /}
+#{set title:'Profile' /}
+
+<h2>Error during validation</h2>
+
+<p>
+#{if errorCode == controllers.Application.UNKNOWN_EMAIL}
+	No user as known with this address email. You can try to create a new account.
+#{/if}
+#{else}
+	The validation link is corrupted. You can try to create a new account.
+#{/else}
+</p>
+
+<p>Thanks</p>
+

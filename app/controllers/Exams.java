@@ -28,32 +28,41 @@ public class Exams extends AbstractController {
 	}
 
 	public static void search(String email, String examKey) {
-		List<Exam> exams = Exam.search(email, examKey, (User) renderArgs.get("user"));
-		render(exams);
+		List<Exam> exams = Exam.search(email, examKey,
+				(User) renderArgs.get("user"));
+		render(exams, email, examKey);
 	}
 
-	public static void createFirstStep(Long examId, @Required String firstname, @Required String lastname,
-			@Required String email, String birthdate) {
+	public static void createFirstStep(Long examId, @Required String firstname,
+			@Required String lastname, @Required String email, String birthdate) {
 
 		Date parsedDate = null;
 		if (birthdate != null && birthdate.length() > 0) {
 			try {
-				parsedDate = new SimpleDateFormat("yyyy-MM-dd").parse(birthdate);
+				parsedDate = new SimpleDateFormat("yyyy-MM-dd")
+						.parse(birthdate);
 			} catch (ParseException e) {
 				// -- Add error
 				// validation.errors().add(new Error(key, message, variables));
 				System.out.println("Bad date");
 			}
 		}
-		User candidate = new User(email, null, firstname, lastname, parsedDate);
+
+		User candidate = User.findByEmail(email);
+		
 		Exam exam = Exam.findById(examId);
 
 		if (validation.hasErrors()) {
 			// exam.delete();
-			render("Exams/create.html", exam);
+			render("Exams/create.html", exam, firstname, lastname, email, birthdate);
 		}
 
-		candidate.save();
+		// New Candidate
+		if (candidate == null) {
+			candidate = new User(email, null, firstname, lastname, parsedDate);
+			candidate.save();
+		}
+		
 		exam.candidate = candidate;
 		exam.validate();
 		exam.save();
@@ -85,19 +94,20 @@ public class Exams extends AbstractController {
 	private static void sendMail(Exam exam) {
 		// -- Stub SEND_MAIL
 		String pwd = exam.candidate.changePassword();
-		System.out.println("Mail has been sent to " + exam.candidate.email + " for contest/" + exam.examKey + " ["
-				+ pwd + "]");
+		System.out.println("Mail has been sent to " + exam.candidate.email
+				+ " for contest/" + exam.examKey + " [" + pwd + "]");
 
 	}
 
-	public static void searchQuiz(Long examId, String title, Integer difficulty, Integer minutes, Long groupType,
+	public static void searchQuiz(Long examId, String title,
+			Integer difficulty, Integer minutes, Long groupType,
 			Integer questions) {
 
-		List<Quiz> quizzes =
-				Quiz.search(title, difficulty, minutes != null ? 60 * minutes : null, groupType, questions);
+		List<Quiz> quizzes = Quiz.search(title, difficulty,
+				minutes != null ? 60 * minutes : null, groupType, questions);
 
 		Exam exam = Exam.findById(examId);
-		render("Exams/create.html", exam, quizzes);
+		render("Exams/create.html", exam, quizzes, title, difficulty, minutes, groupType, questions);
 	}
 
 	// public static void searchQuiz(Long examId) {

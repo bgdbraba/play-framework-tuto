@@ -1,0 +1,8 @@
+#{list items:1..5, as:'diff'}
+   #{if _star == diff}
+      <input type="radio" name="difficulty" class="star" value="${diff}" checked="checked"/>
+   #{/if}
+   #{else}
+      <input type="radio" name="difficulty" class="star" value="${diff}" />
+   #{/else}
+#{/list}

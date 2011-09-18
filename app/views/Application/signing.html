@@ -1,0 +1,46 @@
+#{extends 'site.html' /}
+#{set title:'Profile' /}
+
+<h2>Signing in</h2>
+
+#{form @Application.signingOk()}
+   
+    #{ifErrors}
+        <p class="error">
+            All fields are required!
+        </p>
+    #{/ifErrors}
+    
+    <p>
+        <label for="firstname">First name: </label>
+        <input type="text" name="firstname" id="firstname" value="${firstname}" />
+    </p>
+    <p>
+        <label for="lastname">Last name: </label>
+        <input type="text" name="lastname" id="lastname" value="${lastname}" />
+    </p>
+    <p>
+        <label for="email">Email: </label>
+        <input type="text" name="email" id="email" value="${email}"/>
+    </p>
+    <p>
+        <label for="email">Confirm email: </label>
+        <input type="text" name="confirm_email" id="confirm_email" value=""/>
+    </p>
+    <p>
+        <label for="password">Password: </label>
+        <input type="password" name="password" id="password" value="" />
+    </p>
+    <p>
+        <label for="confirm_password">Confirm password: </label>
+        <input type="password" name="confirm_password" id="confirm_password" value="" />
+    </p>
+    <p>
+        <label for="birthdate">Birth date: </label>
+        <input type="text" name="birthdate" id="birthdate"  value="${birthdate}"/>
+    </p>
+
+    <p>
+        <input type="submit" value="Save" />
+    </p>
+#{/form}

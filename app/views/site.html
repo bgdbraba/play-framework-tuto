@@ -6,11 +6,20 @@
  
 <div id="main" >
    <div id="recentQuiz" >
-     <h2>Recent Quiz</h2>
+     <h2>Lilo Quiz, it's about</h2>
      <ul>
-        #{list items:recentQuizzes, as:'quiz'}
-           <li>${quiz.title}</li>
-        #{/list}
+		<li>${nbQuiz} User</li>
+		<li>${nbQuiz} Exam</li>
+		<li>${nbQuiz} Quizzes</li>
+		<li>${nbQuiz} Questions</li>
+     </ul>
+     
+	 <h2>Some references</h2>
+     <ul>
+		<li>SQL Technologies</li>
+		<li>NordNet</li>
+		<li>Vauban Humanis</li>
+		<li>and you ?</li>
      </ul>
    </div>
    <div id="content_main">

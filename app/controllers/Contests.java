@@ -25,6 +25,18 @@ public class Contests extends AbstractController {
 		render(exam, isUser);
 	}
 
+	// public static void go(String examKey) {
+	// User user = (User) renderArgs.get("user");
+	// Exam exam = null;
+	// if (examKey == null || examKey.length() == 0) {
+	// exam = Exam.findForUser(user);
+	// } else {
+	// exam = Exam.findByKey(examKey);
+	// }
+	// boolean isUser = (user == exam.candidate);
+	// render(exam, isUser);
+	// }
+
 	public static void beginQuiz(String examKey) {
 		Exam exam = Exam.findByKey(examKey);
 		if (exam.isFinished()) {
@@ -47,18 +59,21 @@ public class Contests extends AbstractController {
 	public static void finish(String examKey) {
 		Exam exam = Exam.findByKey(examKey);
 		// Send mail to exam.author
-		System.out.println("Mail has been sent to " + exam.author.email + " for exam " + exam.examKey);
+		System.out.println("Mail has been sent to " + exam.author.email
+				+ " for exam " + exam.examKey);
 		render(exam);
 	}
 
-	public static void nextQuestion(String examKey, String simpleResponse, String response1, String response2,
-			String response3, String response4, String response5, Boolean correct1, Boolean correct2, Boolean correct3,
-			Boolean correct4, Boolean correct5) {
+	public static void nextQuestion(String examKey, String simpleResponse,
+			String response1, String response2, String response3,
+			String response4, String response5, Boolean correct1,
+			Boolean correct2, Boolean correct3, Boolean correct4,
+			Boolean correct5) {
 		beginQuiz(examKey);
 	}
 
-	public static void storeCandidate(Long examId, @Required String password, @Required String confirm_password,
-			String birthdate) {
+	public static void storeCandidate(Long examId, @Required String password,
+			@Required String confirm_password, String birthdate) {
 		Exam exam = Exam.findById(examId);
 		exam.candidate.password = password;
 		exam.candidate.save();

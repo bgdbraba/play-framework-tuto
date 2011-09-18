@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import play.db.jpa.Model;
 
@@ -24,6 +25,9 @@ public class Quiz extends Model {
 
 	@ManyToMany(cascade = CascadeType.ALL, targetEntity = Question.class)
 	public List<Question> questions;
+	
+	@Transient
+	public int nbQuestion = (questions==null?0:questions.size());
 
 	public int second;
 
@@ -56,31 +60,31 @@ public class Quiz extends Model {
 				&& groupTypeId == null && questions == null) {
 			quizzes = new ArrayList<Quiz>();
 		} else {
-			String query = "SELECT quiz FROM Quiz quiz JOIN quiz.groupTypes groupType WHERE quiz.id != null ";
+			String query = "SELECT distinct quiz FROM Quiz quiz JOIN quiz.groupTypes groupType WHERE quiz.id != null ";
 			List<Object> params = new ArrayList<Object>();
 			if (title != null && title.trim().length() > 0) {
-				query = "title = ? ";
+				query += "and title = ? ";
 				params.add(title);
 			}
 			if (difficulty != null) {
-				query += (query.length() > 0 ? "and " : "") + "difficulty >= ? ";
+				query += "and difficulty >= ? ";
 				params.add(difficulty);
 			}
 			if (second != null && second > 0) {
-				query += (query.length() > 0 ? "and " : "") + "second >= ? ";
+				query += "and second >= ? ";
 				params.add(second);
 			}
 			if (questions != null && questions > 0) {
-				query += (query.length() > 0 ? "and " : "") + "questions >= ? ";
+				query += "and size(quiz.questions) >= ? ";
 				params.add(questions);
 			}
 			if (groupTypeId != null) {
-				query += (query.length() > 0 ? "and " : "") + "groupTypes.id = ? ";
+				query += "and groupType.id = ? ";
 				params.add(groupTypeId);
 			}
-			query = " and groupType.id > 0";
 			System.out.println(query);
-			quizzes = find(query).fetch();
+			find(query, params.toArray());
+			quizzes = find(query, params.toArray()).fetch();
 		}
 
 		return quizzes;
