@@ -1,7 +1,44 @@
 #{extends 'site.html' /} 
 #{set title:exam.examKey /}
 
-<h2>Exam ${exam.examKey}</h2>
+<h4>Exam ${exam.examKey}</h4>
+
+Candidate
+ <p>
+     <label for="firstname">First name: </label>${exam.candidate.firstname}
+ </p>
+ <p>
+     <label for="lastname">Last name: </label>${exam.candidate.lastname}
+ </p>
+ <p>
+     <label for="email">Email: </label>${exam.candidate.email}
+ </p>
+ <p>
+     <label for="birthdate">Birth date: </label>${exam.candidate.birthdate}
+ </p>
+ 
+Quiz
+ <p>
+     <label for="firstname">Title: </label>${exam.quiz.title}
+ </p>
+ <p>
+     <label for="lastname">Difficulty: </label>${exam.quiz.difficulty}
+ </p>
+ <p>
+     <label for="email">Nb questions: </label>${exam.quiz.questions.size()}
+ </p>
+ <p>
+	<label for="birthdate">Types: </label>
+	<ul>
+		#{list items:exam.quiz.groupTypes, as:'types'}
+			<li>${types.name}</li>
+		#{/list}
+	</ul>
+ </p>
+ <p>
+     <label for="birthdate">Time: </label>${exam.quiz.second}
+ </p>
+
 
 
 

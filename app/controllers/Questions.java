@@ -7,6 +7,7 @@ import models.GroupType;
 import models.Question;
 import models.Question.QuestionType;
 import play.data.validation.Required;
+import play.mvc.Before;
 import play.mvc.With;
 import controllers.CRUD.For;
 
@@ -66,6 +67,11 @@ public class Questions extends AbstractController {
 
 	public static void create() {
 		render();
+	}
+	
+	@Before
+	static void addDefaults() {
+		renderArgs.put("siteBaseline", "Question");
 	}
 
 }

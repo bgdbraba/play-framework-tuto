@@ -57,8 +57,7 @@ public class Profiles extends AbstractController {
 
 	@Before
 	static void addDefaults() {
-		renderArgs.put("siteTitle", Play.configuration.getProperty("site.title"));
-		renderArgs.put("siteBaseline", Play.configuration.getProperty("site.baseline"));
+		renderArgs.put("siteBaseline", "Profile");
 	}
 
 }

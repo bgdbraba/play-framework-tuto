@@ -1,20 +1,98 @@
 #{extends 'site.html' /} 
 #{set title:'Documentation' /}
 
-<h3>Login informations</h3>
-<p>The link is located on the top-right corner of the site. Your login has been sent on your mail box by the Administrator.</p>
+<div id="documentation">
+	<div id="login_menu">
+		<h3>Login informations</h3>
+		<p>The link is located on the top-right corner of the site. Your login has been sent on your mail box by the Administrator,
+		 it must correspond to a valid email address</p>
+		<p>If you have problem to login into the website please contact the Administrator at lostpassword@liloquiz.com</p>
+		<p>After you are logged in, you have access to your personal informations, in the panel menu.</p>
+	</div>
+	
+	<div id="administrator_menu">
+		<h3>Profile Administrator</h3>
+		<p>An administrator can manage all datas of the website by clicking on the "Admin" link.</p>
+	
+		He can manage datas of :
+		<ul>
+			<li>Exams</li>
+			<li>GroupTypes</li>
+			<li>Questions</li>
+			<li>Quizzes</li>
+			<li>Users</li>
+		</ul>
+	</div>
+	
+	<div id="examiner_menu">
+		<h3>Profile Examiner</h3>
+		<p>An examiner can create new exam for many candidates.</p>
+		<p>To assign exam, the examiner must have some credits. It is possible to add credits in the "Account parameters".</p>
+		<p>For this Free Version, the credit is unlimited.</p>
+		
+		<p>To create and assign an exam to a (future) candidate, it must define :</p>
+		<ul>
+			<li>The candidate informations</li>
+			<li>The quiz for this exam</li>
+	    </ul>
+	    <p>After the exam is created and paid, the candidate will receive an email with login informations. 
+	    He have 24 hours to pass the exam until it was canceled. After the candidate has finished his exam, 
+	    the examiner will received an email with the link of the final result.</p>
+	    
+	    <p>The examiner can search the exam he has assign to (and only this), he can see the progress of it</p>
+	</div>
+	
+	<div id="manager_menu">	
+		<h3>Profile Manager</h3>
+		<p>The manager can create quizzes and questions usable by all examiners.</p>
+		
+		<p>For each question, he must define :</p>
+		<ul>
+			<li>The title</li>
+			<li>The groupType of the question</li>
+			<li>The difficulty</li>
+			<li>The number of second available for the question</li>
+			<li>The explanation</li>
+			<li>The type of response (single choice, multiple choice, full text)</li>
+			<li>The available and right(s) response</li>
+	    </ul>	
+	    <p>A difficult question allows to earn more points for the final result, 
+	     '1 star' is an easy question and '5 stars' is a very difficult question.</p>
+	     
+		<p>For each quiz, he must define :</p>
+		<ul>
+			<li>The title</li>
+			<li>The description</li>
+			<li>The groupTypes of the questions</li>
+	    </ul>	
+	    <p>The difficulty of the quiz is the average of its questions difficulty.</p>
+	    <p>The time available of the quiz is calculated with its questions times.</p>
+	</div>
+	
+	<div id="candidate_menu">	
+		<h3>Profile Candidate</h3>
+		<p>A candidate pass a given exam that has been assigned by an examiner. 
+		An email must have been send on an valid email address.</p>
+		
+		<p>The first step is to log in with the temporary password given in the email.</p>
+		<p>After this step, the exam begin, the candidate has a timer display on the screen.
+		This is the remaining time to finish the quiz.</p>
+		
+		<p>After he finished the quiz, the exam is validated and the examiner received the result
+		of the exam.</p>
+	</div>
+</div>
 
-<p>If you have problem to login into the website please contact the Administrator at lostpassword@liloquiz.com</p>
-
-<p>After you are logged in, you have access to your personal informations, in the </p>
-
-
-
-<h3>Profile Administrator</h3>
-
-<h3>Profile Examiner</h3>
-<h3>Profile Manager</h3>
-<h3>Profile Candidate</h3>
+<div id="documentationMenu">
+	<h3>Menu :</h3>
+	<ul>
+		<li><a href="#login_menu">Login informations</a></li>
+		<li><a href="#administrator_menu">Administrator profile</a></li>
+		<li><a href="#examiner_menu">Examiner profile</a></li>
+		<li><a href="#manager_menu">Manager profile</a></li>
+		<li><a href="#candidate_menu">Candidate profile</a></li>
+	</ul>
+</div>
 
 
 
