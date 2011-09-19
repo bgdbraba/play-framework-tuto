@@ -1,10 +1,10 @@
 #{extends 'site.html' /}
 #{set title:exam.examKey /}
 
-<h2>New Exam</h2>
-
 #{if exam.quiz }
-   <p>Congratulation</p>
+	<h4>Exam is validated</h4>
+	
+	<p>Candidate has received an email on ${exam.candidate.email}.</p>
 #{/if}
 #{elseif exam.candidate }
    <h4>Step 2/2 : Store quiz</h4>
@@ -49,7 +49,7 @@
 					<th>&nbsp;</th>
 					<th>Title</th>
 		            <th>Difficulty</th>
-		            <th>Type</th>
+		            <th>Types</th>
 		            <th>Time</th>
 		            <th>Questions</th>
 				</tr>

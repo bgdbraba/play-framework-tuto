@@ -22,15 +22,15 @@ public class AbstractController extends CRUD {
 		}
 	}
 
-	@Before
-	static void addDefaults() {
-		renderArgs.put("siteTitle",
-				Play.configuration.getProperty("site.title"));
-		if (renderArgs.get("siteBaseline") == null) {
-			renderArgs.put("siteBaseline",
-					Play.configuration.getProperty("site.baseline"));
-		}
-	}
+//	@Before
+//	static void addDefaults() {
+//		renderArgs.put("siteTitle",
+//				Play.configuration.getProperty("site.title"));
+//		if (renderArgs.get("siteBaseline") == null) {
+//			renderArgs.put("siteBaseline",
+//					Play.configuration.getProperty("site.baseline"));
+//		}
+//	}
 
 	@Before
 	static void loadInformations() {

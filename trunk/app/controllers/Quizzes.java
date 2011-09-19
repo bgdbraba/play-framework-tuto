@@ -8,6 +8,7 @@ import models.GroupType;
 import models.Question;
 import models.Quiz;
 import play.data.validation.Required;
+import play.mvc.Before;
 import play.mvc.With;
 import controllers.CRUD.For;
 
@@ -83,5 +84,10 @@ public class Quizzes extends AbstractController {
 			quiz.save();
 			renderText(true);
 		}
+	}
+	
+	@Before
+	static void addDefaults() {
+		renderArgs.put("siteBaseline", "Quiz");
 	}
 }

@@ -18,6 +18,7 @@ import org.apache.commons.mail.HtmlEmail;
 
 import play.data.validation.Required;
 import play.libs.Mail;
+import play.mvc.Before;
 import play.mvc.With;
 import controllers.CRUD.For;
 
@@ -149,8 +150,12 @@ public class Exams extends AbstractController {
 
 	public static void show(Long examId) {
 		Exam exam = Exam.findById(examId);
-		System.out.println(exam);
 		render(exam);
+	}
+	
+	@Before
+	static void addDefaults() {
+		renderArgs.put("siteBaseline", "Exam");
 	}
 
 }

@@ -19,11 +19,6 @@ import play.mvc.With;
 @With(Secure.class)
 public class Contests extends AbstractController {
 
-	@Before
-	static void addDefaults() {
-		renderArgs.put("siteBaseline", "Contest");
-	}
-
 	public static void go(String examKey) {
 		Exam exam = Exam.findByKey(examKey);
 		User user = (User) renderArgs.get("user");
@@ -128,6 +123,11 @@ public class Contests extends AbstractController {
 			render("Exams/go.html", exam);
 		}
 		beginQuiz(exam.examKey);
+	}
+	
+	@Before
+	static void addDefaults() {
+		renderArgs.put("siteBaseline", "Contest");
 	}
 
 }

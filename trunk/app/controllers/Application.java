@@ -112,10 +112,7 @@ public class Application extends AbstractController {
 
 	@Before
 	static void addDefaults() {
-		renderArgs.put("blogTitle",
-				Play.configuration.getProperty("blog.title"));
-		renderArgs.put("blogBaseline",
-				Play.configuration.getProperty("blog.baseline"));
+		renderArgs.put("siteBaseline", "Lilo Quiz");
 	}
 
 }

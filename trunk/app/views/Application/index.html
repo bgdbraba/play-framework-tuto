@@ -1,14 +1,34 @@
 #{extends 'site.html' /}
 #{set title:'Home' /}
- 
-<h2>News</h2>
 
-<div id="posts">
-
-	#{list items:posts, as:'post'}
+<div>
+	<h1>Welcome on Lilo Quiz,</h1>
 	
-	   #{post post:post, as:'home' /}
+	<p>Lilo Quiz is on the web, the first full SaaS Application for <br/>assign quiz to candidate.</p>
+	<p>Do not miss a really good talent during recruitment,<br/>and use Lilo Quiz for job interview.</p>
+	<p>You only paid when you use Lilo, it is without<br/>subscription.</p>
 	
-	#{/list}
+	<br/>
+	
+	<b>Some comments about Lilo Quiz</b>
+	
+	<p>
+		Beautiful application, thanks SQL Technologies !<br/>
+		<i>by Marco S. (2011-09-02)</i>
+	</p>
+	<p>
+		Oh my god, pretty good !!!<br/>
+		<i>by Thomas Y. (2011-09-01)</i>
+	</p>
+	<p>
+		Recruitment is so easy with Lilo Quiz, thanks<br/>
+		<i>by Maria M. (2011-08-09)</i>
+	</p>
+	
+</div> 
 
-</div>
+<div style="position: absolute;right: 20px;top: 108px;">
+	<img src="@{'/public/images/logo_title.png'}" />
+</div> 
+
+<br class="clear" />
