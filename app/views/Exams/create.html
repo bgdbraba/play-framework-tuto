@@ -1,19 +1,19 @@
 #{extends 'site.html' /}
 #{set title:exam.examKey /}
 
-#{if exam.quiz }
+#{if exam.author.credit <= 0}
+   <h1>No more credit</h1>
+   <p>Please add some credit in your #{a @Profiles.show()}profile#{/a} to create new exam</p>
+#{/if}
+#{elseif exam.quiz }
 	<h4>Exam is validated</h4>
 	
 	<p>Candidate has received an email on ${exam.candidate.email}.</p>
-#{/if}
+#{/elseif}
 #{elseif exam.candidate }
    <h4>Step 2/2 : Store quiz</h4>
    #{form @Exams.searchQuiz(exam.id)} 
 	
-		#{ifErrors}
-		<p class="error">All fields are required!</p>
-		#{/ifErrors}
-		
 		<p style="display: block; clear: both;">
 			<label for="quizTitle">Title: </label>
 			<input type="text" name="quizTitle" id="quizTitle" value="${quizTitle}" />
@@ -90,27 +90,25 @@
    <h4>Step 1/2 : Store candidate</h4>
    #{form @Exams.CreateFirstStep(exam.id)}
 
-	   #{ifErrors}
-	        <p class="error">
-	            All fields are required!
-	        </p>
-	    #{/ifErrors}
-	    
 	    <p>
 	        <label for="firstname">First name: </label>
 	        <input type="text" name="firstname" id="firstname" value="${firstname}"/>
+	        <span class="error">#{error 'firstname' /}</span>
 	    </p>
 	    <p>
 	        <label for="lastname">Last name: </label>
 	        <input type="text" name="lastname" id="lastname" value="${lastname}"/>
+	        <span class="error">#{error 'lastname' /}</span>
 	    </p>
 	    <p>
 	        <label for="email">Email: </label>
 	        <input type="text" name="email" id="email" value="${email}"/>
+	        <span class="error">#{error 'email' /}</span>
 	    </p>
 	    <p>
 	        <label for="birthdate">Birth date: </label>
-	        <input type="text" name="birthdate" id="birthdate" value="${birthdate}"/>
+	        <input type="text" name="birthdate" id="birthdate" #{if birthdate}value="${birthdate.format("yyyy-MM-dd")}"#{/if}/>
+	        <span class="error">#{error 'birthdate' /}</span>
 	    </p>
 	    
 	    <p>

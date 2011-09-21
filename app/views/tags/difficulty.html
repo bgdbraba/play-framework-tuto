@@ -1,7 +1,6 @@
 #{if _split}
 	#{list items:1..25, as:'diff'}
-	${(_star*5)}
-	   #{if (_star*5) == diff}
+	   #{if java.lang.Math.round(_star*5) == diff}
 	      <input type="radio" name="difficulty${_discriminator}" class="star {split:5}" value="${diff/5}" checked="checked" #{if _readonly}disabled="disabled"#{/if}/>
 	   #{/if}
 	   #{else}

@@ -1,43 +1,44 @@
 #{extends 'site.html' /}
-#{set title:'Profile' /}
+#{set title:'Sign in' /}
 
 <h2>Signing in</h2>
 
 #{form @Application.signingOk()}
-   
-    #{ifErrors}
-        <p class="error">
-            All fields are required!
-        </p>
-    #{/ifErrors}
     
     <p>
         <label for="firstname">First name: </label>
         <input type="text" name="firstname" id="firstname" value="${firstname}" />
+        <span class="error">#{error 'firstname' /}</span>
     </p>
     <p>
         <label for="lastname">Last name: </label>
         <input type="text" name="lastname" id="lastname" value="${lastname}" />
+        <span class="error">#{error 'lastname' /}</span>
     </p>
     <p>
         <label for="email">Email: </label>
         <input type="text" name="email" id="email" value="${email}"/>
+        <span class="error">#{error 'email' /}</span>
     </p>
     <p>
-        <label for="email">Confirm email: </label>
-        <input type="text" name="confirm_email" id="confirm_email" value=""/>
+        <label for="confirmEmail">Confirm email: </label>
+        <input type="text" name="confirmEmail" id="confirmEmail" value="${confirmEmail}"/>
+        <span class="error">#{error 'confirmEmail' /}</span>
     </p>
     <p>
         <label for="password">Password: </label>
         <input type="password" name="password" id="password" value="" />
+        <span class="error">#{error 'password' /}</span>
     </p>
     <p>
-        <label for="confirm_password">Confirm password: </label>
-        <input type="password" name="confirm_password" id="confirm_password" value="" />
+        <label for="confirmPassword">Confirm password: </label>
+        <input type="password" name="confirmPassword" id="confirmPassword" value="" />
+        <span class="error">#{error 'confirmPassword' /}</span>
     </p>
     <p>
         <label for="birthdate">Birth date: </label>
-        <input type="text" name="birthdate" id="birthdate"  value="${birthdate}"/>
+        <input type="text" name="birthdate" id="birthdate"  #{if birthdate}value="${birthdate.format('yyyy-MM-dd')}#{/if}"/>
+        <span class="error">#{error 'birthdate' /}</span>
     </p>
 
     <p>

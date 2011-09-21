@@ -54,8 +54,7 @@ public class User extends Model {
 	@Enumerated
 	public Profile profile;
 
-	public User(String email, String password, String firstname,
-			String lastname, Date birthdate) {
+	public User(String email, String password, String firstname, String lastname, Date birthdate) {
 		super();
 		this.email = email;
 		this.password = password;
@@ -76,14 +75,15 @@ public class User extends Model {
 		// TODO Auto-generated method stub
 		return id + " - " + firstname + " " + lastname;
 	}
-	
+
 	public static User findByEmail(String email) {
 		System.out.println("find with " + email);
 		return User.find("byEmail", email).first();
-	} 
+	}
 
 	public String changePassword() {
 		this.password = Integer.toHexString(new Random().nextInt(1000000));
+		this.save();
 		return this.password;
 	}
 

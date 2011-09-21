@@ -39,6 +39,7 @@
             <th>Quiz</th>
             <th>Created</th>
             <th>Time</th>
+            <th>State</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -47,8 +48,9 @@
 				<td>#{a @Exams.show(exam.id)}${exam.examKey}#{/a}</td>
             <td>${exam.candidate}</td>
             <td>${exam.quiz}</td>
-            <td>${exam.creationDate.getTime().toString()}</td>
+            <td>${exam.creationDate.format("yyyy-MM-dd")}</td>
             <td>${exam.second}</td>
+            <td>${exam.state}</td>
 			</tr>
 			#{/list}
 			#{else}

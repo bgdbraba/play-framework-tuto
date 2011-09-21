@@ -1,22 +1,16 @@
 package controllers;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import models.Post;
 import models.User;
 import models.User.UserState;
-
-import org.apache.commons.mail.EmailException;
-import org.apache.commons.mail.HtmlEmail;
-import org.apache.commons.mail.SimpleEmail;
-
-import play.Play;
+import play.data.binding.As;
+import play.data.validation.Email;
+import play.data.validation.Equals;
+import play.data.validation.Password;
 import play.data.validation.Required;
-import play.db.jpa.JPABase;
-import play.libs.Mail;
 import play.mvc.Before;
 
 public class Application extends AbstractController {
@@ -36,65 +30,61 @@ public class Application extends AbstractController {
 		render(posts);
 	}
 
-	public static void show(Long id) {
-		Post post = Post.findById(id);
-		render(post);
-	}
-
 	public static void logout() {
 		render();
 	}
 
-	public static void postComment(Long postId, @Required String author,
-			@Required String content) {
-		Post post = Post.findById(postId);
-		if (validation.hasErrors()) {
-			render("Application/show.html", post);
-		}
-		post.addComment(author, content);
-		flash.success("Thanks for posting %s", author);
-		show(postId);
-	}
+	// public static void show(Long id) {
+	// Post post = Post.findById(id);
+	// render(post);
+	// }
+	//
+	// public static void postComment(Long postId, @Required String author, @Required String content) {
+	// Post post = Post.findById(postId);
+	// if (validation.hasErrors()) {
+	// render("Application/show.html", post);
+	// }
+	// post.addComment(author, content);
+	// flash.success("Thanks for posting %s", author);
+	// show(postId);
+	// }
 
 	public static void signing() {
+		addDefaults(true);
 		render();
 	}
 
-	public static void signingOk(@Required String firstname,
-			@Required String lastname, @Required String email,
-			@Required String confirm_email, @Required String password,
-			@Required String confirm_password, @Required String birthdate) {
+	public static void signingOk(
+			@Required(message = "Firstname is required") String firstname,
+			@Required(message = "Lastname is required") String lastname,
+			@Required(message = "Email is required") @Email(message = "Corrupted email") String email,
+			@Required(message = "Confirmation is required") @Equals(value = "email", message = "Different email") String confirmEmail,
+			@Required(message = "Password is required") @Password String password,
+			@Required(message = "Confirmation is required") @Equals(value = "password", message = "Different password") String confirmPassword,
+			@As(value = { "yyyy-MM-dd" }) Date birthdate) {
+
+		addDefaults(true);
 
 		if (validation.hasErrors()) {
-			render("Application/signing.html", firstname, lastname, email,
-					birthdate);
+			render("Application/signing.html", firstname, lastname, email, confirmEmail, birthdate);
 		}
-		Date parsedDate = null;
-		if (birthdate != null && birthdate.length() > 0) {
-			try {
-				parsedDate = new SimpleDateFormat("yyyy-MM-dd")
-						.parse(birthdate);
-			} catch (ParseException e) {
-				// -- Add error
-				// validation.errors().add(new Error(key, message, variables));
-				System.out.println("Bad date");
-			}
-		}
-		User user = new User(email, password, firstname, lastname, parsedDate);
+
+		User user = new User(email, password, firstname, lastname, birthdate);
 		user.save();
 
 		// SEND mail for confirmation
-		System.out.println("Confirmation code /validation/user/"
-				+ user.validationNumber + "/?mail=" + user.email);
+		System.out.println("Confirmation code /validation/user/" + user.validationNumber + "/?mail=" + user.email);
 
 		render();
 	}
 
+	/**
+	 * 
+	 * @param validationNumber
+	 * @param mail
+	 */
 	public static void validateUser(Integer validationNumber, String mail) {
-		for (JPABase u : User.findAll()) {
-			System.out.println(((User) u).email + " : "
-					+ ((User) u).validationNumber);
-		}
+
 		User user = User.findByEmail(mail);
 		int errorCode;
 		if (user == null) {
@@ -110,9 +100,17 @@ public class Application extends AbstractController {
 		index();
 	}
 
+	/**
+	 * 
+	 * @param isNotHome
+	 */
 	@Before
-	static void addDefaults() {
-		renderArgs.put("siteBaseline", "Lilo Quiz");
+	static void addDefaults(boolean isNotHome) {
+		if (isNotHome) {
+			renderArgs.put("siteBaseline", "");
+		} else {
+			renderArgs.put("siteBaseline", "Home");
+		}
 	}
 
 }
