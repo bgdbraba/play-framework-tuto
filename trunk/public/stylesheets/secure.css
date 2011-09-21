@@ -5,7 +5,7 @@ html,body {
 
 body {
 	margin: 0px;
-	background: transparent url('/public/images/header.jpg');
+	background: transparent url('../images/header.jpg');
 	background-repeat: repeat-x;
 }
 

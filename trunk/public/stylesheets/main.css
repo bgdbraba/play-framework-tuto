@@ -1,7 +1,6 @@
 /** Main layout **/
 html,body {
-	background: transparent
-		url('http://www.sqltechnologies.com/static/css/images/content.jpg');
+	background: transparent url('../images/content.jpg');
 	background-repeat: repeat;
 	font-family: Helvetica, Arial, Sans !important;
 }
@@ -12,13 +11,22 @@ html,body {
 }
 
 #crud {
-	background: transparent url('/public/images/header.jpg');
+	background: transparent url('../images/header.png');
 	background-repeat: repeat-x;
 }
 
-#recentQuiz {
-	background: transparent
-		url('http://www.sqltechnologies.com/static/css/images/columns.png');
+#home {
+	background: transparent url('../images/header_big.png');
+	background-repeat: repeat-x;
+	margin: 0;
+	padding: 0;
+	font-family: 'Helvetica', 'Arial', 'Sans';
+	font-size: 90%;
+	color: #111;
+}
+
+#left_main {
+	background: transparent url('../images/columns.png');
 	background-repeat: no-repeat;
 	background-position: right;
 	float: left;
@@ -93,8 +101,7 @@ html,body {
 
 #menu_user_detail { /**margin: 8px 15px 6px 0px;**/
 	padding: 10px 10px 10px 10px;
-	background:
-		url("http://www.sqltechnologies.com/static/css/images/content.jpg");
+	background: url('../images/content.jpg');
 	border: 1px grey solid;
 	border-top: 0px solid;
 	color: #333333;
@@ -105,8 +112,7 @@ html,body {
 }
 
 .menu_user_selected:HOVER {
-	background:
-		url("http://www.sqltechnologies.com/static/css/images/content.jpg");
+	background: url('../images/content.jpg');
 	color: grey !important;
 }
 
@@ -116,8 +122,7 @@ html,body {
 }
 
 .menu_user_selected {
-	background:
-		url("http://www.sqltechnologies.com/static/css/images/content.jpg");
+	background: url('../images/content.jpg');
 	color: grey !important;
 }
 
@@ -169,9 +174,9 @@ html,body {
 }
 
 #title {
-	color: #333333;
+	color: #F0F0F0;
 	margin-top: 5px;
-	margin-bottom: 9px;
+	margin-bottom: 14px;
 }
 
 /** A little hacky to create arrows without images **/
@@ -190,8 +195,8 @@ html,body {
 }
 
 #title h1 {
-	font-size: 64px;
-	margin: 0;
+	font-size: 63px;
+	margin: 0 217px 0 0;
 }
 
 #title h1 a {
@@ -236,7 +241,7 @@ html,body {
 /**   **/
 .addingItem {
 	font-weight: bold;
-	list-style-image: url('/public/images/add.png');
+	list-style-image: url('../images/add.png');
 }
 
 .addingItem a {
