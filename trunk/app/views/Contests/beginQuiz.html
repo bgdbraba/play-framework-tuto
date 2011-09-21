@@ -28,7 +28,7 @@
    #{if question.questionType.toString() == 'SIMPLE_CHOICE'}
       <!-- Use foreach question.responses -->
       #{list items:question.responses, as:'response'}
-         <input type="radio" name="simpleResponse" value="${response.id}" checked="checked" />${response.value} (${response.correct})
+         <input type="radio" name="simpleResponse" value="${response_index}" checked="checked" />${response.value} (${response.correct})
          <br/>
       #{/list}
    #{/if}
@@ -36,13 +36,13 @@
    #{elseif question.questionType.toString() == 'MULTIPLE_CHOICE'}
       <!-- Use foreach question.responses -->
       #{list items:question.responses, as:'response'}
-         <input type="checkbox" name="multiple_response_${response.id}" />${response.value} (${response.correct})
+         <input type="checkbox" name="response${response_index}" />${response.value} (${response.correct})
          <br/>
       #{/list}
    #{/elseif}
    
    #{elseif question.questionType.toString() == 'TEXT_ANSWER'}
-      Response <input type="text" name="response_text" />
+      Response <input type="text" name="textResponse" />
    #{/elseif}
 </p>
 

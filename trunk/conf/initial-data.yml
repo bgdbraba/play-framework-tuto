@@ -59,6 +59,18 @@ Response(rep6):
     value:          1000
     correct:        true
 
+Response(rep7):
+    value:          1
+    correct:        false
+
+Response(rep8):
+    value:          2
+    correct:        true
+
+Response(rep9):
+    value:          3
+    correct:        true
+
 GroupType(group_1):
     name:           Java EE
 
@@ -92,30 +104,59 @@ Question(q2):
     groupType:      group_1
     responses:      [rep4, rep5, rep6]
 
+Question(q3):
+    title:          Nombre strictement positif
+    content:        Donner une valeurs possible de x où 0<x<4
+    second:         30
+    difficulty:     2,4
+    questionType:   TEXT_ANSWER
+    groupType:      group_2
+    responses:      [rep7, rep8, rep9]
+
 Quiz(quiz_1):
     title:          Quiz Java and Security Novice
     groupTypes:     [group_1, group_2]
     difficulty:     2.6
     description:    Quiz containg questions about Java and Security 
-    questions:      [q1, q2]
+    questions:      [q1, q2, q3]
     second:         75
     valid:          true
 
+Answer$AnswerValue(v1):
+    value:          2
+
+Answer$AnswerValue(v2):
+    value:          1
+
+Answer$AnswerValue(v3):
+    value:          2
+
+Answer$AnswerValue(v4):
+    value:          3
+
 Answer(answer1):
     question:       q1
+    answerValues:   [v1]
 
 Answer(answer2):
     question:       q2
+    answerValues:   [v2,v3]
+
+Answer(answer3):
+    question:       q3
+    answerValues:   [v4]
 
 Exam(exam_1):
     examKey:        key_1
     candidate:      pouts
     quiz:           quiz_1
-    answers:        [answer1, answer2]
+    answers:        [answer1, answer2, answer3]
     creationDate:   '2011-06-08 00:00:00'
+    endingDate:     '2011-06-09 00:01:00'
+    beginDate:      '2011-06-09 00:00:00'
     second:         75
     author:         steeve
-    state:          PAID
+    state:          FINISHED
 
 Post(firstPost):
     title:          The beginning
