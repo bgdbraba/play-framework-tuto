@@ -1,7 +1,7 @@
 #{extends 'site.html' /}
 #{set title:'Question' /}
 
-<h2>Quiz ${quiz.title}</h2>
+<h2>${quiz.title}</h2>
        
 <p>
    <label for="title">Title: </label>
@@ -9,7 +9,7 @@
 </p>
 <p>
    <label for="difficulty">Difficulty: </label>
-   <input type="text" name="difficulty" id="difficulty" value="${quiz.difficulty}" readonly="readonly"/>
+   #{difficulty star:quiz.difficulty, discriminator:quiz.id, readonly:true, split:true/}
 </p>
 <p>
    <label for="second">Time: </label>
@@ -17,14 +17,18 @@
 </p>
 <p>
    <label for="groupType">Type: </label>
+   <ul>
+      #{list items:quiz.groupTypes, as:'types'}
+         <li>${types.name}</li>
+      #{/list}
+   </ul>
+</p>
+<p>
+   <label for="questions">Questions: </label>${quiz.questions.size()}
 </p>
 <p>
    <label for="description">Description: </label>
    <textarea name="description" cols="80" rows="10" readonly="readonly">${quiz.description}</textarea>
-</p>
-<p>
-   <label for="questions">Questions: </label>
-   <input type="text" name="questions" id="questions" value="${quiz.questions.size()}" readonly="readonly"/>
 </p>
 
 <p>

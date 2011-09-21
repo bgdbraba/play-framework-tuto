@@ -38,6 +38,19 @@ Quiz
  <p>
      <label for="birthdate">Time: </label>${exam.quiz.second}
  </p>
+  <p>
+   <label for="birthdate">Types: </label>
+   <ul>
+      #{list items:exam.answers, as:'answer'}
+         <li>${answer.question.title}
+         response : 
+            #{list items:answer.answerValues, as:'v'}
+		         <li>${answerValues}</li>
+		      #{/list}
+         </li>
+      #{/list}
+   </ul>
+ </p>
 
 
 

@@ -1,7 +1,7 @@
 package controllers;
 
-import play.mvc.Before;
 import models.User;
+import play.mvc.Before;
 
 public class Documentations extends AbstractController {
 
@@ -9,7 +9,7 @@ public class Documentations extends AbstractController {
 	static void addDefaults() {
 		renderArgs.put("siteBaseline", "Documentation");
 	}
-	
+
 	public static void index() {
 		User user = (User) renderArgs.get("user");
 		render(user);

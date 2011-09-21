@@ -1,7 +1,6 @@
 package controllers;
 
 import models.Exam;
-import models.GroupType;
 import models.Question;
 import models.Quiz;
 import models.User;

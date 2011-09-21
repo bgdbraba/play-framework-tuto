@@ -1,8 +1,6 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -35,13 +33,12 @@ public class GroupType extends Model {
 		if (groupTypeIds == null || groupTypeIds.length == 0) {
 			return new ArrayList<GroupType>();
 		} else {
-			String ids="";
-			 for (Long g : groupTypeIds) {
-				ids+= ("\'"+g+"\', ");
+			String ids = "";
+			for (Long g : groupTypeIds) {
+				ids += ("\'" + g + "\', ");
 			}
-			 ids=ids.substring(0, ids.length()-2);
+			ids = ids.substring(0, ids.length() - 2);
 			return GroupType.find("from GroupType groupType where groupType.id IN (" + ids + ")").fetch();
 		}
 	}
 }
- 

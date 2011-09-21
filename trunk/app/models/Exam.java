@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Random;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
@@ -107,11 +106,11 @@ public class Exam extends Model {
 		state = ExamState.VALIDATED;
 	}
 
-	public static List<Exam> search(String email, String examKey, User user) {
+	public static List<Exam> search(String email, String examKey, User user, List<ExamState> examStates) {
 		List<Exam> exams = null;
 		List<Object> params = new ArrayList<Object>();
 
-		String query = "author.id = ? ";
+		String query = "author.id = ? and state is not null";
 		params.add(user.id);
 
 		if (email != null && email.trim().length() > 0) {
@@ -123,9 +122,20 @@ public class Exam extends Model {
 			params.add(examKey);
 		}
 
-		exams = find(query, params.toArray()).fetch();
-		System.out.println(query + " - > " + exams.size());
+		if (examStates != null && examStates.size() > 0) {
 
+			query += " and (";
+			// I'm sorry :)
+			for (ExamState state : examStates) {
+				query += (" state !=  ? or");
+				params.add(state);
+			}
+			query = query.substring(0, query.length() - 2);
+			query += ")";
+		}
+		System.out.println(query);
+
+		exams = find(query, params.toArray()).fetch();
 		return exams;
 	}
 
@@ -145,9 +155,9 @@ public class Exam extends Model {
 	public void validate() {
 		state = ExamState.VALIDATED;
 	}
-	
+
 	public void finish() {
-		endingDate=Calendar.getInstance();
+		endingDate = Calendar.getInstance();
 		state = ExamState.FINISHED;
 	}
 

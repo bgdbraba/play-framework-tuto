@@ -6,8 +6,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
 import play.db.jpa.Model;
 
@@ -55,13 +53,13 @@ public class Quiz extends Model {
 		return title + "(" + types.substring(0, types.length() - 2) + ")";
 	}
 
-	public static List<Quiz> search(String title, Integer difficulty,
-			Integer second, Long groupTypeId, Integer questions) {
+	public static List<Quiz> search(String title, Integer difficulty, Integer second, Long groupTypeId,
+			Integer questions) {
 
 		List<Quiz> quizzes = null;
 
-		if ((title == null || title.trim().length() == 0) && difficulty == null
-				&& second == null && groupTypeId == null && questions == null) {
+		if ((title == null || title.trim().length() == 0) && difficulty == null && second == null
+				&& groupTypeId == null && questions == null) {
 			quizzes = new ArrayList<Quiz>();
 		} else {
 			String query = "SELECT distinct quiz FROM Quiz quiz JOIN quiz.groupTypes groupType WHERE quiz.id > 0 ";
@@ -99,14 +97,14 @@ public class Quiz extends Model {
 		int time = 0;
 		for (Question q : questions) {
 			System.out.println(q.difficulty);
-			diff+=q.difficulty;
-			time+=q.second;
+			diff += q.difficulty;
+			time += q.second;
 		}
-		
-		//FIXME
-		this.difficulty=new Float(Math.round((new Double(diff)/questions.size())*5))/5;
+
+		// FIXME
+		this.difficulty = new Float(Math.round((new Double(diff) / questions.size()) * 5)) / 5;
 		System.out.println(this.difficulty);
-		this.second=time;
+		this.second = time;
 		this.valid = true;
 		this.save();
 	}

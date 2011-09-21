@@ -52,9 +52,9 @@
 		  #{list items:questions, as:'question'}
 			<tr>
 				<td>#{a @Questions.show(question.id)}${question.title}#{/a}</td>
-	            <td>${question.difficulty}</td>
-	            <td>${question.second}</td>
-	            <td>${question.groupType.name}</td>
+	         <td>#{difficulty star:question.difficulty, discriminator:question.id, readonly:true, split:false/}</td>
+            <td>${question.second}</td>
+            <td>${question.groupType.name}</td>
 			</tr>
 			#{/list}
 			#{else}
