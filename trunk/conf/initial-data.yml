@@ -26,6 +26,7 @@ User(steeve):
     lastname:       Hunting
     birthdate:      1980-03-20  
     profile:        EXAMINER 
+    credit:         15
 
 User(bob):
     email:          candidate@gmail.com
@@ -114,6 +115,7 @@ Exam(exam_1):
     creationDate:   '2011-06-08 00:00:00'
     second:         75
     author:         steeve
+    state:          PAID
 
 Post(firstPost):
     title:          The beginning
