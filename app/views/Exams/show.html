@@ -1,57 +1,115 @@
 #{extends 'site.html' /} 
 #{set title:exam.examKey /}
 
-<h4>Exam ${exam.examKey}</h4>
+<h2>Exam : ${exam.examKey}</h2>
 
-Candidate
- <p>
-     <label for="firstname">First name: </label>${exam.candidate.firstname}
- </p>
- <p>
-     <label for="lastname">Last name: </label>${exam.candidate.lastname}
- </p>
- <p>
-     <label for="email">Email: </label>${exam.candidate.email}
- </p>
- <p>
-     <label for="birthdate">Birth date: </label>${exam.candidate.birthdate}
- </p>
- 
-Quiz
- <p>
-     <label for="firstname">Title: </label>${exam.quiz.title}
- </p>
- <p>
-     <label for="lastname">Difficulty: </label>${exam.quiz.difficulty}
- </p>
- <p>
-     <label for="email">Nb questions: </label>${exam.quiz.questions.size()}
- </p>
- <p>
-	<label for="birthdate">Types: </label>
-	<ul>
-		#{list items:exam.quiz.groupTypes, as:'types'}
-			<li>${types.name}</li>
-		#{/list}
-	</ul>
- </p>
- <p>
-     <label for="birthdate">Time: </label>${exam.quiz.second}
- </p>
-  <p>
-   <label for="birthdate">Types: </label>
-   <ul>
-      #{list items:exam.answers, as:'answer'}
-         <li>${answer.question.title}
-         response : 
-            #{list items:answer.answerValues, as:'v'}
-		         <li>${answerValues}</li>
-		      #{/list}
-         </li>
-      #{/list}
-   </ul>
- </p>
+<div class="panel">
+<h4>Candidate</h4>
+<p>
+    <label for="firstname">First name: </label>${exam.candidate.firstname}
+</p>
+<p>
+    <label for="lastname">Last name: </label>${exam.candidate.lastname}
+</p>
+<p>
+    <label for="email">Email: </label>${exam.candidate.email}
+</p>
+<p>
+    <label for="birthdate">Birth date: </label>${exam.candidate.birthdate}
+</p>
+</div>
 
+<div class="panel">
+<h4>Quiz</h4>
+<p>
+    <label>Title: </label>${exam.quiz.title}
+</p>
+<p>
+    <label>Difficulty: </label>${exam.quiz.difficulty}
+</p>
+<p>
+    <label>Nb questions: </label>${exam.quiz.questions.size()}
+</p>
+<p>
+<label>Types: </label>
+<ul>
+	#{list items:exam.quiz.groupTypes, as:'types'}
+		<li>${types.name}</li>
+	#{/list}
+</ul>
+</p>
+<p>
+    <label>Time: </label>${exam.quiz.second} seconds
+</p>
+</div>
+
+<div class="panel">
+<h4>Responses</h4>
+
+#{list items:exam.answers, as:'answer'} 
+	   
+	Question : ${answer.question.title}
+	
+	<table class="exam_response">
+		
+	   #{if answer.question.questionType.toString() == 'SIMPLE_CHOICE'}
+	      
+	      #{list items:answer.question.responses, as:'response'}
+	      
+	        <tr>
+	        	<td width="12px">
+			      	#{if response_index.toString() == answer.answerValues.get(0).value}
+			      		#{if response.correct}<img alt="right" src="@{'/public/images/right.png'}">#{/if}
+			      		#{else}<img alt="wrong" src="@{'/public/images/wrong.png'}">#{/else}
+			      	#{/if}
+		      	</td>
+		        <td width="12px"><input type="radio" #{if response.correct}checked="checked"#{/if} /></td>
+		        <td width="300px">${response.value}</td>
+	        </tr>
+	      #{/list}
+	   #{/if}
+	
+	   #{elseif answer.question.questionType.toString() == 'MULTIPLE_CHOICE'}
+
+	      #{list items:answer.question.responses, as:'response'}
+	      
+	         <tr>
+	         	<td>
+		        	#{list items:answer.answerValues, as:'answerValue'}
+		      			#{if response_index.toString() == answerValue.value}
+		      	    		#{if response.correct}<img alt="right" src="@{'/public/images/right.png'}">#{/if}
+			      			#{else}<img alt="wrong" src="@{'/public/images/wrong.png'}">#{/else}
+		      	    	#{/if}
+		      	 	#{/list}
+		        </td>
+		        <td><input type="checkbox" #{if response.correct}checked="checked"#{/if} /></td>
+		        <td>${response.value}</td>
+	         </tr>
+	      #{/list}
+	   #{/elseif}
+	   
+	   #{elseif answer.question.questionType.toString() == 'TEXT_ANSWER'}
+	      <tr>
+	         <td colspan="2">Answer : ${answer.answerValues.get(0).value}</td>
+	      </tr>
+	      #{list items:answer.question.responses, as:'response'}
+	         <tr>
+	         	<td>
+		      	  #{if utils.StringUtils.compareOnlyText(answer.answerValues.get(0).value, response.value)}
+		      	     <img alt="right" src="@{'/public/images/right.png'}">
+		      	  #{/if}
+			      #{else}
+			         <img alt="wrong" src="@{'/public/images/wrong.png'}">
+			      #{/else}
+		        </td>
+		        <td>${response.value}</td>
+	         </tr>
+	      #{/list}
+	   #{/elseif}
+	</table>
+	
+#{/list}
+</div>
 
 
 

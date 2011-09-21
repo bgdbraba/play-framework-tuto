@@ -24,17 +24,18 @@
 	        <input type="password" name="password" id="password" />
 	    </p>
 	    <p>
-	        <label for="confirm_password">Confirm password: </label>
-	        <input type="password" name="confirm_password" id="confirm_password" />
+	        <label for="confirmPassword">Confirm password: </label>
+	        <input type="password" name="confirmPassword" id="confirmPassword" />
 	    </p>
 	    <p>
 	        <label for="birthdate">Birth date: </label>
-	        <input type="text" name="birthdate" id="birthdate" />
+	        <input type="text" name="birthdate" id="birthdate" #{if birthdate}value="${birthdate.format("yyyy-MM-dd")}"#{/if}/>
 	    </p>
 	    
 	    <p>
 	        <input type="submit" value="Go to exam" />
 	    </p>
 	#{/form}
+	
 #{/else}
 

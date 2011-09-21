@@ -721,3 +721,17 @@ tr.odd {
 #documentationMenu a {
 	color: #333333;
 }
+
+/** Exam **/
+.exam_response {
+	display: block;
+	margin-bottom: 15px;
+	background-color: white;
+}
+
+div.panel {
+	padding : 3px;	
+	border : 1px solid #E0E0E0;
+	margin: 10px;
+	width: 75%
+}

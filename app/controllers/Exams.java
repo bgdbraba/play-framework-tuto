@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import models.Answer;
+import models.Answer.AnswerValue;
 import models.Exam;
 import models.Exam.ExamState;
 import models.Quiz;
@@ -27,6 +28,9 @@ import controllers.CRUD.For;
 @For(Exam.class)
 public class Exams extends AbstractController {
 
+	/**
+	 * 
+	 */
 	public static void create() {
 		String examKey = Exam.generateFreeExamKey();
 		User user = (User) renderArgs.get("user");
@@ -36,6 +40,11 @@ public class Exams extends AbstractController {
 		render(exam);
 	}
 
+	/**
+	 * 
+	 * @param email
+	 * @param examKey
+	 */
 	public static void search(String email, String examKey) {
 		System.out.println(Exam.findAll().size());
 		List<Exam> exams =
@@ -44,6 +53,14 @@ public class Exams extends AbstractController {
 		render(exams, email, examKey);
 	}
 
+	/**
+	 * 
+	 * @param examId
+	 * @param firstname
+	 * @param lastname
+	 * @param email
+	 * @param birthdate
+	 */
 	public static void createFirstStep(Long examId, @Required(message = "Firstname is required") String firstname,
 			@Required(message = "Lastname is required") String lastname,
 			@Required(message = "Email is required") @Email(message = "Corrupted email") String email,
@@ -149,6 +166,15 @@ public class Exams extends AbstractController {
 
 	public static void show(Long examId) {
 		Exam exam = Exam.findById(examId);
+		System.out.println(exam.answers.size() + " rep");
+		for (Answer answer : exam.answers) {
+			System.out.println(answer.question.title);
+			System.out.println(answer.answerValues.size());
+			for (AnswerValue v : answer.answerValues) {
+				System.out.println(v.value);
+			}
+			System.out.println("##########################");
+		}
 		render(exam);
 	}
 
