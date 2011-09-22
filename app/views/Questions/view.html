@@ -1,0 +1,61 @@
+#{extends 'site.html' /} 
+#{set title:'Question' /}
+
+<h2>Show Question</h2>
+
+<p class="bloc_line">
+	<label for="title">Title: </label>${question.title}
+</p>
+<p class="bloc_line">
+	<label for="difficulty">Difficulty: </label>
+	#{difficulty star:question.difficulty, readonly:true/}
+</p>
+<p class="bloc_line">
+	<label for="second">Time: </label>${question.second}<span class="info"> (seconds)</span>
+</p>
+<p class="bloc_line">
+	<label for="groupType">Type: </label>${question.groupType}
+</p>
+<p class="bloc_line">
+	<label for="content">Content: </label>${question.content}
+</p>
+<p class="bloc_line">
+	<label for="explanation">Explanation: </label>#{if question.explanation}${question.explanation}#{/if}#{else}<i>unknown</i>#{/else}
+</p>
+<p class="bloc_line">
+	<label for="questionType">Response: </label>
+	#{if question.questionType == models.Question.QuestionType.SIMPLE_CHOICE}Simple choice#{/if}
+    #{elseif question.questionType == models.Question.QuestionType.MULTIPLE_CHOICE}Multiple choice#{/elseif}
+    #{else}Full text#{/else}
+</p>
+
+<div id="response_bloc">
+	<table width="200px" style="display: block; ">
+		<thead>
+			<tr>
+				<th width="30px"><img alt="Correct" src="@{'/public/images/right.png'}" /></th>
+				<th width="350px">Responses</th>
+			</tr>
+		</thead>
+		<tbody>
+		#{list items:0..question.responses.size()-1, as:'i'}
+    		<tr>
+				<td align="center">
+					#{if question.responses.size()>i && question.responses.get(i).correct}<img alt="right" src="@{'/public/images/right.png'}">#{/if}
+				</td>
+				<td>${question.responses.get(i).value}</td>
+			</tr>
+		#{/list}
+		</tbody>
+	</table>
+
+</div>
+
+
+
+
+
+
+
+
+

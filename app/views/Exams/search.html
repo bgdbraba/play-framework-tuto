@@ -11,20 +11,16 @@
 
 #{form @Exams.search()} 
 
-	#{ifErrors}
-	<p class="error">All fields are required!</p>
-	#{/ifErrors}
-	
-	<p style="display: block; clear: both;">
+	<p class="bloc_line">
       <label for="email">Candidate email: </label>
       <input type="text" name="email" id="email" value="${email}"/>
    </p>
-   <p style="display: block; clear: both;">
+   <p class="bloc_line">
       <label for="examKey">Key: </label>
       <input type="text" name="examKey" id="examKey" value="${examKey}"/>
    </p>
            
-     <p style="display: block; clear: both;">
+     <p class="bloc_line">
         <input type="submit" value="Search" />
      </p>
   
@@ -45,7 +41,7 @@
 		<tbody>
 		  #{list items:exams, as:'exam'}
 			<tr>
-				<td>#{a @Exams.show(exam.id)}${exam.examKey}#{/a}</td>
+				<td>#{a @Exams.view(exam.id)}${exam.examKey}#{/a}</td>
             <td>${exam.candidate}</td>
             <td>${exam.quiz}</td>
             <td>${exam.creationDate.format("yyyy-MM-dd")}</td>

@@ -4,19 +4,19 @@
 <h2>Exam : ${exam.examKey}</h2>
 
 <div class="panel">
-<h4>Candidate</h4>
-<p>
-    <label for="firstname">First name: </label>${exam.candidate.firstname}
-</p>
-<p>
-    <label for="lastname">Last name: </label>${exam.candidate.lastname}
-</p>
-<p>
-    <label for="email">Email: </label>${exam.candidate.email}
-</p>
-<p>
-    <label for="birthdate">Birth date: </label>${exam.candidate.birthdate}
-</p>
+	<h4>Candidate</h4>
+	<p>
+	    <label>First name: </label>${exam.candidate.firstname}
+	</p>
+	<p>
+	    <label>Last name: </label>${exam.candidate.lastname}
+	</p>
+	<p>
+	    <label>Email: </label>${exam.candidate.email}
+	</p>
+	<p>
+	    <label>Birth date: </label>#{if exam.candidate.birthdate}${exam.candidate.birthdate}#{/if}#{else}<i>inconnu</i>#{/else}
+	</p>
 </div>
 
 <div class="panel">
@@ -25,7 +25,7 @@
     <label>Title: </label>${exam.quiz.title}
 </p>
 <p>
-    <label>Difficulty: </label>${exam.quiz.difficulty}
+    <label>Difficulty: </label>#{difficulty star:exam.quiz.difficulty, readonly:true, split:true/}</td>
 </p>
 <p>
     <label>Nb questions: </label>${exam.quiz.questions.size()}
@@ -39,17 +39,22 @@
 </ul>
 </p>
 <p>
-    <label>Time: </label>${exam.quiz.second} seconds
+    <label>Time: </label>${exam.quiz.second} <span class="info"> (seconds)</span>
 </p>
 </div>
 
 <div class="panel">
-<h4>Responses</h4>
+<h4>Result</h4>
+Score : <b>${exam.resultPoint}</b> / ${exam.possiblePoint} points
+<br/>
+<br/>
 
 #{list items:exam.answers, as:'answer'} 
 	   
-	Question : ${answer.question.title}
-	
+	Question : ${answer.question.title}<br/>
+	#{if answer.isCorrect()}<img alt="right" src="@{'/public/images/right.png'}"> ${answer.question.difficulty} point(s)#{/if}#{else}<img alt="wrong" src="@{'/public/images/wrong.png'}"> no point#{/else}
+	<br/>
+	<br/>
 	<table class="exam_response">
 		
 	   #{if answer.question.questionType.toString() == 'SIMPLE_CHOICE'}

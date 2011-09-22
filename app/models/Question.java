@@ -99,4 +99,9 @@ public class Question extends Model {
 		}
 		return questions;
 	}
+	
+	@Override
+	public String toString() {
+		return title;
+	}
 }

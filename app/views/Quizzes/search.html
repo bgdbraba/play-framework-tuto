@@ -11,10 +11,6 @@
 
 #{form @Quizzes.search()} 
 
-	#{ifErrors}
-	<p class="error">All fields are required!</p>
-	#{/ifErrors}
-	
 	  <table class="table-filter">
       <tbody>
          <tr>
@@ -25,7 +21,7 @@
          </tr>
          <tr>
             <td align="right"><label for="second">Min time: </label></td>
-            <td><input type="text" name="second"   id="second" value="${second}" />(seconds)</td>
+            <td><input type="text" name="second"   id="second" value="${second}" /><span class="info"> (seconds)</span></td>
             <td align="right"><label for="groupType">Type: </label> </td>
             <td>#{select 'groupType', items:models.GroupType.findAll(true), valueProperty:'id', value:groupType, labelProperty:'name', id:'group_types' /}</td>
          </tr>
@@ -58,7 +54,7 @@
 		<tbody>
 		  #{list items:quizzes, as:'quiz'}
 			<tr>
-				<td>#{a @Quizzes.show(quiz.id)}${quiz.title}#{/a}</td>
+				<td>#{a @Quizzes.view(quiz.id)}${quiz.title}#{/a}</td>
             <td>#{difficulty star:quiz.difficulty, discriminator:quiz.id, readonly:true, split:true/}</td>
             <td>${quiz.questions.size()}</td>
             <td>${quiz.second}</td>

@@ -1,0 +1,28 @@
+#{extends 'site.html' /}
+#{set title:'Question' /}
+
+<h2>Show Quiz</h2>
+       
+<p class="bloc_line">
+   <label for="title">Title: </label>${quiz.title}
+</p>
+<p class="bloc_line">
+   <label for="difficulty">Difficulty: </label>
+   #{difficulty star:quiz.difficulty, discriminator:quiz.id, readonly:true, split:true/}
+</p>
+<p class="bloc_line">
+   <label for="second">Time: </label>${quiz.second}<span class="info"> (seconds)</span>
+</p>
+<p class="bloc_line">
+   <label for="groupType">Type: </label>
+   #{list items:quiz.groupTypes, as:'type'}
+     ${type} #{if ! type_isLast}-#{/if}
+   #{/list}
+</p>
+<p class="bloc_line">
+   <label for="questions">Questions: </label>${quiz.questions.size()}
+</p>
+<p class="bloc_line">
+   <label for="description">Description: </label>#{if quiz.description}${quiz.description}#{/if}#{else}<i>unknown</i>#{/else}
+   
+</p>

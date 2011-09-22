@@ -15,7 +15,7 @@
 	$('#defaultCountdown').countdown({until: newYear, format: 'MS', onExpiry: liftOff}); 
 	 
 	function liftOff() { 
-	    alert('Finish!'); 
+		$('#submitQuestion').submit();
 	}
 </script>
 
@@ -23,12 +23,12 @@
 
 <p>${question.content}</p>
 
-#{form @Contests.nextQuestion(exam.examKey)}
+#{form @Contests.nextQuestion(exam.examKey), id:'submitQuestion'}
 <p>
    #{if question.questionType.toString() == 'SIMPLE_CHOICE'}
       <!-- Use foreach question.responses -->
       #{list items:question.responses, as:'response'}
-         <input type="radio" name="simpleResponse" value="${response_index}" checked="checked" />${response.value} (${response.correct})
+         <input type="radio" name="simpleResponse" value="${response_index}" checked="checked" />${response.value}
          <br/>
       #{/list}
    #{/if}
@@ -36,7 +36,7 @@
    #{elseif question.questionType.toString() == 'MULTIPLE_CHOICE'}
       <!-- Use foreach question.responses -->
       #{list items:question.responses, as:'response'}
-         <input type="checkbox" name="response${response_index}" />${response.value} (${response.correct})
+         <input type="checkbox" name="response${response_index}" />${response.value}
          <br/>
       #{/list}
    #{/elseif}

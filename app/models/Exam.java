@@ -41,6 +41,10 @@ public class Exam extends Model {
 	@OneToMany(cascade = CascadeType.PERSIST, targetEntity = Answer.class)
 	public List<Answer> answers;
 
+	public int possiblePoint;
+
+	public int resultPoint;
+
 	public enum ExamState {
 
 		INIT, VALIDATED, PAID, CANCELED, IN_PROGRESS, FINISHED;
@@ -56,12 +60,26 @@ public class Exam extends Model {
 	}
 
 	public void initAnswers() {
-		if (quiz != null) {
-			answers = new ArrayList<Answer>();
-			for (Question question : quiz.questions) {
+		this.possiblePoint = 0;
+		this.resultPoint = 0;
+		if (this.quiz != null) {
+			this.answers = new ArrayList<Answer>();
+			for (Question question : this.quiz.questions) {
+				this.possiblePoint += question.difficulty;
 				Answer answer = new Answer();
 				answer.question = question;
-				answers.add(answer);
+				this.answers.add(answer);
+			}
+		}
+	}
+
+	public void calculateFinalResult() {
+		this.resultPoint = 0;
+		if (this.answers != null) {
+			for (Answer answer : this.answers) {
+				if (answer.isCorrect()) {
+					resultPoint += answer.question.difficulty;
+				}
 			}
 		}
 	}
@@ -95,10 +113,18 @@ public class Exam extends Model {
 		return examKey;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isFinished() {
 		return endingDate != null && endingDate.before(Calendar.getInstance());
 	}
 
+	/**
+	 * 
+	 * @param quiz
+	 */
 	public void storeQuiz(Quiz quiz) {
 		this.quiz = quiz;
 		this.second = quiz.second;
@@ -106,7 +132,16 @@ public class Exam extends Model {
 		state = ExamState.VALIDATED;
 	}
 
-	public static List<Exam> search(String email, String examKey, User user, List<ExamState> examStates) {
+	/**
+	 * 
+	 * @param email
+	 * @param examKey
+	 * @param user
+	 * @param examStates
+	 * @return
+	 */
+	public static List<Exam> search(String email, String examKey, User user,
+			List<ExamState> examStates) {
 		List<Exam> exams = null;
 		List<Object> params = new ArrayList<Object>();
 
@@ -133,7 +168,7 @@ public class Exam extends Model {
 			query = query.substring(0, query.length() - 2);
 			query += ")";
 		}
-		System.out.println(query);
+		// System.out.println(query);
 
 		exams = find(query, params.toArray()).fetch();
 		return exams;
@@ -141,7 +176,7 @@ public class Exam extends Model {
 
 	@Override
 	public String toString() {
-		return candidate + " " + examKey;
+		return examKey;
 	}
 
 	public boolean isPaid() {
@@ -159,6 +194,7 @@ public class Exam extends Model {
 	public void finish() {
 		endingDate = Calendar.getInstance();
 		state = ExamState.FINISHED;
+		this.calculateFinalResult();
 	}
 
 	public static Exam findForUser(User user) {

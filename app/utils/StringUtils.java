@@ -24,9 +24,4 @@ public class StringUtils {
 		return str1.equalsIgnoreCase(str2);
 	}
 	
-	public static void main(String[] args) {
-		boolean b = compareOnlyText(" to ti            tu", "to ti tu");
-		System.out.println(b);
-	}
-
 }

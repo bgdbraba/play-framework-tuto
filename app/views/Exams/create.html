@@ -1,48 +1,51 @@
 #{extends 'site.html' /}
 #{set title:exam.examKey /}
 
+<h2>Create Exam</h2>
 #{if exam.author.credit <= 0}
-   <h1>No more credit</h1>
-   <p>Please add some credit in your #{a @Profiles.show()}profile#{/a} to create new exam</p>
+   <h3>No more credit</h3>
+   <p>Please add some credit in your #{a @Profiles.view()}profile#{/a} to create new exam</p>
 #{/if}
 #{elseif exam.quiz }
-	<h4>Exam is validated</h4>
+	<h3>Exam is validated</h3>
 	
-	<p>Candidate has received an email on ${exam.candidate.email}.</p>
+	<p>Candidate has received an email on <b>${exam.candidate.email}</b>.</p>
+	<p>You will be contacted when the exam will be finished.</p>
+	
 #{/elseif}
 #{elseif exam.candidate }
-   <h4>Step 2/2 : Store quiz</h4>
+   <h3>Step 2/2 : Store quiz</h3>
    #{form @Exams.searchQuiz(exam.id)} 
 	
-		<p style="display: block; clear: both;">
+		<p class="bloc_line">
 			<label for="quizTitle">Title: </label>
 			<input type="text" name="quizTitle" id="quizTitle" value="${quizTitle}" />
 		</p>
 		
-		  <p style="display: block; clear: both;">
+		  <p class="bloc_line">
 			<label style="float: left;">Min difficulty: </label>
 			#{difficulty star:difficulty /}
 		</p>
-		  <p style="display: block; clear: both;">
+		  <p class="bloc_line">
 			<label for="minutes">Min time: </label>
 			<input type="text" name="minutes" id="minutes" value="${minutes}" />(minutes)
 		</p>
-		  <p style="display: block; clear: both;">
+		  <p class="bloc_line">
 		     <label for="groupType">Type: </label> 
    			 #{select 'groupType',  items:models.GroupType.findAll(true), valueProperty:'id', value:groupType, labelProperty:'name', id:'group_type' /}
 		  </p>
-		  <p style="display: block; clear: both;">
+		  <p class="bloc_line">
 		     <label for="questions">Questions: </label> 
 		     <input type="text" name="questions" id="questions" value="${questions}" />
 		  </p>
 		          
-		  <p style="display: block; clear: both;">
+		  <p class="bloc_line">
 		     <input type="submit" value="Search" />
 		  </p>
 	 
 	 #{/form} 
 
-	#{form @Exams.storeQuiz(exam.id)} 
+	#{form @Exams.storeQuiz(exam.id), id:'quizForm'} 
 		<table>
 			<thead>
 				<tr>
@@ -55,63 +58,80 @@
 				</tr>
 			</thead>
 			<tbody>
-			  #{list items:quizzes, as:'quiz'}
+			  #{list items:quizzes, as:'quiz', }
 				<tr>
-					<td><input type="radio" name="quizId" value="${quiz.id}"/></td>
-					<td>${quiz.title}</td>
-	            <td>${quiz.difficulty}</td>
-	            <td>
-		            <ul>
-		               #{list items:quiz.groupTypes, as:'types'}
-		                  <li>${types.name}</li>
-		               #{/list}
-		            </ul>
-		         </td>
-	            <td>${quiz.second}</td>
-	            <td>${quiz.questions.size()}</td>
+				   <td><input type="radio" name="quizId" value="${quiz.id}"/></td>
+				   <td>${quiz.title}</td>
+                   <td>#{difficulty star:quiz.difficulty, discriminator:quiz.id, readonly:true, split:true/}</td>
+	               <td>
+		              <ul>
+		                 #{list items:quiz.groupTypes, as:'types'}
+		                    <li>${types.name}</li>
+		                 #{/list}
+		              </ul>
+		           </td>
+	               <td>${quiz.second}</td>
+	               <td>${quiz.questions.size()}</td>
 				</tr>
-				#{/list}
-				#{else}
+			  #{/list}
+			  #{else}
 				<tr>
 				   <td colspan="6" class="no-response">No quiz. Change filter values.</td>
 				</tr>
-				#{/else}
+			  #{/else}
 			</tbody>
 		</table>
 		
 	    <p>
-	        <input type="submit" value="Create" />
+	        <input type="submit" value="Create" id="validateQuiz"/>
+	        <span class="error" style="display:none;" id="errorquiz">Select the quiz</span>
 	    </p>
 		    
 	#{/form}
+	
+	<script>
+	  $(document).ready(function(){
+		  $('#quizForm').submit(function(){
+		     var quiz = $('input[name="quizId"]:checked').val();
+			 if(quiz!=null && quiz > 0){
+				 return true;
+			 }else{
+				 $('#errorquiz').fadeIn('slow', function(){
+					 $('#errorquiz').fadeOut();
+				 });
+				 return false;
+			 }
+		  });
+	  });
+	</script>
 
 #{/elseif}
 #{else}
-   <h4>Step 1/2 : Store candidate</h4>
+   <h3>Step 1/2 : Store candidate</h3>
    #{form @Exams.CreateFirstStep(exam.id)}
 
-	    <p>
+	    <p class="bloc_line">
 	        <label for="firstname">First name: </label>
 	        <input type="text" name="firstname" id="firstname" value="${firstname}"/>
 	        <span class="error">#{error 'firstname' /}</span>
 	    </p>
-	    <p>
+	    <p class="bloc_line">
 	        <label for="lastname">Last name: </label>
 	        <input type="text" name="lastname" id="lastname" value="${lastname}"/>
 	        <span class="error">#{error 'lastname' /}</span>
 	    </p>
-	    <p>
+	    <p class="bloc_line">
 	        <label for="email">Email: </label>
 	        <input type="text" name="email" id="email" value="${email}"/>
 	        <span class="error">#{error 'email' /}</span>
 	    </p>
-	    <p>
+	    <p class="bloc_line">
 	        <label for="birthdate">Birth date: </label>
 	        <input type="text" name="birthdate" id="birthdate" #{if birthdate}value="${birthdate.format("yyyy-MM-dd")}"#{/if}/>
 	        <span class="error">#{error 'birthdate' /}</span>
 	    </p>
 	    
-	    <p>
+	    <p class="bloc_line">
 	        <input type="submit" value="Next step" />
 	    </p>
    

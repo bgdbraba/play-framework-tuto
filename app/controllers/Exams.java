@@ -36,7 +36,7 @@ public class Exams extends AbstractController {
 		User user = (User) renderArgs.get("user");
 		Exam exam = new Exam(examKey, user);
 		exam.save();
-		System.out.println(user + " creating the new exam " + exam.examKey);
+//		System.out.println(user + " creating the new exam " + exam.examKey);
 		render(exam);
 	}
 
@@ -46,10 +46,11 @@ public class Exams extends AbstractController {
 	 * @param examKey
 	 */
 	public static void search(String email, String examKey) {
-		System.out.println(Exam.findAll().size());
-		List<Exam> exams =
-				Exam.search(email, examKey, (User) renderArgs.get("user"),
-						Arrays.asList(ExamState.PAID, ExamState.VALIDATED, ExamState.CANCELED, ExamState.IN_PROGRESS));
+//		System.out.println(Exam.findAll().size());
+		List<Exam> exams = Exam
+				.search(email, examKey, (User) renderArgs.get("user"), Arrays
+						.asList(ExamState.PAID, ExamState.VALIDATED,
+								ExamState.CANCELED, ExamState.IN_PROGRESS));
 		render(exams, email, examKey);
 	}
 
@@ -61,7 +62,9 @@ public class Exams extends AbstractController {
 	 * @param email
 	 * @param birthdate
 	 */
-	public static void createFirstStep(Long examId, @Required(message = "Firstname is required") String firstname,
+	public static void createFirstStep(
+			Long examId,
+			@Required(message = "Firstname is required") String firstname,
 			@Required(message = "Lastname is required") String lastname,
 			@Required(message = "Email is required") @Email(message = "Corrupted email") String email,
 			@As(value = { "yyyy-MM-dd" }) Date birthdate) {
@@ -71,7 +74,8 @@ public class Exams extends AbstractController {
 		Exam exam = Exam.findById(examId);
 
 		if (validation.hasErrors()) {
-			render("Exams/create.html", exam, firstname, lastname, email, birthdate);
+			render("Exams/create.html", exam, firstname, lastname, email,
+					birthdate);
 		}
 
 		// New Candidate
@@ -83,14 +87,21 @@ public class Exams extends AbstractController {
 		exam.candidate = candidate;
 		exam.validate();
 		exam.save();
-		System.out.println("Exam for candidate " + exam.candidate.email);
+//		System.out.println("Exam for candidate " + exam.candidate.email);
 		render("Exams/create.html", exam);
 
 	}
 
+	/**
+	 * 
+	 * @param examId
+	 * @param quizId
+	 * @throws Exception
+	 */
 	public static void storeQuiz(Long examId, Long quizId) throws Exception {
-		Quiz quiz = Quiz.findById(quizId);
+
 		Exam exam = Exam.findById(examId);
+		Quiz quiz = Quiz.findById(quizId);
 
 		if (!exam.isPaid()) {
 
@@ -109,7 +120,14 @@ public class Exams extends AbstractController {
 		render("Exams/create.html", exam);
 	}
 
-	private static void sendMail(Exam exam) throws EmailException, MalformedURLException {
+	/**
+	 * 
+	 * @param exam
+	 * @throws EmailException
+	 * @throws MalformedURLException
+	 */
+	private static void sendMail(Exam exam) throws EmailException,
+			MalformedURLException {
 		// -- Stub SEND_MAIL
 
 		HtmlEmail email = new HtmlEmail();
@@ -120,18 +138,35 @@ public class Exams extends AbstractController {
 		// set the html message
 		if (exam.candidate.password == null) {
 			String pwd = exam.candidate.changePassword();
-			email.setHtmlMsg("<html><body><p><a href=\'http://localhost:9000/contest/" + exam.examKey
-					+ "\'>New exam</a></p><p>Your password : " + pwd + "</p></body></html>");
+			email.setHtmlMsg("<html><body>"
+					+ "<p>Hi <b>"
+					+ exam.candidate.firstname
+					+ " "
+					+ exam.candidate.lastname
+					+ "</b></p><br/>"
+					+ "<p>Your can begin your quiz on <b>Lilo Quiz</b> by logging in and clicking on \"Go to my EXAM\" menu.<br/></p>"
+					+ "<p>Username : <b>" + exam.candidate.email + "</b></p>"
+					+ "<p>Password : <b>" + pwd + "</b></p>" + "<br/>"
+					+ "<p>ExamKey  : <b>" + exam.examKey + "</b></p>" + "<br/>"
+					+ "<p>Good Luck</p>" + "</body></html>");
 		} else {
-			email.setHtmlMsg("<html><body><p><a href=\'http://localhost:9000/contest/" + exam.examKey
-					+ "\'>New exam</a></p></body></html>");
+			email.setHtmlMsg("<html><body>"
+					+ "<p>Hi <b>"
+					+ exam.candidate.firstname
+					+ " "
+					+ exam.candidate.lastname
+					+ "</b></p><br/>"
+					+ "<p>Your can begin your quiz on <b>Lilo Quiz</b> by logging in and clicking on \"Go to my EXAM\" menu with your username.<br/></p>"
+					+ "<p>ExamKey  : <b>" + exam.examKey + "</b></p>" + "<br/>"
+					+ "<p>Good Luck</p>" + "</body></html>");
 		}
 
 		// set the alternative message
 		email.setTextMsg("Your email client does not support HTML messages, too bad :(");
 		Mail.send(email);
-		System.out.println("Mail has been sent to " + exam.candidate.email + " for contest/" + exam.examKey + " ["
-				+ exam.candidate.password + "]");
+//		System.out.println("Mail has been sent to " + exam.candidate.email
+//				+ " for contest/" + exam.examKey + " ["
+//				+ exam.candidate.password + "]");
 	}
 
 	/**
@@ -143,14 +178,16 @@ public class Exams extends AbstractController {
 	 * @param groupType
 	 * @param questions
 	 */
-	public static void searchQuiz(Long examId, String quizTitle, Integer difficulty, Integer minutes, Long groupType,
+	public static void searchQuiz(Long examId, String quizTitle,
+			Integer difficulty, Integer minutes, Long groupType,
 			Integer questions) {
 
-		List<Quiz> quizzes =
-				Quiz.search(quizTitle, difficulty, minutes != null ? 60 * minutes : null, groupType, questions);
+		List<Quiz> quizzes = Quiz.search(quizTitle, difficulty,
+				minutes != null ? 60 * minutes : null, groupType, questions);
 
 		Exam exam = Exam.findById(examId);
-		render("Exams/create.html", exam, quizzes, quizTitle, difficulty, minutes, groupType, questions);
+		render("Exams/create.html", exam, quizzes, quizTitle, difficulty,
+				minutes, groupType, questions);
 	}
 
 	// public static void searchQuiz(Long examId) {
@@ -164,17 +201,17 @@ public class Exams extends AbstractController {
 	// render("Exams/create.html", exam, quizzes);
 	// }
 
-	public static void show(Long examId) {
+	public static void view(Long examId) {
 		Exam exam = Exam.findById(examId);
-		System.out.println(exam.answers.size() + " rep");
-		for (Answer answer : exam.answers) {
-			System.out.println(answer.question.title);
-			System.out.println(answer.answerValues.size());
-			for (AnswerValue v : answer.answerValues) {
-				System.out.println(v.value);
-			}
-			System.out.println("##########################");
-		}
+//		System.out.println(exam.answers.size() + " rep");
+//		for (Answer answer : exam.answers) {
+//			System.out.println(answer.question.title);
+//			System.out.println(answer.answerValues.size());
+//			for (AnswerValue v : answer.answerValues) {
+//				System.out.println(v.value);
+//			}
+//			System.out.println("##########################");
+//		}
 		render(exam);
 	}
 
