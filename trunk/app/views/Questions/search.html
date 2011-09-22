@@ -27,7 +27,7 @@
 				<td align="right"><label for="difficulty">Min difficulty: </label></td>
 				<td>#{difficulty star:difficulty/}</td>
 				<td align="right"><label for="second">Min time: </label></td>
-				<td><input type="text" name="second" id="second" value="${second}" />(seconds)</td>
+				<td><input type="text" name="second" id="second" value="${second}" /><span class="info"> (seconds)</span></td>
 			</tr>
 		</tbody>
 	</table>
@@ -51,7 +51,7 @@
 		<tbody>
 		  #{list items:questions, as:'question'}
 			<tr>
-				<td>#{a @Questions.show(question.id)}${question.title}#{/a}</td>
+				<td>#{a @Questions.view(question.id)}${question.title}#{/a}</td>
 	         <td>#{difficulty star:question.difficulty, discriminator:question.id, readonly:true, split:false/}</td>
             <td>${question.second}</td>
             <td>${question.groupType.name}</td>

@@ -108,7 +108,7 @@ Question(q3):
     title:          Nombre strictement positif
     content:        Donner une valeurs possible de x où 0<x<4
     second:         30
-    difficulty:     2,4
+    difficulty:     3
     questionType:   TEXT_ANSWER
     groupType:      group_2
     responses:      [rep7, rep8, rep9]
@@ -157,6 +157,8 @@ Exam(exam_1):
     second:         75
     author:         steeve
     state:          FINISHED
+    resultPoint:    3
+    possiblePoint:  8
 
 Post(firstPost):
     title:          The beginning

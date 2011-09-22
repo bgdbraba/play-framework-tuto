@@ -1,35 +1,43 @@
 #{extends 'site.html' /}
 #{set title:exam.examKey /}
  
-<h4>User informations</h4>
+<h2>User informations</h2>
 
 #{if !isUser}
    <h1>Wrong candidate</h1>
 #{/if}
 #{else}
+
+    <p>Welcome for this exam,</p>
+    
+    <p>You will begin this session, you have ${exam.second} seconds for terminated it.</p>
+    
+    <p>Before please complete this form (you can change your current password if you want).</p>
+    
+    <p>Thanks and good luck</p>
+    
 	#{form @Contests.storeCandidate(exam.id)}
 	
-	    #{ifErrors}
-	        <p class="error">
-	            All fields are required!
-	        </p>
-	    #{/ifErrors}
-	    
 	    <p>
-	        <label for="email">Email: </label>
+	        <label for="email">Email*: </label>
 	        <input type="text" name="email" id="email" value="${exam.candidate.email}" disabled="disabled"/>
 	    </p>
 	    <p>
-	        <label for="password">Password: </label>
-	        <input type="password" name="password" id="password" />
+	        <label for="password">Password*: </label>
+	        <input type="password" name="password" id="password" value="${exam.candidate.password}"/>
+	        <span class="error">#{error 'password' /}</span>
+	        
 	    </p>
 	    <p>
-	        <label for="confirmPassword">Confirm password: </label>
-	        <input type="password" name="confirmPassword" id="confirmPassword" />
+	        <label for="confirmPassword">Confirm password*: </label>
+	        <input type="password" name="confirmPassword" id="confirmPassword" value="${exam.candidate.password}"/>
+	        <span class="error">#{error 'confirmPassword' /}</span>
 	    </p>
 	    <p>
 	        <label for="birthdate">Birth date: </label>
 	        <input type="text" name="birthdate" id="birthdate" #{if birthdate}value="${birthdate.format("yyyy-MM-dd")}"#{/if}/>
+	        <span class="info">(yyyy-mm-dd)</span>
+	        <span class="error">#{error 'birthdate' /}</span>
 	    </p>
 	    
 	    <p>

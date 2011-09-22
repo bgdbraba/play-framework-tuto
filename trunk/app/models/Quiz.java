@@ -84,7 +84,7 @@ public class Quiz extends Model {
 				query += "and groupType.id = ? ";
 				params.add(groupTypeId);
 			}
-			System.out.println(query);
+//			System.out.println(query);
 			find(query, params.toArray());
 			quizzes = find(query, params.toArray()).fetch();
 		}
@@ -96,14 +96,14 @@ public class Quiz extends Model {
 		int diff = 0;
 		int time = 0;
 		for (Question q : questions) {
-			System.out.println(q.difficulty);
+//			System.out.println(q.difficulty);
 			diff += q.difficulty;
 			time += q.second;
 		}
 
 		// FIXME
 		this.difficulty = new Float(Math.round((new Double(diff) / questions.size()) * 5)) / 5;
-		System.out.println(this.difficulty);
+//		System.out.println(this.difficulty);
 		this.second = time;
 		this.valid = true;
 		this.save();

@@ -15,7 +15,7 @@ GET     /public/                                staticDir:public
 GET      /siging/?                              Application.signing
 GET      /validation/user/{validationNumber}    Application.validateUser
 
-GET		/posts/{id}                             Application.show
+GET		/posts/{id}                             Application.view
 POST    /posts/{postId}/comments                Application.postComment
 GET     /posts/{postId}/comments                Application.logout
 
@@ -33,24 +33,24 @@ POST     /quiz/new/step3/{quizId}               Quizzes.validateQuiz
 POST     /quiz/toogleQuestion/{quizId}          Quizzes.toogleQuestion
 *        /quiz/new/{quizId}                     Quizzes.storeQuiz
 GET      /quiz/new/?                            Quizzes.create
-GET      /quiz/show/{quizId}                    Quizzes.show
+GET      /quiz/view/{quizId}                    Quizzes.view
 GET      /quiz/{action}                         Quizzes.{action}
 
 *        /question/search/?                     Questions.search
 GET      /question/new/?                        Questions.create
 POST     /question/new/?                        Questions.storeQuestion
-*        /question/show/{questionId}            Questions.show
+*        /question/view/{questionId}            Questions.view
 GET      /question/{action}                     Questions.{action}
 
-GET      /profile/?                             Profiles.show
-GET      /profile/showUserMenu/?                Profiles.showUserMenu
+GET      /profile/?                             Profiles.view
+GET      /profile/viewUserMenu/?                Profiles.viewUserMenu
 
 GET      /exam/search/?                         Exams.search
 POST     /exam/new/step1/{examId}               Exams.createFirstStep
 POST     /exam/new/step2/{examId}               Exams.searchQuiz
 POST     /exam/new/step3/{examId}               Exams.storeQuiz
 GET      /exam/new/?                            Exams.create
-*        /exam/show/{examId}                    Exams.show
+*        /exam/view/{examId}                    Exams.view
 GET      /exam/{action}                         Exams.{action}
 
 GET      /group/{action}                        GroupTypes.{action}

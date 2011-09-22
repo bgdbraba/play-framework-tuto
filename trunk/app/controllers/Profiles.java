@@ -6,6 +6,9 @@ import java.util.Date;
 
 import models.User;
 import play.Play;
+import play.data.binding.As;
+import play.data.validation.Equals;
+import play.data.validation.Password;
 import play.data.validation.Required;
 import play.mvc.Before;
 import play.mvc.With;
@@ -15,32 +18,33 @@ import controllers.CRUD.For;
 @For(User.class)
 public class Profiles extends AbstractController {
 
-	public static void show() {
+	public static void view() {
 		User user = (User) renderArgs.get("user");
 		boolean creditable = user.isExaminer();
 		render(user, creditable);
 	}
 
-	public static void save(@Required String firstname, @Required String lastname, @Required String password,
-			@Required String confirm_password, String birthdate) {
+	public static void save(
+			@Required(message = "Firstname is required") String firstname,
+			@Required(message = "Lastname is required") String lastname,
+			@Required(message = "Password is required") @Password String password,
+			@Required(message = "Confirmation is required") @Equals(value = "password", message = "Different password") String confirm_password,
+			@As(value = { "yyyy-MM-dd" }) Date birthdate) {
+		
 		User user = (User) renderArgs.get("user");
+		
+		if (validation.hasErrors()) {
+			boolean creditable = user.isExaminer();
+			render("Profiles/view.html", user, creditable, firstname, lastname, password,
+					birthdate);
+		}
+		
 		user.firstname = firstname;
 		user.lastname = lastname;
 		user.password = password;
-
-		Date parsedDate = null;
-		if (birthdate != null && birthdate.length() > 0) {
-			try {
-				parsedDate = new SimpleDateFormat("yyyy-MM-dd").parse(birthdate);
-			} catch (ParseException e) {
-				// -- Add error
-				// validation.errors().add(new Error(key, message, variables));
-				System.out.println("Bad date");
-			}
-		}
-		user.birthdate = parsedDate;
+		user.birthdate = birthdate;
 		user.save();
-		show();
+		view();
 
 	}
 
@@ -49,8 +53,8 @@ public class Profiles extends AbstractController {
 		user.addCredit(sum);
 		renderText(user.credit.toString());
 	}
-	
-	public static void showUserMenu(){
+
+	public static void viewUserMenu() {
 		User user = (User) renderArgs.get("user");
 		render("Profiles/user_menu.html", user);
 	}

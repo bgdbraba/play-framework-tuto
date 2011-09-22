@@ -5,48 +5,51 @@
 
 #{form @Profiles.save()}
    
-    #{ifErrors}
-        <p class="error">
-            All fields are required!
-        </p>
-    #{/ifErrors}
-    
-    <p>
+    <p class="bloc_line">
         <label for="firstname">First name: </label>
         <input type="text" name="firstname" id="firstname" value="${user.firstname}" />
+        <span class="error">#{error 'firstname' /}</span>
     </p>
-    <p>
+    <p class="bloc_line">
         <label for="lastname">Last name: </label>
         <input type="text" name="lastname" id="lastname" value="${user.lastname}" />
+        <span class="error">#{error 'lastname' /}</span>
     </p>
-    <p>
+    <p class="bloc_line">
         <label for="email">Email: </label>
         <input type="text" name="email" id="email" value="${user.email}" disabled="disabled"/>
     </p>
-    <p>
+    <p class="bloc_line">
         <label for="password">Password: </label>
         <input type="password" name="password" id="password" value="${user.password}" />
+        <span class="error">#{error 'password' /}</span>
     </p>
-    <p>
+    <p class="bloc_line">
         <label for="confirm_password">Confirm password: </label>
         <input type="password" name="confirm_password" id="confirm_password" value="${user.password}" />
+        <span class="error">#{error 'confirm_password' /}</span>
     </p>
-    <p>
+    <p class="bloc_line">
         <label for="birthdate">Birth date: </label>
         <input type="text" name="birthdate" id="birthdate"  value="${user.birthdate}"/>
+        <span class="error">#{error 'birthdate' /}</span>
     </p>
     #{if user.profile != null}
-    <p>
+    <p class="bloc_line">
         <label for="profile">Profile: </label>
         <input type="text" name="profile" id="profile"  value="${user.profile}" disabled="disabled"/>
     </p>
     #{/if}
     #{if creditable}
-    <p>
-        <label for="credit">Credit: </label>
-        <input type="text" name="credit" id="credit"  value="${user.credit}" disabled="disabled"/> units
-    </p>
-    <a href="#" onclick="credit()">+ Add Credit</a>
+	    <p class="bloc_line">
+	        <label for="credit">Credit: </label>
+	        <input type="text" name="credit" id="credit"  value="${user.credit}" disabled="disabled"/><span class="info"> units</span>
+	    </p>
+	    <ul class="addingCredit">
+			<li>
+				<a href="#" onclick="credit()">Add credit</a>
+			</li>
+		</ul>
     #{/if}
 
     <script type="text/javascript">
@@ -63,7 +66,7 @@
 	    
     </script>
     
-    <p>
+    <p class="bloc_line">
         <input type="submit" value="Save" />
     </p>
 #{/form}

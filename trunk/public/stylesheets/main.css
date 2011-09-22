@@ -239,12 +239,18 @@ html,body {
 }
 
 /**   **/
-.addingItem {
+.addingItem,.addingCredit {
 	font-weight: bold;
 	list-style-image: url('../images/add.png');
 }
 
-.addingItem a {
+.addingCredit {
+	bottom: 5px;
+	position: relative;
+	left: 130px;
+}
+
+.addingItem a,.addingCredit a {
 	color: #333333;
 	position: relative;
 	bottom: 3px;
@@ -434,7 +440,7 @@ form input,form textarea {
 form label { /**display: block;*/
 	font-weight: bold;
 	font-size: 90%;
-	color: #aaa;
+	color: #666666;
 	margin-bottom: 3px;
 }
 
@@ -576,7 +582,7 @@ tr.odd {
 }
 
 .crudField label {
-	color: #B8FA5C;
+	color: #grey;
 }
 
 .crudHelp {
@@ -616,6 +622,10 @@ tr.odd {
 	padding: 0;
 	color: pink;
 	-webkit-box-shadow: none;
+}
+
+body#crud #title h1 {
+	display: none;
 }
 
 /** Login **/
@@ -722,6 +732,30 @@ tr.odd {
 	color: #333333;
 }
 
+.info {
+	color: grey;
+	font-style: italic;
+	font-size: 11px;
+}
+
+p.bloc_line {
+	display: block;
+	clear: both;
+	height: 30px;
+}
+
+p.bloc_line_area {
+	display: block;
+	clear: both;
+	height: 163px;
+}
+
+p.bloc_line_double {
+	display: block;
+	clear: both;
+	height: 85px;
+}
+
 /** Exam **/
 .exam_response {
 	display: block;
@@ -729,9 +763,15 @@ tr.odd {
 	background-color: white;
 }
 
+.question_response {
+	display: block;
+	margin-bottom: 15px;
+	background-color: inherit;
+}
+
 div.panel {
-	padding : 3px;	
-	border : 1px solid #E0E0E0;
+	padding: 3px;
+	border: 1px solid #E0E0E0;
 	margin: 10px;
 	width: 75%
 }

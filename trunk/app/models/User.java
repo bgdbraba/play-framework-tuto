@@ -77,7 +77,7 @@ public class User extends Model {
 	}
 
 	public static User findByEmail(String email) {
-		System.out.println("find with " + email);
+//		System.out.println("find with " + email);
 		return User.find("byEmail", email).first();
 	}
 

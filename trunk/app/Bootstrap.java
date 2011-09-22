@@ -11,7 +11,7 @@ public class Bootstrap extends Job {
 		if (User.count() == 0) {
 			Fixtures.deleteDatabase();
 			Fixtures.loadModels("initial-data.yml");
-			System.out.println("Database Loaded");
+//			System.out.println("Database Loaded");
 		}
 	}
 

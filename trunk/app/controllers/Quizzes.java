@@ -15,7 +15,7 @@ import controllers.CRUD.For;
 @For(Quiz.class)
 public class Quizzes extends AbstractController {
 
-	public static void show(Long quizId) {
+	public static void view(Long quizId) {
 		Quiz quiz = Quiz.findById(quizId);
 		render(quiz);
 	}
@@ -39,7 +39,7 @@ public class Quizzes extends AbstractController {
 	public static void validateQuiz(Long quizId) {
 		Quiz quiz = Quiz.findById(quizId);
 		quiz.validate();
-		render("Quizzes/create.html", quiz);
+		render("Quizzes/view.html", quiz);
 	}
 
 	public static void create(Long quizId) {

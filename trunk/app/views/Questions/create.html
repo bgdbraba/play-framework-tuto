@@ -7,50 +7,51 @@
 	
 	#{form @Questions.storeQuestion()} 
 		
-		<p style="display: block; clear: both;">
+		<p class="bloc_line">
 			<label for="questionTitle">Title: </label>
 			<input type="text" name="questionTitle" id="questionTitle" value="${questionTitle}" />
 			<span class="error">#{error 'questionTitle' /}</span>
 		</p>
-		<p style="display: block; clear: both;">
+		<p class="bloc_line">
 		   <label style="float: left;">Min difficulty: </label>
 		   #{difficulty star:difficulty/}
 		   <span class="error">#{error 'difficulty' /}</span>
 		</p>
-		<p style="display: block; clear: both;">
+		<p class="bloc_line">
 			<label for="second">Time: </label> 
-			<input type="text" name="second" id="second" value="${second}" />(seconds)
+			<input type="text" name="second" id="second" value="${second}" />
+			<span class="info">(seconds)</span>
 			<span class="error">#{error 'second' /}</span>
 		</p>
-		<p style="display: block; clear: both;">
+		<p class="bloc_line">
 			<label for="groupType">Type: </label>
-			#{select 'groupType', items:models.GroupType.findAll(), valueProperty:'id', labelProperty:'name', id:'group_types' /}
+			#{select 'groupType', items:models.GroupType.findAll(), valueProperty:'id', value:groupType, labelProperty:'name', id:'group_types' /}
 			<span class="error">#{error 'groupType' /}</span>
 		</p>
-		<p style="display: block; clear: both;">
-			<label for="content">Content: </label>
-			<textarea name="content" id="content" cols="80" rows="10"></textarea>
-			<span class="error">#{error 'content' /}</span>
+		<p class="bloc_line_area">
+			<label for="questionContent">Content: </label>
+			<textarea name="questionContent" id="questionContent" cols="80" rows="10">${questionContent}</textarea>
+			<span class="error">#{error 'questionContent' /}</span>
 		</p>
-		<p style="display: block; clear: both;">
+		<p class="bloc_line_area">
 			<label for="explanation">Explanation: </label>
-			<textarea name="explanation" cols="80" rows="10"></textarea>
+			<textarea name="explanation" cols="80" rows="10">${explanation}</textarea>
 			<span class="error">#{error 'explanation' /}</span>
 		</p>
-		<p style="display: block; clear: both;">
+		<p class="bloc_line">
 			<label for="questionType">Response: </label>
 			<input type="radio" name="questionType" value="${models.Question.QuestionType.SIMPLE_CHOICE }" checked="checked" />Simple choice 
-         <input type="radio" name="questionType" value="${models.Question.QuestionType.MULTIPLE_CHOICE }" />Multiple choice
-         <input type="radio" name="questionType" value="${models.Question.QuestionType.TEXT_ANSWER }" />Full text
-         <span class="error">#{error 'questionType' /}</span>
+         	<input type="radio" name="questionType" value="${models.Question.QuestionType.MULTIPLE_CHOICE }" />Multiple choice
+         	<input type="radio" name="questionType" value="${models.Question.QuestionType.TEXT_ANSWER }" />Full text
+         	<span class="error">#{error 'questionType' /}</span>
 		</p>
 		
 		<div id="response_bloc">
-			<table>
+			<table width="200px" style="display: block; ">
 				<thead>
 					<tr>
-						<th>Correct</th>
-						<th>Responses</th>
+						<th width="30px"><img alt="Correct" src="@{'/public/images/right.png'}" /></th>
+						<th width="350px">Responses</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -60,7 +61,7 @@
 							<input type="checkbox" name="correct1" />
 						</td>
 						<td>
-							<input type="text" name="response1" value="" />
+							<input type="text" name="response1" size="50" value=""/>
 						</td>
 					</tr>
 					<tr>
@@ -69,7 +70,7 @@
 							<input type="checkbox" name="correct2" />
 						</td>
 						<td>
-							<input type="text" name="response2" value="" />
+							<input type="text" name="response2" size="50" value=""/>
 						</td>
 					</tr>
 					<tr>
@@ -78,7 +79,7 @@
 							<input type="checkbox" name="correct3" />
 						</td>
 						<td>
-							<input type="text" name="response3" value="" />
+							<input type="text" name="response3" size="50" value="" />
 						</td>
 					</tr>
 					<tr>
@@ -86,7 +87,7 @@
 							<input type="radio" name="correct" value="4" />
 							<input type="checkbox" name="correct4" />
 						</td>
-						<td><input type="text" name="response4" value="" />
+						<td><input type="text" name="response4" size="50" value="" />
 						</td>
 					</tr>
 					<tr>
@@ -95,7 +96,7 @@
 							<input type="checkbox" name="correct5" />
 						</td>
 						<td>
-							<input type="text" name="response5" value="" />
+							<input type="text" name="response5" size="50" value=""/>
 						</td>
 					</tr>
 				</tbody>

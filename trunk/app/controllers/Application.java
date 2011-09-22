@@ -34,21 +34,6 @@ public class Application extends AbstractController {
 		render();
 	}
 
-	// public static void show(Long id) {
-	// Post post = Post.findById(id);
-	// render(post);
-	// }
-	//
-	// public static void postComment(Long postId, @Required String author, @Required String content) {
-	// Post post = Post.findById(postId);
-	// if (validation.hasErrors()) {
-	// render("Application/show.html", post);
-	// }
-	// post.addComment(author, content);
-	// flash.success("Thanks for posting %s", author);
-	// show(postId);
-	// }
-
 	public static void signing() {
 		addDefaults(true);
 		render();
@@ -73,7 +58,7 @@ public class Application extends AbstractController {
 		user.save();
 
 		// SEND mail for confirmation
-		System.out.println("Confirmation code /validation/user/" + user.validationNumber + "/?mail=" + user.email);
+//		System.out.println("Confirmation code /validation/user/" + user.validationNumber + "/?mail=" + user.email);
 
 		render();
 	}
